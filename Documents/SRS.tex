@@ -1,0 +1,141 @@
+\documentclass[]{article}
+
+\usepackage[a4paper, total={6in, 8in}]{geometry} % Change paper size, margins, etc...
+\usepackage{enumitem} % Better enumerations
+\usepackage{xcolor} % Colors
+\usepackage{soul} % Highlight colors
+
+\sethlcolor{gray} % Set highlight color (soul + xcolor)
+
+
+\title{\textbf{M1 Project Management} \\ \Large Software Requirements Specification}
+\author{Kévin Driencourt \and Florent Conderine}
+
+
+
+\begin{document}
+
+    \maketitle
+
+    \newpage
+
+    \tableofcontents
+
+    \newpage
+    
+
+
+    \section{Introduction}
+        \subsection{Purpose}
+        \subsection{Project Scope}
+
+
+
+    \newpage
+
+
+
+    \section{Functional Requirements}
+        \subsection{\hl{Administrator Users}}
+            \newcounter{adminCounter} % Counter to keep the FR number between subsubsections
+            \subsubsection{User Management}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{FR-ADM-\arabic{adminCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{adminCounter}\item The system shall allow administrators to create, edit and delete user accounts.
+                \refstepcounter{adminCounter}\item The system shall enable administrators to assign roles to users (e.g., admin, project manager, team member).
+                \refstepcounter{adminCounter}\item The system shall provide administrators the ability to manage user permissions and access levels.
+            \end{enumerate}
+
+            \subsubsection{System Configuration}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{FR-ADM-\arabic{adminCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{adminCounter}\item The system shall provide administrators access to system logs and performance tools.
+            \end{enumerate}
+
+        \subsection{\hl{Project Manager}}
+            \newcounter{pmCounter}
+            \subsubsection{Project Management}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{FR-PM-\arabic{pmCounter}}}, leftmargin=*, itemsep=-4px]
+               \refstepcounter{pmCounter}\item The system shall allow project managers to create new projects with details such as project name, description, start date, end date, and team members.
+               \refstepcounter{pmCounter}\item The system shall enable project managers to assign tasks to team members within a project.
+               \refstepcounter{pmCounter}\item The system shall allow project managers to set project priorities and deadlines.
+            \end{enumerate}
+
+            \subsubsection{Task Management}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{FR-PM-\arabic{pmCounter}}}, leftmargin=*, itemsep=-4px]
+               \refstepcounter{pmCounter}\item The system shall allow project managers to create tasks within a project, including assigning them to team members.
+               \refstepcounter{pmCounter}\item The system shall enable project managers to set task priorities, deadlines, and dependencies between tasks.
+            \end{enumerate}
+
+            \subsubsection{Team Collaboration}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{FR-PM-\arabic{pmCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{pmCounter}\item The system shall provide project managers with a comment feature for communication with team members on specific tasks.
+            \end{enumerate}
+                    
+            \subsubsection{Time Tracking and Reporting}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{FR-PM-\arabic{pmCounter}}}, leftmargin=*, itemsep=-4px]
+               \refstepcounter{pmCounter}\item The system shall allow project managers to view reports on the time logged by team members on specific tasks and projects.
+               \refstepcounter{pmCounter}\item The system shall generate reports detailing overall project progress, including time spent and task completion status.
+            \end{enumerate}
+
+            \subsubsection{Notifications and Alerts}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{FR-PM-\arabic{pmCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{pmCounter}\item The system shall shall allow project managers to configure project-specific alerts for key milestones or deadlines.
+            \end{enumerate}
+
+        \subsection{\hl{Team Member}}
+            \newcounter{tmCounter}
+            \subsubsection{Task Management}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{FR-TM-\arabic{tmCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{tmCounter}\item The system shall allow team members to view tasks assigned to them with associated priorities and deadlines.
+                \refstepcounter{tmCounter}\item The system shall enable team members to update the status of their tasks (e.g., pending, in-progress, completed).
+                \refstepcounter{tmCounter}\item The system shall provide team members the ability to organize tasks by labels and view task dependencies.
+            \end{enumerate}
+
+            \subsubsection{Team Collaboration}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{FR-TM-\arabic{tmCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{tmCounter}\item The system shall allow team members to comment on tasks to communicate with other team members.
+            \end{enumerate}
+
+            \subsubsection{Time Tracking}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{FR-TM-\arabic{tmCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{tmCounter}\item The system shall allow team members to log time spent on each assigned task.
+                \refstepcounter{tmCounter}\item The system shall provide team members with the ability to view their personal time logs and task history.
+            \end{enumerate}
+
+            \subsubsection{Notifications and Alerts}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{FR-TM-\arabic{tmCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{tmCounter}\item The system shall notify team members of new task assignments, task updates, and approaching deadlines.
+                \refstepcounter{tmCounter}\item The system shall provide team members with alerts for comments or mentions in task-related discussions.
+            \end{enumerate}
+
+        \subsection{\hl{All Users}}
+            \newcounter{allCounter}
+            \subsubsection{Account Management}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{FR-ALL-\arabic{allCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{allCounter}\item The system shall allow users to register and create accounts.
+                \refstepcounter{allCounter}\item The system shall provide users the ability to log in and log out.
+                \refstepcounter{allCounter}\item The system shall allow users to manage and update their personal profiles, including password updates.
+            \end{enumerate}
+
+            \subsubsection{Communication}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{FR-ALL-\arabic{allCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{allCounter}\item The system shall allow users to communicate with other users via a chat.
+                \refstepcounter{allCounter}\item The system shall allow users to select with which user(s) they want to start a chat.
+            \end{enumerate}
+
+            \subsubsection{Dashboard Overview}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{FR-ALL-\arabic{allCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{allCounter}\item The system shall display key project indicators, such as task progress, upcoming deadlines, and recent activity on the user’s dashboard.
+            \end{enumerate}
+
+
+
+    \newpage
+
+
+    \section{Non-functional Requirements}
+
+
+
+
+
+\end{document}
