@@ -133,6 +133,74 @@
 
 
     \section{Non-functional Requirements}
+        \subsection{\hl{Performance}}
+            \newcounter{performanceCounter}
+            \subsubsection{Response Time}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{NFR-PERF-\arabic{performanceCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{performanceCounter}\item The system shall have a maximum response time of 1 second for 95\% of user requests under normal load conditions.
+                \refstepcounter{performanceCounter}\item The system shall support real-time updates for task status changes, project progress, and user notifications.
+            \end{enumerate}
+
+            \subsubsection{Scalability}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{NFR-PERF-\arabic{performanceCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{performanceCounter}\item The system shall handle a large volume of concurrent users without affecting performance or availability.
+                \refstepcounter{performanceCounter}\item The system shall scale to accomadate an increasing number of projects and tasks without significant degradation in performance.
+            \end{enumerate}
+
+        \subsection{Availability}
+            \newcounter{availabilityCounter}
+            \subsubsection{Uptime}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{NFR-AVAIL-\arabic{availabilityCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{availabilityCounter}\item The system shall be available 99\% of the time of scheduled maintenance.
+            \end{enumerate}
+
+            \subsubsection{Backup and Recovery}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{NFR-AVAIL-\arabic{availabilityCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{availabilityCounter}\item The system shall perform automatic daily backups of all critical data, including projects, tasks, and logs.
+            \end{enumerate}
+
+        \subsection{Security}
+            \newcounter{securityCounter}
+            \subsubsection{Data Encryption}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{NFR-SEC-\arabic{securityCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{securityCounter}\item The system shall encrypt all sensitive user data.
+            \end{enumerate}
+
+            \subsubsection{Data Privacy}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{NFR-SEC-\arabic{securityCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{securityCounter}\item The system shall comply with the GDPR.
+                \refstepcounter{securityCounter}\item The system shall provide users with the ability to delete their personal data on request.
+            \end{enumerate}
+
+        \subsection{Usability}
+            \newcounter{usabilityCounter}
+            \subsubsection{UI Design}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{NFR-USAB-\arabic{usabilityCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{usabilityCounter}\item The system shall provide an intuitive and user-friendly interface.
+                \refstepcounter{usabilityCounter}\item The system shall ensure that common user tasks (e.g., creating a project, assigning a task) can be completed within 5 clicks or less.
+            \end{enumerate}
+
+            \subsubsection{Accessability}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{NFR-USAB-\arabic{usabilityCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{usabilityCounter}\item The system shall support keyboard navigation, and editing (e.g., deleting a task with the DEL key).
+            \end{enumerate}
+
+         \subsection{Reliability}
+            \newcounter{reliabilityCounter}
+            \subsubsection{Updates}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{NFR-RELI-\arabic{reliabilityCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{reliabilityCounter}\item The system shall install any available updates nightly to remain up to date.
+            \end{enumerate}
+
+         \subsection{Compatibility}
+            \newcounter{compatibilityCounter}
+            \subsubsection{Devices and Operating Systems}
+            \begin{enumerate}[label=\scriptsize\textbf{\textcolor{gray}{NFR-COMP-\arabic{compatibilityCounter}}}, leftmargin=*, itemsep=-4px]
+                \refstepcounter{compatibilityCounter}\item The system shall be compatible with different operating systems, such as Windows, macOS, Linux, and mobile operating systems like iOS and Android.
+                \refstepcounter{compatibilityCounter}\item The system shall be compatible with device types, including desktop computers, laptops, tablets, and smartphones.
+            \end{enumerate}
+
+
 
 
 
