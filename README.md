@@ -1,1 +1,1 @@
-# M1-project-management
+# coman - Project Management Software
