@@ -2,6 +2,7 @@
 *.d
 
 # CMake generated files
+.cmake/
 CMakeFiles/
 cmake_install.cmake
 CMakeCache.txt
