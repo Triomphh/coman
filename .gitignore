@@ -1,6 +1,14 @@
 # Prerequisites
 *.d
 
+# CMake generated files
+CMakeFiles/
+cmake_install.cmake
+CMakeCache.txt
+Makefile
+coman
+
+
 # Compiled Object files
 *.slo
 *.lo
@@ -31,6 +39,12 @@
 *.out
 *.app
 
+
+# Editor directories and files
+.vscode/
+/.idea/
+/*.sublime-workspace
+/*.sublime-project
 
 # LaTeX files
 *.aux
