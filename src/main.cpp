@@ -9,14 +9,14 @@ int main()
     // Define the Crow application
     crow::SimpleApp app;
 
-
+    
 
     // Define differents endpoints
     CROW_ROUTE(app, "/")([]()
     {
-        // auto page = crow::mustache::load_text("simplepage.html");
-        // return page;
-        return "Hello World!";
+        auto page = crow::mustache::load_text("simplepage.html");
+        return page;
+        // return "Hello World!";
     });
 
     CROW_ROUTE(app, "/users")([]()
@@ -26,7 +26,7 @@ int main()
 
 
 
-    // Configure and run the application (on http://127.0.0.1)
+    // Configure and run the application (on http://127.0.0.1:18080)
     app.bindaddr("127.0.0.1")
         .port(18080)
         .multithreaded()

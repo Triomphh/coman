@@ -4,6 +4,8 @@ project(coman)
 
 
 
+# Specify the output directory for the executable
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 
 # Include directories
 include_directories(${PROJECT_SOURCE_DIR}/include)
