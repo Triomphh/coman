@@ -18,6 +18,9 @@ cd build
 cmake ..
 make
 ```
+
+## Execution
+Obligatoirement dans le root du projet (pas de `../coman` ou `../../coman`)
 ```
 ./coman
 ```
