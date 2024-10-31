@@ -9,19 +9,25 @@ int main()
     // Define the Crow application
     crow::SimpleApp app;
 
+    // app.loglevel(crow::LogLevel::Info);    // Show all logs bellow this level (see https://crowcpp.org/master/guides/logging/ for more info)
+
     
 
     // Define differents endpoints
     CROW_ROUTE(app, "/")([]()
     {
-        auto page = crow::mustache::load_text("simplepage.html");
+        crow::mustache::context context; 
+
+        context["name"] = "Pablo";      // Just a JSON syntax: {"name" : "Pablo"}
+
+        auto page = crow::mustache::load("dashboard.html").render(context);
         return page;
-        // return "Hello World!";
     });
 
     CROW_ROUTE(app, "/users")([]()
     {
-        return "Here is the /users endpoint";
+        CROW_LOG_INFO << "This endpoint isn't implemented yet";
+        return crow::response( crow::status::NOT_IMPLEMENTED );     // Not implemented error code
     });   
 
 
