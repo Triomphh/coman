@@ -32,9 +32,8 @@ int main()
 
 
 
-    // Configure and run the application (on http://127.0.0.1:18080)
-    app.bindaddr("127.0.0.1")
-        .port(18080)
+    // Configure and run the application (on http://0.0.0.0:18080 (localhost))
+    app.port(18080)
         .multithreaded()
         .run();
 }
