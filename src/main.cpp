@@ -24,6 +24,12 @@ int main()
         return page;
     });
 
+    CROW_ROUTE(app, "/projects")([]()
+    {
+        auto page = crow::mustache::load("projects.html").render();
+        return page;
+    });
+
     CROW_ROUTE(app, "/users")([]()
     {
         CROW_LOG_INFO << "This endpoint isn't implemented yet";
@@ -34,6 +40,6 @@ int main()
 
     // Configure and run the application (on http://0.0.0.0:18080 (localhost))
     app.port(18080)
-        .multithreaded()
-        .run();
+       .multithreaded()
+       .run();
 }
