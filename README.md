@@ -20,7 +20,7 @@ make
 ```
 
 ## Execution
-Obligatoirement dans le root du projet (pas de `../coman` ou `../../coman`)
+Obligatoirement dans la racine du projet (pas de `../coman` ou `../../coman`)
 ```
 ./coman
 ```
