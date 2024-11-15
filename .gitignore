@@ -9,6 +9,9 @@ CMakeCache.txt
 Makefile
 coman
 
+# Build files
+build/
+
 
 # Compiled Object files
 *.slo
