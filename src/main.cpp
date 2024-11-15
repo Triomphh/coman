@@ -1,66 +1,6 @@
 #include "../third_party/crow_all.h"    // Using Crow framework to manage HTTP web services (taking care of routing, multithreading, etc...)
+#include "../include/project_repository.hpp"
 #include <SQLiteCpp/SQLiteCpp.h>
-#include <SQLiteCpp/VariadicBind.h>
-#include <string>
-
-
-class Project
-{
-public:
-    int id;
-    std::string name;
-    std::string description;
-};
-
-void create_project(const std::string& name, const std::string& description)
-{
-    SQLite::Database db("database.db", SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
-    SQLite::Statement query(db, "INSERT INTO projects (name, description) VALUES (?, ?)");
-    query.bind(1, name);
-    query.bind(2, description);
-    query.exec();
-}
-
-std::vector<Project> get_projects()
-{
-    SQLite::Database db("database.db", SQLite::OPEN_READONLY);
-    SQLite::Statement query(db, "SELECT id, name, description FROM projects");
-
-    std::vector<Project> projects;
-    while (query.executeStep())
-    {
-        Project project;
-        project.id = query.getColumn(0).getInt();
-        project.name = query.getColumn(1).getString();
-        project.description = query.getColumn(2).getString();
-        projects.push_back(project);
-    }
-    return projects;
-}
-
-void update_project(int id, const std::string& name, const std::string& description)
-{
-    SQLite::Database db("database.db", SQLite::OPEN_READWRITE);
-    SQLite::Statement query(db, "UPDATE projects SET name = ?, description = ? WHERE id = ?");
-    query.bind(1, name);
-    query.bind(2, description);
-    query.bind(3, id);
-    query.exec();
-}
-
-void delete_project(int id)
-{
-    SQLite::Database db("database.db", SQLite::OPEN_READWRITE);
-    SQLite::Statement query(db, "DELETE FROM projects WHERE id = ?");
-    query.bind(1, id);
-    query.exec();
-}
-
-void delete_all_projects()
-{
-    SQLite::Database db("database.db", SQLite::OPEN_READWRITE);
-    db.exec("DELETE FROM projects");
-}
 
 int main()
 {
@@ -91,7 +31,7 @@ int main()
 
     CROW_ROUTE(app, "/projects")([]()
     {
-        auto projects = get_projects();
+        auto projects = ProjectRepository::get_projects();
         crow::mustache::context context;
         std::vector<crow::json::wvalue> project_list;
         
@@ -119,7 +59,7 @@ int main()
         std::string name = body["name"].s();
         std::string description = body["description"].s();
 
-        create_project(name, description);
+        ProjectRepository::create_project(name, description);
 
         return crow::response(201, "Project created");
     });
@@ -128,7 +68,7 @@ int main()
     CROW_ROUTE(app, "/projects/deleteall").methods("DELETE"_method)([]()
     {
         CROW_LOG_INFO << "Delete all projects endpoint called";
-        delete_all_projects();
+        ProjectRepository::delete_all_projects();
         return crow::response(200, "All projects deleted");
     });
     // curl -X DELETE http://localhost:18080/projects/deleteall
