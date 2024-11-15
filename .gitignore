@@ -12,6 +12,11 @@ coman
 # Build files
 build/
 
+# Databases
+*.db
+
+# Cache
+.cache/
 
 # Compiled Object files
 *.slo
