@@ -1,5 +1,5 @@
 #include "../third_party/crow_all.h"    // Using Crow framework to manage HTTP web services (taking care of routing, multithreading, etc...)
-#include "../include/project_repository.hpp"
+#include "../include/ProjectRepository.hpp"
 #include <SQLiteCpp/SQLiteCpp.h>
 
 int main()
@@ -12,7 +12,13 @@ int main()
 
     // Initialize the SQLite database
     SQLite::Database db("database.db", SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
-    db.exec("CREATE TABLE IF NOT EXISTS projects (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, description TEXT)");
+    db.exec("CREATE TABLE IF NOT EXISTS projects ("
+            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+            "name TEXT, "
+            "description TEXT, "
+            "start_date DATE, "
+            "end_date DATE"
+            ")");
 
 
 
@@ -40,6 +46,8 @@ int main()
             p["id"] = project.id;
             p["name"] = project.name;
             p["description"] = project.description;
+            p["start_date"] = project.start_date;
+            p["end_date"] = project.end_date;
             project_list.push_back(std::move(p));
         }
         
@@ -58,12 +66,21 @@ int main()
 
         std::string name = body["name"].s();
         std::string description = body["description"].s();
+        std::string start_date = body["start_date"].s();
+        std::string end_date = body["end_date"].s();
 
-        ProjectRepository::create_project(name, description);
+        ProjectRepository::create_project(name, description, start_date, end_date);
 
         return crow::response(201, "Project created");
     });
-    // curl -X POST http://localhost:18080/projects/create -d '{"name": "Test", "description": "Test description"}'
+    // curl -X POST http://localhost:18080/projects/create -d '{"name": "Test", "description": "Test description", "start_date": "2024-03-20", "end_date": "2024-12-31"}'
+
+    CROW_ROUTE(app, "/projects/delete/<int>").methods("DELETE"_method)([](int id)
+    {
+        ProjectRepository::delete_project(id);
+        return crow::response(200, "Project deleted");
+    });
+    // curl -X DELETE http://localhost:18080/projects/delete/1
 
     CROW_ROUTE(app, "/projects/deleteall").methods("DELETE"_method)([]()
     {
