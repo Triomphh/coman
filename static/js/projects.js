@@ -17,9 +17,7 @@ async function deleteProject(projectId)
     {
         const response = await fetch(`/projects/delete/${projectId}`, {
             method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            headers: { 'Content-Type': 'application/json' }
         });
 
         if (response.ok) 
@@ -41,19 +39,17 @@ document.addEventListener('DOMContentLoaded', () =>
         e.preventDefault();
         
         const formData = {
-            name: document.getElementById('name').value,
+            name:        document.getElementById('name').value,
             description: document.getElementById('description').value,
-            start_date: document.getElementById('start_date').value,
-            end_date: document.getElementById('end_date').value
+            start_date:  document.getElementById('start_date').value,
+            end_date:    document.getElementById('end_date').value
         };
 
         try 
         {
             const response = await fetch('/projects/create', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
 

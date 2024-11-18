@@ -18,7 +18,8 @@ int main()
             "description TEXT, "
             "start_date DATE, "
             "end_date DATE"
-            ")");
+            ")"
+    );
 
 
 
