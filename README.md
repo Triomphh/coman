@@ -11,7 +11,7 @@ Je pense qu'on va devoir utiliser des APIs REST pour faire les communications cl
 
 ...on aura un backend (en C++) et un frontend classique (html, css, ...) où on pourra utiliser un framework comme tailwind ou autre **si on a le temps**
 
-## Dépendances (avant d'implémenter le DockerFile)
+## Dépendances <sub>(avant d'implémenter le DockerFile)</sub>
 - CMake
 - C++ 17 (uncomment le `CMakeLists.txt` si il y a beaucoup d'erreurs dans la première compilation)
 - Asio development headers (1.10.9+) (peut-être devoir link son path dans le `CMakeLists.txt`)
