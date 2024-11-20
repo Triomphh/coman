@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Project Details - Coman</title>
+    <link href="../static/css/test.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="bg-[#00B4DB] p-4">
+        <ul class="flex items-center space-x-8">
+            <li><a href="/" class="text-white font-bold text-xl hover:text-gray-300">coman</a></li>
+            <li><a href="/projects" class="text-white hover:text-gray-300">Projects</a></li>
+            <li class="text-gray-500 cursor-not-allowed">Tasks</li>
+            <li><a href="/users" class="text-white hover:text-gray-300">Users</a></li>
+        </ul>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Project Details -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold mb-4">{{name}}</h1>
+            <p class="text-gray-600 mb-4">{{description}}</p>
+            <div class="text-sm text-gray-500">
+                <p class="mb-1">Start Date: {{start_date}}</p>
+                <p>End Date: {{end_date}}</p>
+            </div>
+        </div>
+
+        <!-- Tasks Section -->
+        <div class="mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-semibold">Tasks</h2>
+                <button onclick="showTaskForm()" class="bg-[#00B4DB] text-white px-4 py-2 rounded-md hover:bg-[#0083a3]">
+                    Add Task
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {{#tasks}}
+                <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-semibold">{{title}}</h3>
+                        <span class="px-2 py-1 text-sm rounded-full 
+                            {{#priority}}
+                            {{#HIGH}}bg-red-100 text-red-800{{/HIGH}}
+                            {{#MEDIUM}}bg-yellow-100 text-yellow-800{{/MEDIUM}}
+                            {{#LOW}}bg-green-100 text-green-800{{/LOW}}
+                            {{/priority}}
+                        ">
+                            {{priority}}
+                        </span>
+                    </div>
+                    <p class="text-gray-600 mb-4">{{description}}</p>
+                    <div class="text-sm text-gray-500">
+                        <p class="mb-1">Status: {{status}}</p>
+                        <p>Deadline: {{deadline}}</p>
+                    </div>
+                </div>
+                {{/tasks}}
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for new task form -->
+    <div id="taskModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full">
+            <h2 class="text-2xl font-bold mb-4">Create New Task</h2>
+            <form id="taskForm">
+                <input type="hidden" id="project_id" value="{{id}}">
+                <div class="mb-4">
+                    <label for="task_title" class="block text-gray-700 font-medium mb-2">Title</label>
+                    <input type="text" id="task_title" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00B4DB]">
+                </div>
+                <div class="mb-4">
+                    <label for="task_description" class="block text-gray-700 font-medium mb-2">Description</label>
+                    <textarea id="task_description" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00B4DB]" rows="3"></textarea>
+                </div>
+                <div class="mb-4">
+                    <label for="task_priority" class="block text-gray-700 font-medium mb-2">Priority</label>
+                    <select id="task_priority" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00B4DB]">
+                        <option value="0">Low</option>
+                        <option value="1">Medium</option>
+                        <option value="2">High</option>
+                    </select>
+                </div>
+                <div class="mb-6">
+                    <label for="task_deadline" class="block text-gray-700 font-medium mb-2">Deadline</label>
+                    <input type="date" id="task_deadline" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00B4DB]">
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" onclick="hideTaskForm()" class="px-4 py-2 text-gray-600 hover:text-gray-800">Cancel</button>
+                    <button type="submit" class="bg-[#00B4DB] text-white px-4 py-2 rounded-md hover:bg-[#0083a3]">Create Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../static/js/tasks.js"></script>
+</body>
+</html> 
