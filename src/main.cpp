@@ -135,6 +135,7 @@ int main()
             t["title"]         = task.title;
             t["description"]   = task.description;
             t["deadline"]      = task.deadline;
+            t["status"] = static_cast<int>(task.status);
             
             // Add status helper booleans
             t["isStatusTodo"]       = (task.status == TaskStatus::TODO);
@@ -180,6 +181,30 @@ int main()
         return crow::response(201, "Task created");
     });
     // curl -X POST http://localhost:18080/projects/1/tasks/create -d '{"title": "Test", "description": "Test description", "priority": 1, "deadline": "2024-12-31"}'
+
+    CROW_ROUTE(app, "/projects/<int>/tasks/<int>/update").methods("PUT"_method)([](const crow::request& req, int project_id, int task_id) 
+    {
+        auto body = crow::json::load(req.body);
+        if (!body) {
+            return crow::response(400);
+        }
+
+        try {
+            Task task;
+            task.id          = task_id;
+            task.title       = body["title"].s();
+            task.description = body["description"].s();
+            task.priority    = static_cast<TaskPriority>(body["priority"].i());
+            task.deadline    = body["deadline"].s();
+            task.status      = static_cast<TaskStatus>(body["status"].i());
+            
+            TaskRepository::update_task(task);
+            return crow::response(200);
+        } 
+        catch (const std::exception& e) {
+            return crow::response(500);
+        }
+    });
 
     CROW_ROUTE(app, "/projects/<int>/tasks/<int>/delete").methods("DELETE"_method)([](const crow::request& req, int project_id, int task_id) 
     {
@@ -267,8 +292,8 @@ int main()
             return crow::response(crow::status::BAD_REQUEST);
         }
 
-        std::string name = body["name"].s();
-        std::string email = body["email"].s();
+        std::string name     = body["name"].s();
+        std::string email    = body["email"].s();
         std::string password = body["password"].s();
         UserRole role = static_cast<UserRole>(body["role"].i());
 
@@ -291,6 +316,8 @@ int main()
         return crow::response(200, "All users deleted");
     });
     // curl -X DELETE http://localhost:18080/users/deleteall
+
+    
 
     
 

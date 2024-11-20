@@ -8,6 +8,33 @@ function hideTaskForm()
     document.getElementById('taskModal').classList.add('hidden');
 }
 
+function showEditTaskForm(taskId, title, description, priority, deadline, status) 
+{
+    document.getElementById('edit_task_id').value          = taskId;
+    document.getElementById('edit_task_title').value       = title;
+    document.getElementById('edit_task_description').value = description;
+    document.getElementById('edit_task_priority').value    = convertPriorityToValue(priority);
+    document.getElementById('edit_task_deadline').value    = deadline;
+    document.getElementById('edit_task_status').value      = status;
+    document.getElementById('editTaskModal').classList.remove('hidden');
+}
+
+function hideEditTaskForm() 
+{
+    document.getElementById('editTaskModal').classList.add('hidden');
+}
+
+function convertPriorityToValue(priority) 
+{
+    switch(priority.toLowerCase()) 
+    {
+        case 'high':   return 2;
+        case 'medium': return 1;
+        case 'low':    return 0;
+        default:       return 1;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('taskForm').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -36,6 +63,39 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             console.error('Error:', error);
             alert('Failed to create task');
+        }
+    });
+
+    document.getElementById('editTaskForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const projectId = document.getElementById('project_id').value;
+        const taskId = document.getElementById('edit_task_id').value;
+        
+        const formData = {
+            title:       document.getElementById('edit_task_title').value,
+            description: document.getElementById('edit_task_description').value,
+            priority:    parseInt(document.getElementById('edit_task_priority').value),
+            deadline:    document.getElementById('edit_task_deadline').value,
+            status:      parseInt(document.getElementById('edit_task_status').value)
+        };
+
+        try {
+            const response = await fetch(`/projects/${projectId}/tasks/${taskId}/update`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) 
+                window.location.reload();
+            else 
+                alert('Failed to update task');
+        } 
+        catch (error) 
+        {
+            console.error('Error:', error);
+            alert('Failed to update task');
         }
     });
 }); 
