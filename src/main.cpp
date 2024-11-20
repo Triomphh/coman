@@ -125,20 +125,34 @@ int main()
         context["end_date"]      = project->end_date;
 
         // Get tasks for this project
-        SQLite::Database db("database.db", SQLite::OPEN_READONLY);
-        SQLite::Statement query(db, "SELECT id, title, description, priority, status, deadline FROM tasks WHERE project_id = ?");
-        query.bind(1, id);
+        auto tasks = TaskRepository::get_tasks_by_project(id);
 
         std::vector<crow::json::wvalue> task_list;
-        while (query.executeStep()) 
+        for (const auto& task : tasks) 
         {
             crow::json::wvalue t;
-            t["id"]            = query.getColumn(0).getInt();
-            t["title"]         = query.getColumn(1).getText();
-            t["description"]   = query.getColumn(2).getText();
-            t["priority"]      = query.getColumn(3).getText();
-            t["status"]        = query.getColumn(4).getText();
-            t["deadline"]      = query.getColumn(5).getText();
+            t["id"]            = task.id;
+            t["title"]         = task.title;
+            t["description"]   = task.description;
+            t["deadline"]      = task.deadline;
+            
+            // Add status helper booleans
+            t["isStatusTodo"]       = (task.status == TaskStatus::TODO);
+            t["isStatusInProgress"] = (task.status == TaskStatus::IN_PROGRESS);
+            t["isStatusDone"]       = (task.status == TaskStatus::DONE);
+
+            // Add priority as a string and individual flags
+            t["priorityHigh"]   = (task.priority == TaskPriority::HIGH);
+            t["priorityMedium"] = (task.priority == TaskPriority::MEDIUM);
+            t["priorityLow"]    = (task.priority == TaskPriority::LOW);
+            
+            // Convert priority to display string
+            switch(task.priority) {
+                case TaskPriority::HIGH:   t["priorityText"] = "High"; break;
+                case TaskPriority::MEDIUM: t["priorityText"] = "Medium"; break;
+                case TaskPriority::LOW:    t["priorityText"] = "Low"; break;
+            }
+            
             task_list.push_back(std::move(t));
         }
         

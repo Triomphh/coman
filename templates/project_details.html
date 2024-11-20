@@ -38,28 +38,87 @@
                 </button>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {{#tasks}}
-                <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="text-xl font-semibold">{{title}}</h3>
-                        <span class="px-2 py-1 text-sm rounded-full 
-                            {{#priority}}
-                            {{#HIGH}}bg-red-100 text-red-800{{/HIGH}}
-                            {{#MEDIUM}}bg-yellow-100 text-yellow-800{{/MEDIUM}}
-                            {{#LOW}}bg-green-100 text-green-800{{/LOW}}
-                            {{/priority}}
-                        ">
-                            {{priority}}
-                        </span>
-                    </div>
-                    <p class="text-gray-600 mb-4">{{description}}</p>
-                    <div class="text-sm text-gray-500">
-                        <p class="mb-1">Status: {{status}}</p>
-                        <p>Deadline: {{deadline}}</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- To Do Column -->
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold mb-4">To Do</h3>
+                    <div class="space-y-4">
+                        {{#tasks}}
+                        {{#isStatusTodo}}
+                        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-xl font-semibold">{{title}}</h3>
+                                <span class="px-2 py-1 text-sm rounded-full 
+                                    {{#priorityHigh}}bg-red-100 text-red-800{{/priorityHigh}}
+                                    {{#priorityMedium}}bg-yellow-100 text-yellow-800{{/priorityMedium}}
+                                    {{#priorityLow}}bg-green-100 text-green-800{{/priorityLow}}
+                                ">
+                                    {{priorityText}}
+                                </span>
+                            </div>
+                            <p class="text-gray-600 mb-4">{{description}}</p>
+                            <div class="text-sm text-gray-500">
+                                <p>Deadline: {{deadline}}</p>
+                            </div>
+                        </div>
+                        {{/isStatusTodo}}
+                        {{/tasks}}
                     </div>
                 </div>
-                {{/tasks}}
+
+                <!-- In Progress Column -->
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold mb-4">In Progress</h3>
+                    <div class="space-y-4">
+                        {{#tasks}}
+                        {{#isStatusInProgress}}
+                        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-xl font-semibold">{{title}}</h3>
+                                <span class="px-2 py-1 text-sm rounded-full 
+                                    {{#priorityHigh}}bg-red-100 text-red-800{{/priorityHigh}}
+                                    {{#priorityMedium}}bg-yellow-100 text-yellow-800{{/priorityMedium}}
+                                    {{#priorityLow}}bg-green-100 text-green-800{{/priorityLow}}
+                                ">
+                                    {{priorityText}}
+                                </span>
+                            </div>
+                            <p class="text-gray-600 mb-4">{{description}}</p>
+                            <div class="text-sm text-gray-500">
+                                <p>Deadline: {{deadline}}</p>
+                            </div>
+                        </div>
+                        {{/isStatusInProgress}}
+                        {{/tasks}}
+                    </div>
+                </div>
+
+                <!-- Done Column -->
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold mb-4">Done</h3>
+                    <div class="space-y-4">
+                        {{#tasks}}
+                        {{#isStatusDone}}
+                        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-xl font-semibold">{{title}}</h3>
+                                <span class="px-2 py-1 text-sm rounded-full 
+                                    {{#priorityHigh}}bg-red-100 text-red-800{{/priorityHigh}}
+                                    {{#priorityMedium}}bg-yellow-100 text-yellow-800{{/priorityMedium}}
+                                    {{#priorityLow}}bg-green-100 text-green-800{{/priorityLow}}
+                                ">
+                                    {{priorityText}}
+                                </span>
+                            </div>
+                            <p class="text-gray-600 mb-4">{{description}}</p>
+                            <div class="text-sm text-gray-500">
+                                <p>Deadline: {{deadline}}</p>
+                            </div>
+                        </div>
+                        {{/isStatusDone}}
+                        {{/tasks}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
