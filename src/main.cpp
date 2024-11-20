@@ -181,6 +181,20 @@ int main()
     });
     // curl -X POST http://localhost:18080/projects/1/tasks/create -d '{"title": "Test", "description": "Test description", "priority": 1, "deadline": "2024-12-31"}'
 
+    CROW_ROUTE(app, "/projects/<int>/tasks/<int>/delete").methods("DELETE"_method)([](const crow::request& req, int project_id, int task_id) 
+    {
+        try 
+        {
+            TaskRepository::delete_task(task_id);
+            return crow::response(200);
+        } 
+        catch (const std::exception& e) 
+        {
+            return crow::response(500);
+        }
+    });
+    // curl -X DELETE http://localhost:18080/projects/1/tasks/1/delete
+
     CROW_ROUTE(app, "/projects/create").methods("POST"_method)([](const crow::request& req)
     {
         auto body = crow::json::load(req.body);

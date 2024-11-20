@@ -39,3 +39,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 }); 
+
+async function deleteTask(taskId) 
+{
+    if (!confirm('Are you sure you want to delete this task?')) 
+        return;
+
+    const projectId = document.getElementById('project_id').value;
+    
+    try 
+    {
+        const response = await fetch(`/projects/${projectId}/tasks/${taskId}/delete`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (response.ok) 
+            window.location.reload();
+        else 
+            alert('Failed to delete task');
+    } 
+    catch (error) 
+    {
+        console.error('Error:', error);
+        alert('Failed to delete task');
+    }
+} 
