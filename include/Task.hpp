@@ -24,7 +24,6 @@ public:
     int id;
     std::string title;
     std::string description;
-    std::vector<User> assignedTo;
     TaskPriority priority;
     TaskStatus status;
     std::string deadline;
