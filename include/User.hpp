@@ -20,8 +20,5 @@ public:
     UserRole role;
 
     // Helper method to check permissions
-    bool hasPermission(UserRole minimum_role) const 
-    {
-        return static_cast<int>(role) >= static_cast<int>(minimum_role);
-    }
+    bool hasPermission(UserRole minimum_role) const;
 }; 
