@@ -102,6 +102,7 @@ int main()
         return page;
     });
 
+
     CROW_ROUTE(app, "/login").methods("GET"_method)([&](const crow::request& req) -> crow::response
     {
         auto& session = app.get_context<Session>(req);
@@ -117,6 +118,7 @@ int main()
         // If user is not logged in, render login page
         return crow::mustache::load("login.html").render();
     });
+
 
     CROW_ROUTE(app, "/login").methods("POST"_method)([&](const crow::request& req)
     {
@@ -142,6 +144,77 @@ int main()
     });
 
 
+    CROW_ROUTE(app, "/register").methods("GET"_method)([&](const crow::request& req) -> crow::response
+    {
+        auto& session = app.get_context<Session>(req);
+        
+        // If user is already logged in, redirect to home page
+        if (session.get("user", "") != "")
+        {
+            crow::response response(303);
+            response.set_header("Location", "/");
+            return response;
+        }
+
+        // If user is not logged in, render registration page
+        crow::mustache::context context;
+        // Add error message if present in the session
+        if (auto error = session.get("register_error", ""); !error.empty()) {
+            context["error"] = error;
+            session.remove("register_error");
+        }
+        return crow::mustache::load("register.html").render(context);
+    });
+
+
+    CROW_ROUTE(app, "/register").methods("POST"_method)([&](const crow::request& req)
+    {
+        auto& session = app.get_context<Session>(req);
+        auto params = req.get_body_params();
+        std::string name     = params.get("name");
+        std::string email    = params.get("email");
+        std::string password = params.get("password");
+
+        crow::response response;
+        response.code = 303;    // Redirect after POST
+
+        // Basic validation
+        if (name.empty() || email.empty() || password.empty()) 
+        {
+            session.set("register_error", "All fields are required");
+            response.set_header("Location", "/register");
+            return response;
+        }
+
+        try 
+        {
+            // Check if user already exists
+            if (UserRepository::get_user_by_email(email)) 
+            {
+                session.set("register_error", "Email already registered");
+                response.set_header("Location", "/register");
+                return response;
+            }
+
+            // Create new user (default role as TEAM_MEMBER)
+            UserRepository::create_user(name, email, password, UserRole::TEAM_MEMBER);
+            
+            // Log the user in automatically
+            session.set("user", email);
+            response.set_header("Location", "/");
+        }
+        catch (const std::exception& e) 
+        {
+            session.set("register_error", "Registration failed. Please try again.");
+            response.set_header("Location", "/register");
+        }
+
+        return response;
+    });
+
+
+
+
 
     CROW_ROUTE(app, "/projects")([]()
     {
@@ -163,6 +236,7 @@ int main()
         auto page = crow::mustache::load("projects.html").render(context);
         return page;
     });
+
 
     CROW_ROUTE(app, "/projects/<int>")([](int id) 
     {
@@ -217,6 +291,7 @@ int main()
         return page;
     });
 
+
     CROW_ROUTE(app, "/projects/<int>/tasks/create").methods("POST"_method)([](const crow::request& req, int project_id) 
     {
         auto body = crow::json::load(req.body);
@@ -236,6 +311,7 @@ int main()
         return crow::response(201, "Task created");
     });
     // curl -X POST http://localhost:18080/projects/1/tasks/create -d '{"title": "Test", "description": "Test description", "priority": 1, "deadline": "2024-12-31"}'
+
 
     CROW_ROUTE(app, "/projects/<int>/tasks")([](int project_id)
     {
@@ -257,6 +333,7 @@ int main()
         return context;
     });
     // curl -X GET http://localhost:18080/projects/1/tasks
+
 
     CROW_ROUTE(app, "/projects/<int>/tasks/<int>/update").methods("PUT"_method)([](const crow::request& req, int project_id, int task_id) 
     {
@@ -283,6 +360,7 @@ int main()
     });
     // curl -X PUT http://localhost:18080/projects/1/tasks/1/update -d '{"title": "Test", "description": "Test description", "priority": 1, "deadline": "2024-12-31", "status": 1}'
 
+
     CROW_ROUTE(app, "/projects/<int>/tasks/<int>/delete").methods("DELETE"_method)([](const crow::request& req, int project_id, int task_id) 
     {
         try 
@@ -296,6 +374,7 @@ int main()
         }
     });
     // curl -X DELETE http://localhost:18080/projects/1/tasks/1/delete
+
 
     CROW_ROUTE(app, "/projects/create").methods("POST"_method)([](const crow::request& req)
     {
@@ -316,12 +395,14 @@ int main()
     });
     // curl -X POST http://localhost:18080/projects/create -d '{"name": "Test", "description": "Test description", "start_date": "2024-03-20", "end_date": "2024-12-31"}'
 
+
     CROW_ROUTE(app, "/projects/delete/<int>").methods("DELETE"_method)([](int id)
     {
         ProjectRepository::delete_project(id);
         return crow::response(200, "Project deleted");
     });
     // curl -X DELETE http://localhost:18080/projects/delete/1
+
 
     CROW_ROUTE(app, "/projects/deleteall").methods("DELETE"_method)([]()
     {
@@ -361,6 +442,7 @@ int main()
         return context;
     });   
 
+
     CROW_ROUTE(app, "/users/create").methods("POST"_method)([](const crow::request& req)
     {
         auto body = crow::json::load(req.body);
@@ -380,12 +462,14 @@ int main()
     });
     // curl -X POST http://localhost:18080/users/create -d '{"name": "Test", "email": "test@test.com", "password": "test", "role": 1}'
 
+
     CROW_ROUTE(app, "/users/delete/<int>").methods("DELETE"_method)([](int id)
     {
         UserRepository::delete_user(id);
         return crow::response(200, "User deleted");
     });
     // curl -X DELETE http://localhost:18080/users/delete/1
+
 
     CROW_ROUTE(app, "/users/deleteall").methods("DELETE"_method)([]()
     {
