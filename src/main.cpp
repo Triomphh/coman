@@ -144,6 +144,17 @@ int main()
     });
 
 
+    CROW_ROUTE(app, "/logout").methods("POST"_method)([&](const crow::request& req) 
+    {
+        auto& session = app.get_context<Session>(req);
+        session.remove("user");
+        
+        crow::response response(303);
+        response.set_header("Location", "/login");
+        return response;
+    });
+
+
     CROW_ROUTE(app, "/register").methods("GET"_method)([&](const crow::request& req) -> crow::response
     {
         auto& session = app.get_context<Session>(req);
