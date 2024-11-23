@@ -54,19 +54,21 @@ int main()
 
     // Dashboard   if user is logged in
     // Login page  if user is not logged in
-    CROW_ROUTE(app, "/")([&](const crow::request& req)
+    CROW_ROUTE(app, "/")([&](const crow::request& req) -> crow::response
     {
         auto& session = app.get_context<Session>(req);
         auto username = session.get("user", "");
 
         // If user is not logged in, redirect to login page
-        if (username == "")
-            return crow::mustache::load("login.html").render();
-
+        if (username.empty()) {
+            crow::response redirect(302);
+            redirect.set_header("Location", "/login");
+            return redirect;
+        }
 
         // Else, display the dashboard
         crow::mustache::context context;
-        context["name"] = "Pablo";
+        context["name"] = username;
 
         // -- Recent projects ---------------------------------------------------
         // Get all projects
@@ -108,9 +110,8 @@ int main()
         auto& session = app.get_context<Session>(req);
         
         // If user is already logged in, redirect to home page
-        if (session.get("user", "") != "")
-        {
-            crow::response response(303);
+        if (!session.get("user", "").empty()) {
+            crow::response response(302);
             response.set_header("Location", "/");
             return response;
         }
@@ -128,8 +129,9 @@ int main()
         std::string login    = params.get("login");
         std::string password = params.get("password");
 
-        crow::response response;
-        response.code = 303;
+        crow::response response(302);
+
+        // Validate credentials
         auto user = UserRepository::authenticate(login, password);
         if (user)
         {
@@ -149,7 +151,7 @@ int main()
         auto& session = app.get_context<Session>(req);
         session.remove("user");
         
-        crow::response response(303);
+        crow::response response(302);
         response.set_header("Location", "/login");
         return response;
     });
@@ -307,7 +309,7 @@ int main()
     {
         auto body = crow::json::load(req.body);
         if (!body) {
-            return crow::response(crow::status::BAD_REQUEST);
+            return crow::response(400, "Invalid JSON body");
         }
 
         Task task;
@@ -350,7 +352,7 @@ int main()
     {
         auto body = crow::json::load(req.body);
         if (!body) {
-            return crow::response(400);
+            return crow::response(400, "Invalid JSON body");
         }
 
         try {
@@ -363,10 +365,10 @@ int main()
             task.status      = static_cast<TaskStatus>(body["status"].i());
             
             TaskRepository::update_task(task);
-            return crow::response(200);
+            return crow::response(200, "Task updated successfully");
         } 
         catch (const std::exception& e) {
-            return crow::response(500);
+            return crow::response(500, "Internal server error");
         }
     });
     // curl -X PUT http://localhost:18080/projects/1/tasks/1/update -d '{"title": "Test", "description": "Test description", "priority": 1, "deadline": "2024-12-31", "status": 1}'
@@ -377,11 +379,11 @@ int main()
         try 
         {
             TaskRepository::delete_task(task_id);
-            return crow::response(200);
+            return crow::response(204);
         } 
         catch (const std::exception& e) 
         {
-            return crow::response(500);
+            return crow::response(500, "Internal server error");
         }
     });
     // curl -X DELETE http://localhost:18080/projects/1/tasks/1/delete
