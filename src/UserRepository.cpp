@@ -33,6 +33,26 @@ std::optional<User> UserRepository::get_user(int id)
     return std::nullopt;
 }
 
+std::optional<User> UserRepository::get_user_by_email(const std::string& email) 
+{
+    SQLite::Database db("database.db", SQLite::OPEN_READONLY);
+    SQLite::Statement query(db, "SELECT id, name, email, hashed_password, role FROM users WHERE email = ?");
+    query.bind(1, email);
+
+    if (query.executeStep())
+    {
+        User user;
+        user.id = query.getColumn(0);
+        user.name = query.getColumn(1).getText();
+        user.email = query.getColumn(2).getText();
+        user.hashed_password = query.getColumn(3).getText();
+        user.role = static_cast<UserRole>(query.getColumn(4).getInt());
+        return user;
+    }
+
+    return std::nullopt;
+}
+
 std::vector<User> UserRepository::get_users() 
 {
     std::vector<User> users;
