@@ -66,3 +66,34 @@ void UserRepository::delete_all_users()
     SQLite::Database db("database.db", SQLite::OPEN_READWRITE);
     db.exec("DELETE FROM users");
 }
+
+// Add this method to your UserRepository class
+std::optional<User> UserRepository::authenticate(const std::string& email, const std::string& password) 
+{
+    SQLite::Database db("database.db", SQLite::OPEN_READONLY);
+    SQLite::Statement query(db, "SELECT * FROM users WHERE email = ?");
+    query.bind(1, email);
+
+    if (query.executeStep()) 
+    {
+        std::string stored_hash = query.getColumn("hashed_password").getText();
+        
+        if (UserRepository::verify_password(password, stored_hash)) 
+        {
+            User user;
+            user.id    = query.getColumn("id").getInt();
+            user.name  = query.getColumn("name").getText();
+            user.email = query.getColumn("email").getText();
+            user.role  = static_cast<UserRole>(query.getColumn("role").getInt());
+            return user;
+        }
+    }
+
+    return std::nullopt;
+}
+
+// For now, simple comparison
+bool UserRepository::verify_password(const std::string& password, const std::string& hash) 
+{
+    return password == hash;
+}

@@ -6,8 +6,12 @@
 
 int main()
 {
+    // Define the session middleware
+    using Session = crow::SessionMiddleware<crow::FileStore>;
+
     // Define the Crow application
-    crow::SimpleApp app;
+    crow::App<crow::CookieParser, Session> app { Session{crow::FileStore("./sessions")} };
+
 
     // app.loglevel(crow::LogLevel::Info);    // Show all logs bellow this level (see https://crowcpp.org/master/guides/logging/ for more info)
 
@@ -47,8 +51,20 @@ int main()
 
 
     // Define differents endpoints
-    CROW_ROUTE(app, "/")([]()
+
+    // Dashboard   if user is logged in
+    // Login page  if user is not logged in
+    CROW_ROUTE(app, "/")([&](const crow::request& req)
     {
+        auto& session = app.get_context<Session>(req);
+        auto username = session.get("user", "");
+
+        // If user is not logged in, redirect to login page
+        if (username == "")
+            return crow::mustache::load("login.html").render();
+
+
+        // Else, display the dashboard
         crow::mustache::context context;
         context["name"] = "Pablo";
 
@@ -60,11 +76,11 @@ int main()
         // Convert projects to JSON format
         for (const auto& project : projects) {
             crow::json::wvalue p;
-            p["id"] = project.id;
-            p["name"] = project.name;
+            p["id"]          = project.id;
+            p["name"]        = project.name;
             p["description"] = project.description;
-            p["start_date"] = project.start_date;
-            p["end_date"] = project.end_date;
+            p["start_date"]  = project.start_date;
+            p["end_date"]    = project.end_date;
             project_list.push_back(std::move(p));
         }
         
@@ -84,6 +100,45 @@ int main()
         context["projects"] = std::move(project_list);
         auto page = crow::mustache::load("dashboard.html").render(context);
         return page;
+    });
+
+    CROW_ROUTE(app, "/login").methods("GET"_method)([&](const crow::request& req) -> crow::response
+    {
+        auto& session = app.get_context<Session>(req);
+        
+        // If user is already logged in, redirect to home page
+        if (session.get("user", "") != "")
+        {
+            crow::response response(303);
+            response.set_header("Location", "/");
+            return response;
+        }
+
+        // If user is not logged in, render login page
+        return crow::mustache::load("login.html").render();
+    });
+
+    CROW_ROUTE(app, "/login").methods("POST"_method)([&](const crow::request& req)
+    {
+        auto& session = app.get_context<Session>(req);
+
+        auto params = req.get_body_params();
+        std::string login    = params.get("login");
+        std::string password = params.get("password");
+
+        crow::response response;
+        response.code = 303;
+        auto user = UserRepository::authenticate(login, password);
+        if (user)
+        {
+            session.set("user", user->email);
+            response.set_header("Location", "/");
+        }
+        else
+        {
+            response.set_header("Location", "/login");
+        }
+        return response;
     });
 
 
@@ -182,6 +237,27 @@ int main()
     });
     // curl -X POST http://localhost:18080/projects/1/tasks/create -d '{"title": "Test", "description": "Test description", "priority": 1, "deadline": "2024-12-31"}'
 
+    CROW_ROUTE(app, "/projects/<int>/tasks")([](int project_id)
+    {
+        auto tasks = TaskRepository::get_tasks_by_project(project_id);
+        crow::mustache::context context;
+        std::vector<crow::json::wvalue> task_list;
+
+        for (const auto& task : tasks) {
+            crow::json::wvalue t;
+            t["id"]            = task.id;
+            t["title"]         = task.title;
+            t["description"]   = task.description;
+            t["deadline"]      = task.deadline;
+            t["status"]        = static_cast<int>(task.status);
+            task_list.push_back(std::move(t));
+        }
+
+        context["tasks"] = std::move(task_list);
+        return context;
+    });
+    // curl -X GET http://localhost:18080/projects/1/tasks
+
     CROW_ROUTE(app, "/projects/<int>/tasks/<int>/update").methods("PUT"_method)([](const crow::request& req, int project_id, int task_id) 
     {
         auto body = crow::json::load(req.body);
@@ -205,6 +281,7 @@ int main()
             return crow::response(500);
         }
     });
+    // curl -X PUT http://localhost:18080/projects/1/tasks/1/update -d '{"title": "Test", "description": "Test description", "priority": 1, "deadline": "2024-12-31", "status": 1}'
 
     CROW_ROUTE(app, "/projects/<int>/tasks/<int>/delete").methods("DELETE"_method)([](const crow::request& req, int project_id, int task_id) 
     {
