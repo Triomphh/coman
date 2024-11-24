@@ -89,27 +89,7 @@ int main()
         context["name"] = username;
 
         // -- Recent projects ---------------------------------------------------
-        // Get all projects
-        auto projects = ProjectRepository::get_projects();
-        std::vector<crow::json::wvalue> project_list;
         
-        // Convert projects to JSON format
-        for (const auto& project : projects) {
-            crow::json::wvalue p;
-            p["id"]          = project.id;
-            p["name"]        = project.name;
-            p["description"] = project.description;
-            p["start_date"]  = project.start_date;
-            p["end_date"]    = project.end_date;
-            project_list.push_back(std::move(p));
-        }
-        
-        // Add a "first3" flag to each project in the first 3 positions
-        for (size_t i = 0; i < project_list.size(); i++) {
-            if (i < 3) {
-                project_list[i]["first3"] = true;
-            }
-        }
         // ----------------------------------------------------------------------
 
 
@@ -117,7 +97,6 @@ int main()
 
         // ----------------------------------------------------------------------
         
-        context["projects"] = std::move(project_list);
         auto page = crow::mustache::load("dashboard.html").render(context);
         return page;
     });
@@ -260,6 +239,19 @@ int main()
             p["description"]   = project.description;
             p["start_date"]    = project.start_date;
             p["end_date"]      = project.end_date;
+
+            // Get users for this project
+            auto project_users = ProjectRepository::get_project_users(project.id);
+            std::vector<crow::json::wvalue> user_avatars;
+            
+            for (const auto& user : project_users) {
+                crow::json::wvalue avatar;
+                avatar["profile_picture"] = "/static/profile_pictures/" + user.profile_picture;
+                avatar["name"] = user.name;  // For tooltip/title attribute
+                user_avatars.push_back(std::move(avatar));
+            }
+            
+            p["users"] = std::move(user_avatars);
             project_list.push_back(std::move(p));
         }
         

@@ -42,6 +42,14 @@
                             <p class="mb-1">End Date: {{end_date}}</p>
                             <p>ID: {{id}}</p>
                         </div>
+                        <div class="flex mt-4">
+                            {{#users}}
+                            <img src="{{profile_picture}}" 
+                                 alt="{{name}}" 
+                                 title="{{name}}" 
+                                 class="w-8 h-8 rounded-full border-2 border-white object-cover -ml-2 first:ml-0 hover:-translate-y-0.5 hover:z-10 transition-transform duration-200 relative">
+                            {{/users}}
+                        </div>
                     </a>
                 </div>
             {{/projects}}
