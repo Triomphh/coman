@@ -8,15 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="bg-[#00B4DB] p-4">
-        <ul class="flex items-center space-x-8">
-            <li><a href="/" class="text-white font-bold text-xl hover:text-gray-300">coman</a></li>
-            <li><a href="/projects" class="text-white hover:text-gray-300">Projects</a></li>
-            <li class="text-gray-500 cursor-not-allowed">Tasks</li>
-            <li><a href="/users" class="text-white hover:text-gray-300">Users</a></li>
-        </ul>
-    </nav>
+    {{>navbar.html}}
 
     <div class="container mx-auto px-4 py-8">
         <div class="flex justify-between items-center mb-6">
@@ -96,6 +88,7 @@
         </div>
     </div>
 
+    <script src="../static/js/nav.js"></script>
     <script src="../static/js/users.js"></script>
 </body>
 </html> 

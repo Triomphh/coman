@@ -4,6 +4,22 @@
 #include "../include/UserRepository.hpp"
 #include <SQLiteCpp/SQLiteCpp.h>
 
+
+
+// Used to populate the navbar context with user information
+void populate_navbar_context(crow::mustache::context& ctx, const crow::request& req, crow::App<crow::CookieParser, crow::SessionMiddleware<crow::FileStore>>& app) 
+{
+    auto& session = app.get_context<crow::SessionMiddleware<crow::FileStore>>(req);
+    auto user = UserRepository::get_user_by_email(session.get("user", ""));
+    if (user) 
+    {
+        ctx["profile_picture"] = user->profile_picture;
+        ctx["name"] = user->name;
+    }
+}
+
+
+
 int main()
 {
     // Define the session middleware
@@ -86,22 +102,17 @@ int main()
 
         // Else, display the dashboard
         crow::mustache::context context;
-        context["name"] = username;
+        populate_navbar_context(context, req, app);
 
-        // -- Recent projects ---------------------------------------------------
-        
+        // -- Recent projects --------------------------------------------------- 
+
         // ----------------------------------------------------------------------
 
 
         // -- Recent tasks ------------------------------------------------------
 
         // ----------------------------------------------------------------------
-        
-        auto user = UserRepository::get_user_by_email(session.get("user", ""));
-        if (user) {
-            context["profile_picture"] = user->profile_picture;
-            context["name"] = user->name;
-        }
+
         auto page = crow::mustache::load("dashboard.html").render(context);
         return page;
     });
@@ -231,10 +242,12 @@ int main()
 
 
 
-    CROW_ROUTE(app, "/projects")([]()
+    CROW_ROUTE(app, "/projects")([&](const crow::request& req) 
     {
-        auto projects = ProjectRepository::get_projects();
         crow::mustache::context context;
+        populate_navbar_context(context, req, app);
+        
+        auto projects = ProjectRepository::get_projects();
         std::vector<crow::json::wvalue> project_list;
         
         for (const auto& project : projects) {
@@ -266,14 +279,13 @@ int main()
     });
 
 
-    CROW_ROUTE(app, "/projects/<int>")([](int id) 
+    CROW_ROUTE(app, "/projects/<int>")([&](const crow::request& req, int project_id) 
     {
-        // Get project details
-        auto project = ProjectRepository::get_project(id);
-
-        // Create context for template
         crow::mustache::context context;
+        populate_navbar_context(context, req, app);
         
+        auto project = ProjectRepository::get_project(project_id);
+
         // Add project details
         context["id"]            = project->id;
         context["name"]          = project->name;
@@ -282,7 +294,7 @@ int main()
         context["end_date"]      = project->end_date;
 
         // Get tasks for this project
-        auto tasks = TaskRepository::get_tasks_by_project(id);
+        auto tasks = TaskRepository::get_tasks_by_project(project_id);
 
         std::vector<crow::json::wvalue> task_list;
         for (const auto& task : tasks) 
@@ -468,10 +480,12 @@ int main()
 
 
 
-    CROW_ROUTE(app, "/users")([]()
+    CROW_ROUTE(app, "/users")([&](const crow::request& req) 
     {
-        auto users = UserRepository::get_users();
         crow::mustache::context context;
+        populate_navbar_context(context, req, app);
+        
+        auto users = UserRepository::get_users();
         std::vector<crow::json::wvalue> user_list;
 
         for (const auto& user : users) {
