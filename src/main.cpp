@@ -48,6 +48,23 @@ int main()
             ")"
     );
 
+    db.exec("CREATE TABLE IF NOT EXISTS work_on_project ("
+            "user_id INTEGER, "
+            "project_id INTEGER, "
+            "PRIMARY KEY (user_id, project_id), "
+            "FOREIGN KEY (user_id) REFERENCES users(id), "
+            "FOREIGN KEY (project_id) REFERENCES projects(id)"
+            ")"
+    );
+
+    db.exec("CREATE TABLE IF NOT EXISTS work_on_task ("
+            "user_id INTEGER, "
+            "task_id INTEGER, "
+            "PRIMARY KEY (user_id, task_id), "
+            "FOREIGN KEY (user_id) REFERENCES users(id), "
+            "FOREIGN KEY (task_id) REFERENCES tasks(id)"
+            ")"
+    );
 
 
     // Define differents endpoints
@@ -409,6 +426,30 @@ int main()
     // curl -X POST http://localhost:18080/projects/create -d '{"name": "Test", "description": "Test description", "start_date": "2024-03-20", "end_date": "2024-12-31"}'
 
 
+    // Add this new endpoint for updating projects
+    CROW_ROUTE(app, "/projects/<int>/update").methods("PUT"_method)([](const crow::request& req, int id) 
+    {
+        auto body = crow::json::load(req.body);
+        if (!body)
+            return crow::response(400, "Invalid JSON body");
+
+        try 
+        {
+            std::string name = body["name"].s();
+            std::string description = body["description"].s();
+            std::string start_date = body["start_date"].s();
+            std::string end_date = body["end_date"].s();
+
+            ProjectRepository::update_project(id, name, description, start_date, end_date);
+            return crow::response(200, "Project updated");
+        } 
+        catch (const std::exception& e) 
+        {
+            return crow::response(500, "Failed to update project");
+        }
+    });
+
+
     CROW_ROUTE(app, "/projects/delete/<int>").methods("DELETE"_method)([](int id)
     {
         ProjectRepository::delete_project(id);
@@ -494,6 +535,69 @@ int main()
     
 
     
+
+    // Add user to project
+    CROW_ROUTE(app, "/projects/<int>/users/add").methods("POST"_method)([](const crow::request& req, int project_id) 
+    {
+        auto body = crow::json::load(req.body);
+        if (!body) 
+            return crow::response(400, "Invalid JSON body");
+        
+        int user_id = body["user_id"].i();
+        try 
+        {
+            ProjectRepository::add_user_to_project(user_id, project_id);
+            return crow::response(200, "User added to project");
+        } 
+        catch (const std::exception& e) 
+        {
+            return crow::response(500, "Failed to add user to project");
+        }
+    });
+    // curl -X POST http://localhost:18080/projects/1/users/add -d '{"user_id": 1}'
+
+
+    // Remove user from project
+    CROW_ROUTE(app, "/projects/<int>/users/<int>/remove").methods("DELETE"_method)([](int project_id, int user_id) 
+    {
+        try 
+        {
+            ProjectRepository::remove_user_from_project(user_id, project_id);
+            return crow::response(200, "User removed from project");
+        } 
+        catch (const std::exception& e) 
+        {
+            return crow::response(500, "Failed to remove user from project");
+        }
+    });
+    // curl -X DELETE http://localhost:18080/projects/1/users/1/remove
+
+
+    // Get project users
+    CROW_ROUTE(app, "/projects/<int>/users")([](int project_id) 
+    {
+        auto users = ProjectRepository::get_project_users(project_id);
+        crow::json::wvalue response;
+        std::vector<crow::json::wvalue> user_list;
+
+        for (const auto& user : users) 
+        {
+            crow::json::wvalue u;
+            u["id"]    = user.id;
+            u["name"]  = user.name;
+            u["email"] = user.email;
+            u["role"]  = static_cast<int>(user.role);
+            user_list.push_back(std::move(u));
+        }
+
+        response["users"] = std::move(user_list);
+        return response;
+    });
+    // curl -X GET http://localhost:18080/projects/1/users
+
+
+
+
 
     // Configure and run the application (on http://0.0.0.0:18080 (localhost))
     app.port(18080)

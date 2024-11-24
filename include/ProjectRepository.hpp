@@ -18,4 +18,9 @@ public:
     static void delete_project(int id);
     static void delete_all_projects();
 
+    // Manage project members
+    static void add_user_to_project(int user_id, int project_id);
+    static void remove_user_from_project(int user_id, int project_id);
+    static std::vector<User> get_project_users(int project_id);
+    static std::vector<Project> get_user_projects(int user_id);
 };
