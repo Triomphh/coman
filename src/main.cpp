@@ -327,6 +327,20 @@ int main()
         }
         
         context["tasks"] = std::move(task_list);
+
+        // Get project users
+        auto project_users = ProjectRepository::get_project_users(project_id);
+        std::vector<crow::json::wvalue> user_list;
+        
+        for (const auto& user : project_users) {
+            crow::json::wvalue u;
+            u["name"] = user.name;
+            u["profile_picture"] = user.profile_picture;
+            user_list.push_back(std::move(u));
+        }
+        
+        context["users"] = std::move(user_list);
+
         auto page = crow::mustache::load("project_details.html").render(context);
         return page;
     });
