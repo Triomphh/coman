@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Users - Coman</title>
+    <link href="../static/css/test.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="bg-[#00B4DB] p-4">
+        <ul class="flex items-center space-x-8">
+            <li><a href="/" class="text-white font-bold text-xl hover:text-gray-300">coman</a></li>
+            <li><a href="/projects" class="text-white hover:text-gray-300">Projects</a></li>
+            <li class="text-gray-500 cursor-not-allowed">Tasks</li>
+            <li><a href="/users" class="text-white hover:text-gray-300">Users</a></li>
+        </ul>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold">Users</h1>
+            <button onclick="showUserForm()" class="bg-[#00B4DB] text-white px-6 py-3 rounded-md hover:bg-[#0083a3] transition-colors flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"/>
+                </svg>
+                Add User
+            </button>
+        </div>
+
+        <!-- Users Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {{#users}}
+            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow relative group">
+                <div class="absolute top-2 right-2 flex space-x-2 opacity-0 group-hover:opacity-100">
+                    <button onclick="deleteUser('{{id}}')" class="text-gray-400 hover:text-red-500 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="flex flex-col items-center">
+                    <img src="../static/profile_pictures/{{profile_picture}}" alt="{{name}}'s profile picture" 
+                         class="w-24 h-24 rounded-full object-cover mb-4 border-2 border-[#00B4DB]">
+                    <h3 class="text-xl font-semibold mb-2">{{name}}</h3>
+                    <p class="text-gray-600 mb-2">{{email}}</p>
+                    <span class="px-3 py-1 text-sm rounded-full 
+                        {{#isAdmin}}bg-red-100 text-red-800{{/isAdmin}}
+                        {{#isProjectManager}}bg-blue-100 text-blue-800{{/isProjectManager}}
+                        {{#isTeamMember}}bg-green-100 text-green-800{{/isTeamMember}}">
+                        {{role}}
+                    </span>
+                </div>
+            </div>
+            {{/users}}
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div id="userModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full">
+            <h2 class="text-2xl font-bold mb-4">Add New User</h2>
+            <form id="userForm">
+                <div class="mb-4">
+                    <label for="name" class="block text-gray-700 font-medium mb-2">Full Name</label>
+                    <input type="text" id="name" name="name" required 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00B4DB]">
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+                    <input type="email" id="email" name="email" required 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00B4DB]">
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
+                    <input type="password" id="password" name="password" required 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00B4DB]">
+                </div>
+                <div class="mb-6">
+                    <label for="role" class="block text-gray-700 font-medium mb-2">Role</label>
+                    <select id="role" name="role" required 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00B4DB]">
+                        <option value="0">Team Member</option>
+                        <option value="1">Project Manager</option>
+                        <option value="2">Admin</option>
+                    </select>
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" onclick="hideUserForm()" 
+                            class="px-4 py-2 text-gray-600 hover:text-gray-800">Cancel</button>
+                    <button type="submit" 
+                            class="bg-[#00B4DB] text-white px-4 py-2 rounded-md hover:bg-[#0083a3]">Add User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../static/js/users.js"></script>
+</body>
+</html> 

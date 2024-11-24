@@ -18,6 +18,7 @@ public:
     std::string email;
     std::string hashed_password;
     UserRole role;
+    std::string profile_picture;
 
     // Helper method to check permissions
     bool hasPermission(UserRole minimum_role) const;

@@ -106,7 +106,7 @@ std::vector<User> ProjectRepository::get_project_users(int project_id)
     std::vector<User> users;
     SQLite::Database db("database.db", SQLite::OPEN_READONLY);
     SQLite::Statement query(db, 
-        "SELECT u.id, u.name, u.email, u.role "
+        "SELECT u.id, u.name, u.email, u.role, u.profile_picture "
         "FROM users u "
         "JOIN work_on_project w ON u.id = w.user_id "
         "WHERE w.project_id = ?");
@@ -115,10 +115,11 @@ std::vector<User> ProjectRepository::get_project_users(int project_id)
     while (query.executeStep()) 
     {
         User user;
-        user.id    = query.getColumn(0);
-        user.name  = query.getColumn(1).getText();
-        user.email = query.getColumn(2).getText();
-        user.role  = static_cast<UserRole>(query.getColumn(3).getInt());
+        user.id              = query.getColumn(0);
+        user.name            = query.getColumn(1).getText();
+        user.email           = query.getColumn(2).getText();
+        user.role            = static_cast<UserRole>(query.getColumn(3).getInt());
+        user.profile_picture = query.getColumn(4).getText();
         users.push_back(user);
     }
     

@@ -10,11 +10,11 @@ class UserRepository
 {
 public:
     // CRUD operations
-    static void create_user(const std::string& name, const std::string& email, const std::string& password, UserRole role);
+    static void create_user(const std::string& name, const std::string& email, const std::string& password, UserRole role, const std::string& profile_picture = "default.png");
     static std::optional<User> get_user(int id);
     static std::optional<User> get_user_by_email(const std::string& email);
     static std::vector<User> get_users();
-    static void update_user(int id, const std::string& name, const std::string& email, const std::string& password, UserRole role);
+    static void update_user(int id, const std::string& name, const std::string& email, const std::string& password, UserRole role, const std::string& profile_picture = "default.png");
     static void delete_user(int id);
     static void delete_all_users();
 

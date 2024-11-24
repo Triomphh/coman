@@ -44,7 +44,8 @@ int main()
             "name TEXT, "
             "email TEXT, "
             "hashed_password TEXT, "
-            "role TEXT"
+            "role TEXT, "
+            "profile_picture TEXT DEFAULT 'default.png'"
             ")"
     );
 
@@ -478,23 +479,31 @@ int main()
 
         for (const auto& user : users) {
             crow::json::wvalue u;
-            u["id"] = user.id;
-            u["name"] = user.name;
+            u["id"]    = user.id;
+            u["name"]  = user.name;
             u["email"] = user.email;
-            u["role"] = [&user]() {
+            u["role"]  = [&user]() {
                 switch (user.role) {
-                    case UserRole::ADMIN: return "Admin";
+                    case UserRole::ADMIN:           return "Admin";
                     case UserRole::PROJECT_MANAGER: return "Project Manager";
-                    case UserRole::TEAM_MEMBER: return "Team Member";
-                    default: return "Unknown";
+                    case UserRole::TEAM_MEMBER:     return "Team Member";
+                    default:                        return "Unknown";
                 }
             }();
+            u["profile_picture"] = user.profile_picture;
+            
+            // Add role-specific flags for styling
+            u["isAdmin"]          = (user.role == UserRole::ADMIN);
+            u["isProjectManager"] = (user.role == UserRole::PROJECT_MANAGER);
+            u["isTeamMember"]     = (user.role == UserRole::TEAM_MEMBER);
+            
             user_list.push_back(std::move(u));
         }
 
         context["users"] = std::move(user_list);
-        return context;
-    });   
+        auto page = crow::mustache::load("users.html").render(context);
+        return page;
+    });
 
 
     CROW_ROUTE(app, "/users/create").methods("POST"_method)([](const crow::request& req)
@@ -505,12 +514,13 @@ int main()
             return crow::response(crow::status::BAD_REQUEST);
         }
 
-        std::string name     = body["name"].s();
-        std::string email    = body["email"].s();
-        std::string password = body["password"].s();
-        UserRole role = static_cast<UserRole>(body["role"].i());
+        std::string name            = body["name"].s();
+        std::string email           = body["email"].s();
+        std::string password        = body["password"].s();
+        UserRole role               = static_cast<UserRole>(body["role"].i());
+        std::string profile_picture = body.has("profile_picture") ? std::string(body["profile_picture"].s()) : std::string("default.png");
 
-        UserRepository::create_user(name, email, password, role);
+        UserRepository::create_user(name, email, password, role, profile_picture);
 
         return crow::response(201, "User created");
     });
@@ -583,10 +593,11 @@ int main()
         for (const auto& user : users) 
         {
             crow::json::wvalue u;
-            u["id"]    = user.id;
-            u["name"]  = user.name;
-            u["email"] = user.email;
-            u["role"]  = static_cast<int>(user.role);
+            u["id"]              = user.id;
+            u["name"]            = user.name;
+            u["email"]           = user.email;
+            u["role"]            = static_cast<int>(user.role);
+            u["profile_picture"] = user.profile_picture;
             user_list.push_back(std::move(u));
         }
 
