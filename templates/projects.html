@@ -97,6 +97,45 @@
 
     <script src="../static/js/projects.js"></script> 
     
+    <script>
+    function calculateDaysRemaining(endDate) {
+        const today = new Date();
+        const end = new Date(endDate);
+        
+        // Reset time part to ensure accurate day calculation
+        today.setHours(0, 0, 0, 0);
+        end.setHours(0, 0, 0, 0);
+        
+        const diffTime = end - today;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        return diffDays;
+    }
+
+    function formatDaysRemaining(days) {
+        if (days < 0) {
+            return `<span class="text-red-500">Overdue by ${Math.abs(days)} days</span>`;
+        } else if (days === 0) {
+            return `<span class="text-orange-500">Due today</span>`;
+        } else {
+            return `<span class="text-green-500">${days} days remaining</span>`;
+        }
+    }
+
+    // Update all project cards with days remaining
+    document.addEventListener('DOMContentLoaded', function() {
+        const projectCards = document.querySelectorAll('[id^="days-remaining-"]');
+        projectCards.forEach(element => {
+            const projectId = element.id.replace('days-remaining-', '');
+            const endDateElement = element.parentElement.querySelector('span.text-xs');
+            const endDate = endDateElement.textContent.split(' - ')[1];
+            
+            const daysRemaining = calculateDaysRemaining(endDate);
+            element.innerHTML = formatDaysRemaining(daysRemaining);
+        });
+    });
+    </script>
+    
 </body>
 
 </html>

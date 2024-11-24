@@ -97,6 +97,11 @@ int main()
 
         // ----------------------------------------------------------------------
         
+        auto user = UserRepository::get_user_by_email(session.get("user", ""));
+        if (user) {
+            context["profile_picture"] = user->profile_picture;
+            context["name"] = user->name;
+        }
         auto page = crow::mustache::load("dashboard.html").render(context);
         return page;
     });
@@ -247,7 +252,7 @@ int main()
             for (const auto& user : project_users) {
                 crow::json::wvalue avatar;
                 avatar["profile_picture"] = "/static/profile_pictures/" + user.profile_picture;
-                avatar["name"] = user.name;  // For tooltip/title attribute
+                avatar["name"] = user.name; 
                 user_avatars.push_back(std::move(avatar));
             }
             

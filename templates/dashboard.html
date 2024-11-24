@@ -20,9 +20,22 @@
                 <li class="text-gray-500 cursor-not-allowed">Tasks</li>
                 <li><a href="/users" class="text-white hover:text-gray-300">Users</a></li>
             </ul>
-            <form action="/logout" method="POST">
-                <button type="submit" class="text-white hover:text-gray-300">Logout</button>
-            </form>
+            <div class="relative">
+                <button onclick="toggleProfileMenu()" class="flex items-center text-white hover:text-gray-300">
+                    <img src="../static/profile_pictures/{{profile_picture}}" alt="Profile" 
+                         class="w-8 h-8 rounded-full border-2 border-white">
+                </button>
+                <div id="profileMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
+                    <a href="/profile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        Profile Settings
+                    </a>
+                    <form action="/logout" method="POST" class="block">
+                        <button type="submit" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
+                            Logout
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -66,6 +79,8 @@
             </div>
         </div>
     </div>
+
+    <script src="../static/js/nav.js"></script>
 
 </body>
 
