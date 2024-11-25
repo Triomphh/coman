@@ -7,38 +7,43 @@
 - Essaye d'avoir des messages de commit normaux
 
 
-Je pense qu'on va devoir utiliser des APIs REST pour faire les communications client/serveur...
+## Architecture
+Le projet suit une architecture client-serveur :
+- **Backend** : C++ avec APIs REST
+- **Frontend** : HTML/CSS avec Tailwind CSS
 
-...on aura un backend (en C++) et un frontend classique (html, css, ...) où on pourra utiliser un framework comme tailwind ou autre **si on a le temps**
-
-## Dépendances <sub><sup>(avant d'implémenter le DockerFile)</sup></sub>
+## Dépendances <sub><sup>(en local / sans Docker)</sup></sub>
 - CMake
-- C++ 17 (uncomment le `CMakeLists.txt` si il y a beaucoup d'erreurs dans la première compilation)
+- C++ 17 
 - Asio development headers (1.10.9+) (peut-être devoir link son path dans le `CMakeLists.txt`)
 
+> Note : uncomment le `CMakeLists.txt` si il y a beaucoup d'erreurs dans la première compilation
+
 ## Docker
-Format des versions : `MAJOR.MINOR.PATCH (ex, 1.18.2)` <br>
-`MAJOR (1.0.0)`: Release majeures <br>
-`MINOR (0.1.0)`: Nouvelle fonctionnalité <br>
-`PATCH (0.0.1)`: Bug fix
+Format des versions : `MAJOR.MINOR.PATCH (ex, 1.18.2)` :
+- `MAJOR (1.0.0)`: Release majeures <br>
+- `MINOR (0.1.0)`: Nouvelle fonctionnalité <br>
+- `PATCH (0.0.1)`: Bug fix
 
-<br>
-
-Éventuellement faire `sudo` avant chaque commande `docker`
-
-<sub> **Volume** pour la base de données (fichier persistant à travers les versions)</sub>
+### Volume de Base de Données
 ```bash
+# Création du volume persistant pour la base de données
 docker volume create coman-data
 ```
 
-<sub> **Build & Run** </sub>
+### Build & Run
 ```bash
+# Build
 docker build -t triomph/coman:0.0.1 -t triomph/coman:latest .
+
+# Run
 docker run -p 18080:18080 -v coman-data:/app triomph/coman:latest
 ```
 
+> Note : Éventuellement faire `sudo` avant chaque commande
 
 
+## Développement Local
 ## Compilation
 ```bash
 mkdir build
@@ -48,7 +53,8 @@ make
 ```
 
 ## Execution
-Obligatoirement dans la racine du projet (pas de `../coman` ou `../../coman`)
 ```bash
 ./coman
 ```
+
+> Note : Obligatoirement dans la racine du projet (pas de `../coman` ou `../../coman`)
