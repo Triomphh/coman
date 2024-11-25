@@ -19,6 +19,7 @@ Le projet suit une architecture client-serveur :
 
 > Note : uncomment le `CMakeLists.txt` si il y a beaucoup d'erreurs dans la première compilation
 
+## AVANT LA MISE EN PLACE DU PIPELINE CI/CD SUR UN SERVEUR
 ## Docker
 Format des versions : `MAJOR.MINOR.PATCH (ex, 1.18.2)` :
 - `MAJOR (1.0.0)`: Release majeures <br>
