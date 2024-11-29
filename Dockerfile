@@ -28,14 +28,14 @@ RUN rm -rf build && \
 RUN chmod +x /app/coman
 
 # Create a directory for the database with proper permissions
-RUN mkdir -p /app/data && \
-    chmod 777 /app/data
+RUN mkdir -p /data && \
+    chmod 777 /data
 
 # Expose the port that the application listens on
 EXPOSE 18080
 
 # Set the working directory to where the database should be
-WORKDIR /app/data
+WORKDIR /data
 
 # Run the application
 CMD ["/app/coman"]

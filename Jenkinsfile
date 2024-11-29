@@ -62,12 +62,15 @@ pipeline {
                         docker run -d \
                             --name coman \
                             --network host \
-                            -v coman-data:/app \
+                            -v coman-data:/data \
                             --restart unless-stopped \
                             ${DOCKER_IMAGE}:${VERSION}
                         
                         # Wait a moment for the container to start
                         sleep 5
+                        
+                        # Test local connectivity
+                        curl -v http://localhost:18080 || true
                         
                         # Verify container is running and check logs
                         echo "Container Status:"

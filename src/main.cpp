@@ -30,6 +30,7 @@ int main()
 
 
     // app.loglevel(crow::LogLevel::Info);    // Show all logs bellow this level (see https://crowcpp.org/master/guides/logging/ for more info)
+    CROW_LOG_INFO << "Starting server with database in " << std::filesystem::current_path();
 
 
     // Initialize the SQLite database
