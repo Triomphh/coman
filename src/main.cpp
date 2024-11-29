@@ -30,7 +30,6 @@ int main()
 
 
     // app.loglevel(crow::LogLevel::Info);    // Show all logs bellow this level (see https://crowcpp.org/master/guides/logging/ for more info)
-    CROW_LOG_INFO << "Starting server with database in " << std::filesystem::current_path();
 
 
     // Initialize the SQLite database
@@ -636,10 +635,8 @@ int main()
 
 
 
-    // Configure and run the application
-    app.loglevel(crow::LogLevel::Debug);  // Enable debug logging
-    app.bindaddr("0.0.0.0")              // Explicitly bind to all interfaces
-       .port(18080)                      // Explicitly set port
-       .multithreaded()                  // Enable multithreading
-       .run();                           // Run the application
+    // Configure and run the application (on http://0.0.0.0:18080 (localhost))
+    app.port(18080)
+       .multithreaded()
+       .run();
 }

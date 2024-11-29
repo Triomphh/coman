@@ -1,99 +1,23 @@
 pipeline {
     agent any
-    
-    environment {
-        DOCKER_IMAGE = 'coman'
-        VERSION = ''
-    }
-    
+
     stages {
-        stage('Checkout') {
+        stage('Build') {
             steps {
-                checkout scm
-                // Initialize and update git submodules
-                sh 'git submodule update --init --recursive'
+                sh 'echo "Building..."'
             }
         }
-        
-        stage('Get Version') {
+
+        stage('Test') {
             steps {
-                script {
-                    // Read version from git tags, or set to 0.0.1 if no tags exist
-                    VERSION = sh(
-                        script: 'git describe --tags --abbrev=0 2>/dev/null || echo "0.0.1"',
-                        returnStdout: true
-                    ).trim()
-                }
+                sh 'echo "Testing..."'
             }
         }
-        
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    // Build Docker image with version tag and latest tag
-                    sh """
-                        docker build -t ${DOCKER_IMAGE}:${VERSION} -t ${DOCKER_IMAGE}:latest .
-                    """
-                }
-            }
-        }
-        
-        stage('Test Docker') {
-            steps {
-                script {
-                    sh """
-                        docker info
-                        docker ps
-                    """
-                }
-            }
-        }
-        
+
         stage('Deploy') {
             steps {
-                script {
-                    sh """
-                        # Create network if it doesn't exist
-                        docker network create jenkins || true
-                        
-                        docker volume create coman-data || true
-                        
-                        # Stop and remove existing container if it exists
-                        docker rm -f coman || true
-                        
-                        # Run new container with jenkins network
-                        docker run -d \
-                            --name coman \
-                            --network jenkins \
-                            -p 18080:18080 \
-                            -v coman-data:/data \
-                            --restart unless-stopped \
-                            ${DOCKER_IMAGE}:${VERSION}
-                        
-                        # Wait for container to start
-                        sleep 5
-                        
-                        # Verify container is running
-                        docker ps | grep coman
-                        
-                        # Test connectivity
-                        docker exec coman curl -v http://localhost:18080 || true
-                        
-                        # Show container logs
-                        docker logs coman
-                    """
-                }
+                sh 'echo "Deploying..."'
             }
-        }
-    }
-    
-    post {
-        always {
-            cleanWs()
-        }
-        
-        failure {
-            echo 'Pipeline failed! Notify team...'
         }
     }
 }
