@@ -69,6 +69,14 @@ pipeline {
                         # Wait a moment for the container to start
                         sleep 5
                         
+                        # Network diagnostics
+                        docker exec coman netstat -tulpn || true
+                        docker exec coman ss -tulpn || true
+                        
+                        # Test connectivity from inside container
+                        docker exec coman curl -v http://localhost:18080 || true
+                        docker exec coman curl -v http://127.0.0.1:18080 || true
+
                         # Test local connectivity
                         curl -v http://localhost:18080 || true
                         

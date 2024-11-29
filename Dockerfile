@@ -9,6 +9,9 @@ RUN apt-get update && apt-get install -y \
     cmake \
     libsqlite3-dev \
     libasio-dev \
+    net-tools \
+    iproute2 \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
@@ -33,6 +36,9 @@ RUN mkdir -p /data && \
 
 # Expose the port that the application listens on
 EXPOSE 18080
+
+HEALTHCHECK --interval=5s --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:18080/ || exit 1
 
 # Set the working directory to where the database should be
 WORKDIR /data
