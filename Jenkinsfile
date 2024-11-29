@@ -10,6 +10,8 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
+                // Initialize and update git submodules
+                sh 'git submodule update --init --recursive'
             }
         }
         
