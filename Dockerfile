@@ -24,8 +24,18 @@ RUN rm -rf build && \
     cmake .. && \
     make
 
+# Make sure the binary is executable
+RUN chmod +x /app/coman
+
+# Create a directory for the database with proper permissions
+RUN mkdir -p /app/data && \
+    chmod 777 /app/data
+
 # Expose the port that the application listens on
 EXPOSE 18080
 
+# Set the working directory to where the database should be
+WORKDIR /app/data
+
 # Run the application
-CMD ["./coman"]
+CMD ["/app/coman"]
