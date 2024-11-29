@@ -52,17 +52,16 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Create volume if it doesn't exist
                     sh """
                         docker volume create coman-data || true
                         
                         # Stop and remove existing container if it exists
                         docker rm -f coman || true
                         
-                        # Run new container
+                        # Run new container with host networking
                         docker run -d \
                             --name coman \
-                            -p 18080:18080 \
+                            --network host \
                             -v coman-data:/app \
                             --restart unless-stopped \
                             ${DOCKER_IMAGE}:${VERSION}
@@ -70,7 +69,7 @@ pipeline {
                         # Wait a moment for the container to start
                         sleep 5
                         
-                        # Check container status and logs
+                        # Verify container is running and check logs
                         echo "Container Status:"
                         docker ps -a | grep coman
                         
