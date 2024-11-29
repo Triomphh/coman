@@ -53,43 +53,34 @@ pipeline {
             steps {
                 script {
                     sh """
+                        # Create network if it doesn't exist
+                        docker network create jenkins || true
+                        
                         docker volume create coman-data || true
                         
                         # Stop and remove existing container if it exists
                         docker rm -f coman || true
                         
-                        # Run new container with host networking
+                        # Run new container with jenkins network
                         docker run -d \
                             --name coman \
                             --network jenkins \
+                            -p 18080:18080 \
                             -v coman-data:/data \
                             --restart unless-stopped \
                             ${DOCKER_IMAGE}:${VERSION}
                         
-                        # Wait a moment for the container to start
+                        # Wait for container to start
                         sleep 5
                         
-                        # Network diagnostics
-                        docker exec coman netstat -tulpn || true
-                        docker exec coman ss -tulpn || true
+                        # Verify container is running
+                        docker ps | grep coman
                         
-                        # Test connectivity from inside container
+                        # Test connectivity
                         docker exec coman curl -v http://localhost:18080 || true
-                        docker exec coman curl -v http://127.0.0.1:18080 || true
-
-                        # Test local connectivity
-                        curl -v http://localhost:18080 || true
                         
-                        # Verify container is running and check logs
-                        echo "Container Status:"
-                        docker ps -a | grep coman
-                        
-                        echo "Container Logs:"
+                        # Show container logs
                         docker logs coman
-                        
-                        docker logs coman
-
-                        docker exec coman ip addr show || true
                     """
                 }
             }
