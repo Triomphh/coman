@@ -78,6 +78,10 @@ pipeline {
                         
                         echo "Container Logs:"
                         docker logs coman
+                        
+                        docker logs coman
+
+                        docker exec coman ip addr show || true
                     """
                 }
             }

@@ -637,8 +637,9 @@ int main()
 
 
     // Configure and run the application
-    app.port(18080)
-       .bindaddr("0.0.0.0")
-       .multithreaded()
-       .run();
+    app.loglevel(crow::LogLevel::Debug);  // Enable debug logging
+    app.bindaddr("0.0.0.0")              // Explicitly bind to all interfaces
+       .port(18080)                      // Explicitly set port
+       .multithreaded()                  // Enable multithreading
+       .run();                           // Run the application
 }
