@@ -55,21 +55,27 @@ pipeline {
                     // Create volume if it doesn't exist
                     sh """
                         docker volume create coman-data || true
-                    """
-                    
-                    // Stop and remove existing container if it exists
-                    sh """
+                        
+                        # Stop and remove existing container if it exists
                         docker rm -f coman || true
-                    """
-                    
-                    // Run new container
-                    sh """
+                        
+                        # Run new container
                         docker run -d \
                             --name coman \
                             -p 18080:18080 \
                             -v coman-data:/app \
                             --restart unless-stopped \
                             ${DOCKER_IMAGE}:${VERSION}
+                        
+                        # Wait a moment for the container to start
+                        sleep 5
+                        
+                        # Check container status and logs
+                        echo "Container Status:"
+                        docker ps -a | grep coman
+                        
+                        echo "Container Logs:"
+                        docker logs coman
                     """
                 }
             }
