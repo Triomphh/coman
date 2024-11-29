@@ -61,7 +61,7 @@ pipeline {
                         # Run new container with host networking
                         docker run -d \
                             --name coman \
-                            --network host \
+                            --network jenkins \
                             -v coman-data:/data \
                             --restart unless-stopped \
                             ${DOCKER_IMAGE}:${VERSION}
