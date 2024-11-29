@@ -38,11 +38,12 @@ pipeline {
             }
         }
         
-        stage('Test') {
+        stage('Test Docker') {
             steps {
                 script {
                     sh """
-                        echo "Testing..."
+                        docker info
+                        docker ps
                     """
                 }
             }
