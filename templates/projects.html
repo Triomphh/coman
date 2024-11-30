@@ -13,8 +13,9 @@
 
     {{>navbar.html}}
 
-    <!-- Header Section with Search and Filter -->
-    <div class="container mx-auto px-4 py-8 max-w-full overflow-hidden">
+    <!-- Projects Grid -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header Section with Search and Filter -->
         <div class="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center mb-8">
             <h1 class="text-3xl font-bold">Projects</h1>
             <div class="flex flex-wrap gap-4 items-center justify-end">
@@ -53,10 +54,7 @@
                 </button>
             </div>
         </div>
-    </div>
 
-    <!-- Projects Grid -->
-    <div class="container mx-auto px-4 max-w-full overflow-hidden">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {{#projects}}
                 <div class="project-card bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 relative group">
