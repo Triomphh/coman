@@ -19,20 +19,24 @@ Le projet suit une architecture client-serveur :
 
 > Note : uncomment le `CMakeLists.txt` si il y a beaucoup d'erreurs dans la première compilation
 
-## AVANT LA MISE EN PLACE DU PIPELINE CI/CD SUR UN SERVEUR
-## Docker
+
+## EN REMOTE
+Compilation et déploiment automatique via Jenkins + WebHook
+
+## EN LOCAL
+### Docker
 Format des versions : `MAJOR.MINOR.PATCH (ex, 1.18.2)` :
 - `MAJOR (1.0.0)`: Release majeures <br>
 - `MINOR (0.1.0)`: Nouvelle fonctionnalité <br>
 - `PATCH (0.0.1)`: Bug fix
 
-### Volume de Base de Données
+#### Volume de Base de Données
 ```bash
 # Création du volume persistant pour la base de données
 docker volume create coman-data
 ```
 
-### Build & Run
+#### Build & Run
 ```bash
 # Build
 docker build -t triomph/coman:0.0.1 -t triomph/coman:latest .
@@ -44,8 +48,7 @@ docker run -p 18080:18080 -v coman-data:/app triomph/coman:latest
 > Note : Éventuellement faire `sudo` avant chaque commande
 
 
-## Développement Local
-## Compilation
+### Compilation
 ```bash
 mkdir build
 cd build
