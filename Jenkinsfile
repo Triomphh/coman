@@ -6,6 +6,7 @@ pipeline {
         VERSION = ''
         CONTAINER_NAME = 'coman'
         VOLUME_NAME = 'coman-data'
+        APP_PORT = '18080'
     }
 
     stages {
@@ -58,8 +59,9 @@ pipeline {
                     sh """
                         docker run -d --name ${CONTAINER_NAME} \
                             -v ${VOLUME_NAME}:/app \
-                            -p 18080:18080 \
-                            ${DOCKER_IMAGE}:latest
+                            -p ${APP_PORT}:${APP_PORT} \
+                            --restart unless-stopped \
+                            ${DOCKER_IMAGE}:${VERSION}
                     """
                 }
             }
@@ -68,10 +70,12 @@ pipeline {
 
     post {
         failure {
-            sh """
-                docker stop coman || true
-                docker rm -f coman || true
-            """
+            script {
+                sh """
+                    docker stop ${CONTAINER_NAME} || true
+                    docker rm ${CONTAINER_NAME} || true
+                """
+            }
         }
     }
 }
