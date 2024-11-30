@@ -25,11 +25,23 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </div>
-                <select class="border rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#00B4DB] focus:outline-none">
-                    <option>All Projects</option>
-                    <option>Active</option>
-                    <option>Completed</option>
-                </select>
+                <div class="flex justify-between items-center mb-6">
+                    <select class="px-3 py-2 border border-gray-300 rounded-md text-sm">
+                        <option>All Projects</option>
+                        <option>My Projects</option>
+                        <option>Active</option>
+                        <option>Completed</option>
+                    </select>
+                    <button onclick="showProjectForm()" 
+                            class="ml-4 bg-[#00B4DB] text-white p-2 rounded-md hover:bg-[#0083a3] transition-colors group relative">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        <span class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-black px-2 py-1 text-sm text-white opacity-0 transition before:absolute before:left-1/2 before:top-full before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-black before:content-[''] group-hover:opacity-100">
+                            New Project
+                        </span>
+                    </button>
+                </div>
             </div>
         </div>
         
@@ -75,16 +87,6 @@
                 </div>
             {{/projects}}
         </div>
-    </div>
-
-    <!-- New Project Button -->
-    <div class="fixed bottom-8 right-8">
-        <button onclick="showProjectForm()" class="bg-[#00B4DB] text-white px-6 py-3 rounded-full shadow-lg hover:bg-[#0083a3] transition-colors flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-            </svg>
-            New Project
-        </button>
     </div>
 
     <!-- Modal for new project form -->
