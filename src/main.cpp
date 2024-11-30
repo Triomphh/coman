@@ -632,6 +632,53 @@ int main()
     // curl -X GET http://localhost:18080/projects/1/users
 
 
+    // Profile
+    CROW_ROUTE(app, "/profile").methods("GET"_method)([&](const crow::request& req) -> crow::response
+    {
+        auto& session = app.get_context<Session>(req);
+        auto username = session.get("user", "");
+
+        // If user is not logged in, redirect to login page
+        if (username.empty()) 
+        {
+            crow::response redirect(302);
+            redirect.set_header("Location", "/login");
+            return redirect;
+        }
+
+        // Get user data
+        auto user = UserRepository::get_user_by_email(username);
+        if (!user) 
+        {
+            crow::response redirect(302);
+            redirect.set_header("Location", "/login");
+            return redirect;
+        }
+
+        crow::mustache::context context;
+        populate_navbar_context(context, req, app);
+
+        // Add user data to context
+        context["name"]            = user->name;
+        context["email"]           = user->email;
+        context["profile_picture"] = user->profile_picture;
+        
+        // Add role-specific flags for styling
+        context["isAdmin"]          = (user->role == UserRole::ADMIN);
+        context["isProjectManager"] = (user->role == UserRole::PROJECT_MANAGER);
+        context["isTeamMember"]     = (user->role == UserRole::TEAM_MEMBER);
+        
+        // Add role text
+        switch(user->role) 
+        {
+            case UserRole::ADMIN:           context["roleText"] = "Admin"; break;
+            case UserRole::PROJECT_MANAGER: context["roleText"] = "Project Manager"; break;
+            case UserRole::TEAM_MEMBER:     context["roleText"] = "Team Member"; break;
+        }
+
+        return crow::mustache::load("profile.html").render(context);
+    });
+
 
 
 
