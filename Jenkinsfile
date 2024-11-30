@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'triomph/coman'
-        VERSION = '0.0.1'
+        VERSION = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
         CONTAINER_NAME = 'coman'
         VOLUME_NAME = 'coman-data'
         APP_PORT = '18080'
