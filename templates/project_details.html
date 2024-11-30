@@ -66,7 +66,9 @@
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- To Do Column -->
-                <div class="bg-gray-50 rounded-lg p-4">
+                <div class="bg-gray-50 rounded-lg p-4" 
+                     ondrop="drop(event, 'TODO')" 
+                     ondragover="allowDrop(event)">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-semibold">To Do</h3>
                         <span class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-sm">
@@ -76,8 +78,11 @@
                     <div class="space-y-4">
                         {{#tasks}}
                         {{#isStatusTodo}}
-                        <div class="bg-white rounded-lg shadow p-4 hover:shadow-md transition-shadow relative group">
-                            <!-- Task Content -->
+                        <div class="bg-white rounded-lg shadow p-4 hover:shadow-md transition-shadow relative group cursor-grab"
+                             draggable="true"
+                             ondragstart="drag(event)"
+                             data-task-id="{{id}}"
+                             data-task-status="TODO">
                             <div class="flex justify-between items-start mb-3">
                                 <h4 class="text-lg font-semibold">{{title}}</h4>
                                 <div class="flex gap-2">
@@ -112,36 +117,44 @@
                 </div>
 
                 <!-- In Progress Column -->
-                <div class="bg-gray-50 p-4 rounded-lg">
+                <div class="bg-gray-50 p-4 rounded-lg"
+                     ondrop="drop(event, 'IN_PROGRESS')" 
+                     ondragover="allowDrop(event)">
                     <h3 class="text-lg font-semibold mb-4">In Progress</h3>
                     <div class="space-y-4">
                         {{#tasks}}
                         {{#isStatusInProgress}}
-                        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow relative group">
-                            <button onclick="showEditTaskForm('{{id}}', '{{title}}', '{{description}}', '{{priorityText}}', '{{deadline}}', '{{status}}')" 
-                                    class="absolute top-2 right-10 text-gray-400 hover:text-blue-500 transition-colors opacity-0 group-hover:opacity-100">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                            <button onclick="deleteTask('{{id}}')" class="absolute top-2 right-2 text-gray-400 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="text-xl font-semibold">{{title}}</h3>
-                                <span class="px-2 py-1 text-sm rounded-full 
+                        <div class="bg-white rounded-lg shadow p-4 hover:shadow-md transition-shadow relative group cursor-grab"
+                             draggable="true"
+                             ondragstart="drag(event)"
+                             data-task-id="{{id}}"
+                             data-task-status="IN_PROGRESS">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="text-lg font-semibold">{{title}}</h4>
+                                <div class="flex gap-2">
+                                    <button onclick="showEditTaskForm('{{id}}', '{{title}}', '{{description}}', '{{priorityText}}', '{{deadline}}', '{{status}}')" 
+                                            class="text-gray-400 hover:text-blue-500 transition-colors opacity-0 group-hover:opacity-100">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                        </svg>
+                                    </button>
+                                    <button onclick="deleteTask('{{id}}')" 
+                                            class="text-gray-400 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">{{description}}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="px-2 py-1 text-xs rounded-full 
                                     {{#priorityHigh}}bg-red-100 text-red-800{{/priorityHigh}}
                                     {{#priorityMedium}}bg-yellow-100 text-yellow-800{{/priorityMedium}}
-                                    {{#priorityLow}}bg-green-100 text-green-800{{/priorityLow}}
-                                ">
+                                    {{#priorityLow}}bg-green-100 text-green-800{{/priorityLow}}">
                                     {{priorityText}}
                                 </span>
-                            </div>
-                            <p class="text-gray-600 mb-4">{{description}}</p>
-                            <div class="text-sm text-gray-500">
-                                <p>Deadline: {{deadline}}</p>
+                                <span class="text-sm text-gray-500">{{deadline}}</span>
                             </div>
                         </div>
                         {{/isStatusInProgress}}
@@ -150,36 +163,44 @@
                 </div>
 
                 <!-- Done Column -->
-                <div class="bg-gray-50 p-4 rounded-lg">
+                <div class="bg-gray-50 p-4 rounded-lg"
+                     ondrop="drop(event, 'DONE')" 
+                     ondragover="allowDrop(event)">
                     <h3 class="text-lg font-semibold mb-4">Done</h3>
                     <div class="space-y-4">
                         {{#tasks}}
                         {{#isStatusDone}}
-                        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow relative group">
-                            <button onclick="showEditTaskForm('{{id}}', '{{title}}', '{{description}}', '{{priorityText}}', '{{deadline}}', '{{status}}')" 
-                                    class="absolute top-2 right-10 text-gray-400 hover:text-blue-500 transition-colors opacity-0 group-hover:opacity-100">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                            <button onclick="deleteTask('{{id}}')" class="absolute top-2 right-2 text-gray-400 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="text-xl font-semibold">{{title}}</h3>
-                                <span class="px-2 py-1 text-sm rounded-full 
+                        <div class="bg-white rounded-lg shadow p-4 hover:shadow-md transition-shadow relative group cursor-grab"
+                             draggable="true"
+                             ondragstart="drag(event)"
+                             data-task-id="{{id}}"
+                             data-task-status="DONE">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="text-lg font-semibold">{{title}}</h4>
+                                <div class="flex gap-2">
+                                    <button onclick="showEditTaskForm('{{id}}', '{{title}}', '{{description}}', '{{priorityText}}', '{{deadline}}', '{{status}}')" 
+                                            class="text-gray-400 hover:text-blue-500 transition-colors opacity-0 group-hover:opacity-100">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                        </svg>
+                                    </button>
+                                    <button onclick="deleteTask('{{id}}')" 
+                                            class="text-gray-400 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">{{description}}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="px-2 py-1 text-xs rounded-full 
                                     {{#priorityHigh}}bg-red-100 text-red-800{{/priorityHigh}}
                                     {{#priorityMedium}}bg-yellow-100 text-yellow-800{{/priorityMedium}}
-                                    {{#priorityLow}}bg-green-100 text-green-800{{/priorityLow}}
-                                ">
+                                    {{#priorityLow}}bg-green-100 text-green-800{{/priorityLow}}">
                                     {{priorityText}}
                                 </span>
-                            </div>
-                            <p class="text-gray-600 mb-4">{{description}}</p>
-                            <div class="text-sm text-gray-500">
-                                <p>Deadline: {{deadline}}</p>
+                                <span class="text-sm text-gray-500">{{deadline}}</span>
                             </div>
                         </div>
                         {{/isStatusDone}}
@@ -273,5 +294,7 @@
 
     <script src="../static/js/nav.js"></script>
     <script src="../static/js/tasks.js"></script>
+    <script>const projectId = "{{id}}";</script>
+    <script src="../static/js/task_drag_drop.js"></script>
 </body>
 </html> 
