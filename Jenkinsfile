@@ -20,6 +20,9 @@ pipeline {
                 }
             }
             steps {
+                // Install git first
+                sh 'apt-get update && apt-get install -y git'
+                
                 checkout scm
                 sh 'git submodule update --init --recursive'
                 
@@ -37,6 +40,7 @@ pipeline {
         }
 
         stage('Test') {
+            agent any
             steps {
                 echo "Running tests... (placeholder)"
                 echo "Version: ${VERSION}"
@@ -82,12 +86,15 @@ pipeline {
 
     post {
         failure {
-            script {
-                // Cleanup on failure
-                sh """
-                    docker stop ${CONTAINER_NAME} || true
-                    docker rm ${CONTAINER_NAME} || true
-                """
+            agent any
+            steps {
+                script {
+                    // Cleanup on failure
+                    sh """
+                        docker stop ${CONTAINER_NAME} || true
+                        docker rm ${CONTAINER_NAME} || true
+                    """
+                }
             }
         }
     }
