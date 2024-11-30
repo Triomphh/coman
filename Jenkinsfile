@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'triomph/coman'
-        VERSION = ''
+        VERSION = '0.0.1'
         CONTAINER_NAME = 'coman'
         VOLUME_NAME = 'coman-data'
         APP_PORT = '18080'
@@ -14,18 +14,6 @@ pipeline {
             steps {
                 checkout scm
                 sh 'git submodule update --init --recursive'
-            }
-        }
-
-        stage('Get Version') {
-            steps {
-                script {
-                    // Read version from git tags, or set to 0.0.1 if no tags exist
-                    VERSION = sh(
-                        script: 'git describe --tags --abbrev=0 2>/dev/null || echo "0.0.1"',
-                        returnStdout: true
-                    ).trim()
-                }
             }
         }
 
