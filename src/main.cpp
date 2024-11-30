@@ -635,7 +635,7 @@ int main()
 
 
 
-    // Configure and run the application (on http://0.0.0.0:18080 (localhost))
+    // Configure and run the application (on http://localhost:18080)
     app.port(18080)
        .multithreaded()
        .run();
