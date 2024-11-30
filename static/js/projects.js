@@ -1,3 +1,14 @@
+function toggleMobileSearch() 
+{
+    const overlay = document.getElementById('mobileSearchOverlay');
+    overlay.classList.toggle('hidden');
+    
+    if (!overlay.classList.contains('hidden')) 
+    {
+        overlay.querySelector('input').focus();
+    }
+}
+
 function showProjectForm()
 {
     document.getElementById('projectModal').classList.remove('hidden');
@@ -32,7 +43,8 @@ async function deleteProject(projectId)
     }
 }
 
-function showEditProjectForm(id, name, description, startDate, endDate) {
+function showEditProjectForm(id, name, description, startDate, endDate) 
+{
     document.getElementById('edit_project_id').value = id;
     document.getElementById('edit_name').value = name;
     document.getElementById('edit_description').value = description;
@@ -41,7 +53,8 @@ function showEditProjectForm(id, name, description, startDate, endDate) {
     document.getElementById('editProjectModal').classList.remove('hidden');
 }
 
-function hideEditProjectForm() {
+function hideEditProjectForm() 
+{
     document.getElementById('editProjectModal').classList.add('hidden');
 }
 
