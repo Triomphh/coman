@@ -22,12 +22,10 @@ RUN rm -rf build && \
     mkdir build && \
     cd build && \
     cmake .. && \
-    make && \
-    cp coman ..
+    make
 
 # Expose the port that the application listens on
 EXPOSE 18080
 
-# Run the application from the correct directory
-WORKDIR /app
+# Run the application
 CMD ["./coman"]
