@@ -7,7 +7,6 @@ pipeline {
         CONTAINER_NAME = 'coman'
         VOLUME_NAME = 'coman-data'
         APP_PORT = '18080'
-        DOCKER_NETWORK = 'jenkins'
     }
 
     stages {
@@ -35,18 +34,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Add debugging information
-                    sh """
-                        echo "Available networks:"
-                        docker network ls
-                        
-                        echo "\nNetwork details:"
-                        docker network inspect jenkins || true
-                        
-                        echo "\nCurrent user:"
-                        id
-                    """
-
                     // Create volume if it doesn't exist
                     sh "docker volume create ${VOLUME_NAME} || true"
 
@@ -56,14 +43,13 @@ pipeline {
                         docker rm ${CONTAINER_NAME} || true
                     """
 
-                    // Run the container with explicit network connect
+                    // Run the container
                     sh """
                         docker run -d --name ${CONTAINER_NAME} \
                             -v ${VOLUME_NAME}:/app \
                             -p ${APP_PORT}:${APP_PORT} \
                             --restart unless-stopped \
-                            ${DOCKER_IMAGE}:${VERSION} && \
-                        docker network connect ${DOCKER_NETWORK} ${CONTAINER_NAME}
+                            ${DOCKER_IMAGE}:${VERSION}
                     """
                 }
             }
