@@ -4,7 +4,7 @@
 
 void UserRepository::create_user(const std::string& name, const std::string& email, const std::string& password, UserRole role, const std::string& profile_picture) 
 {
-    SQLite::Database db("database.db", SQLite::OPEN_READWRITE);
+    SQLite::Database db("data/database.db", SQLite::OPEN_READWRITE);
     SQLite::Statement query(db, "INSERT INTO users (name, email, hashed_password, role, profile_picture) VALUES (?, ?, ?, ?, ?)");
     query.bind(1, name);
     query.bind(2, email);
@@ -16,7 +16,7 @@ void UserRepository::create_user(const std::string& name, const std::string& ema
 
 std::optional<User> UserRepository::get_user(int id) 
 {
-    SQLite::Database db("database.db", SQLite::OPEN_READONLY);
+    SQLite::Database db("data/database.db", SQLite::OPEN_READONLY);
     SQLite::Statement query(db, "SELECT id, name, email, hashed_password, role, profile_picture FROM users WHERE id = ?");
     query.bind(1, id);
 
@@ -37,7 +37,7 @@ std::optional<User> UserRepository::get_user(int id)
 
 std::optional<User> UserRepository::get_user_by_email(const std::string& email) 
 {
-    SQLite::Database db("database.db", SQLite::OPEN_READONLY);
+    SQLite::Database db("data/database.db", SQLite::OPEN_READONLY);
     SQLite::Statement query(db, "SELECT id, name, email, hashed_password, role, profile_picture FROM users WHERE email = ?");
     query.bind(1, email);
 
@@ -59,7 +59,7 @@ std::optional<User> UserRepository::get_user_by_email(const std::string& email)
 std::vector<User> UserRepository::get_users() 
 {
     std::vector<User> users;
-    SQLite::Database db("database.db", SQLite::OPEN_READONLY);
+    SQLite::Database db("data/database.db", SQLite::OPEN_READONLY);
     SQLite::Statement query(db, "SELECT id, name, email, hashed_password, role, profile_picture FROM users");
 
     while (query.executeStep()) 
@@ -79,7 +79,7 @@ std::vector<User> UserRepository::get_users()
 
 void UserRepository::delete_user(int id) 
 {
-    SQLite::Database db("database.db", SQLite::OPEN_READWRITE);
+    SQLite::Database db("data/database.db", SQLite::OPEN_READWRITE);
     SQLite::Statement query(db, "DELETE FROM users WHERE id = ?");
     query.bind(1, id);
     query.exec();
@@ -87,14 +87,14 @@ void UserRepository::delete_user(int id)
 
 void UserRepository::delete_all_users() 
 {
-    SQLite::Database db("database.db", SQLite::OPEN_READWRITE);
+    SQLite::Database db("data/database.db", SQLite::OPEN_READWRITE);
     db.exec("DELETE FROM users");
 }
 
 // Add this method to your UserRepository class
 std::optional<User> UserRepository::authenticate(const std::string& email, const std::string& password) 
 {
-    SQLite::Database db("database.db", SQLite::OPEN_READONLY);
+    SQLite::Database db("data/database.db", SQLite::OPEN_READONLY);
     SQLite::Statement query(db, "SELECT * FROM users WHERE email = ?");
     query.bind(1, email);
 

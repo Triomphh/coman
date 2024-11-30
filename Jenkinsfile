@@ -46,7 +46,7 @@ pipeline {
                     // Run the container
                     sh """
                         docker run -d --name ${CONTAINER_NAME} \
-                            -v ${VOLUME_NAME}:/app \
+                            -v ${VOLUME_NAME}:/app/data \
                             -p ${APP_PORT}:${APP_PORT} \
                             --restart unless-stopped \
                             ${DOCKER_IMAGE}:${VERSION}

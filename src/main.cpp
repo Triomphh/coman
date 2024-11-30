@@ -33,7 +33,7 @@ int main()
 
 
     // Initialize the SQLite database
-    SQLite::Database db("database.db", SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
+    SQLite::Database db("data/database.db", SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
     db.exec("CREATE TABLE IF NOT EXISTS projects ("
             "id INTEGER PRIMARY KEY AUTOINCREMENT, "
             "name TEXT, "

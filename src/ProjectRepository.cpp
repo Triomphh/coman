@@ -5,7 +5,7 @@
 
 void ProjectRepository::create_project(const std::string& name, const std::string& description, const std::string& start_date, const std::string& end_date) 
 {
-    SQLite::Database db("database.db", SQLite::OPEN_READWRITE);
+    SQLite::Database db("data/database.db", SQLite::OPEN_READWRITE);
     SQLite::Statement query(db, "INSERT INTO projects (name, description, start_date, end_date) VALUES (?, ?, ?, ?)");
     query.bind(1, name);
     query.bind(2, description);
@@ -17,7 +17,7 @@ void ProjectRepository::create_project(const std::string& name, const std::strin
 std::vector<Project> ProjectRepository::get_projects() 
 {
     std::vector<Project> projects;
-    SQLite::Database db("database.db", SQLite::OPEN_READONLY);
+    SQLite::Database db("data/database.db", SQLite::OPEN_READONLY);
     SQLite::Statement query(db, "SELECT id, name, description, start_date, end_date FROM projects");
     
     while (query.executeStep()) 
@@ -36,7 +36,7 @@ std::vector<Project> ProjectRepository::get_projects()
 
 std::optional<Project> ProjectRepository::get_project(int id) 
 {
-    SQLite::Database db("database.db", SQLite::OPEN_READONLY);
+    SQLite::Database db("data/database.db", SQLite::OPEN_READONLY);
     SQLite::Statement query(db, "SELECT id, name, description, start_date, end_date FROM projects WHERE id = ?");
     query.bind(1, id);
     
@@ -55,7 +55,7 @@ std::optional<Project> ProjectRepository::get_project(int id)
 
 void ProjectRepository::update_project(int id, const std::string& name, const std::string& description, const std::string& start_date, const std::string& end_date) 
 {
-    SQLite::Database db("database.db", SQLite::OPEN_READWRITE);
+    SQLite::Database db("data/database.db", SQLite::OPEN_READWRITE);
     SQLite::Statement query(db, "UPDATE projects SET name = ?, description = ?, start_date = ?, end_date = ? WHERE id = ?");
     query.bind(1, name);
     query.bind(2, description);
@@ -67,7 +67,7 @@ void ProjectRepository::update_project(int id, const std::string& name, const st
 
 void ProjectRepository::delete_project(int id) 
 {
-    SQLite::Database db("database.db", SQLite::OPEN_READWRITE);
+    SQLite::Database db("data/database.db", SQLite::OPEN_READWRITE);
     SQLite::Statement query(db, "DELETE FROM projects WHERE id = ?");
     query.bind(1, id);
     query.exec();
@@ -75,7 +75,7 @@ void ProjectRepository::delete_project(int id)
 
 void ProjectRepository::delete_all_projects() 
 {
-    SQLite::Database db("database.db", SQLite::OPEN_READWRITE);
+    SQLite::Database db("data/database.db", SQLite::OPEN_READWRITE);
     db.exec("DELETE FROM projects");
 }
 
@@ -85,7 +85,7 @@ void ProjectRepository::delete_all_projects()
 // Manage project members
 void ProjectRepository::add_user_to_project(int user_id, int project_id) 
 {
-    SQLite::Database db("database.db", SQLite::OPEN_READWRITE);
+    SQLite::Database db("data/database.db", SQLite::OPEN_READWRITE);
     SQLite::Statement query(db, "INSERT INTO work_on_project (user_id, project_id) VALUES (?, ?)");
     query.bind(1, user_id);
     query.bind(2, project_id);
@@ -94,7 +94,7 @@ void ProjectRepository::add_user_to_project(int user_id, int project_id)
 
 void ProjectRepository::remove_user_from_project(int user_id, int project_id) 
 {
-    SQLite::Database db("database.db", SQLite::OPEN_READWRITE);
+    SQLite::Database db("data/database.db", SQLite::OPEN_READWRITE);
     SQLite::Statement query(db, "DELETE FROM work_on_project WHERE user_id = ? AND project_id = ?");
     query.bind(1, user_id);
     query.bind(2, project_id);
@@ -104,7 +104,7 @@ void ProjectRepository::remove_user_from_project(int user_id, int project_id)
 std::vector<User> ProjectRepository::get_project_users(int project_id) 
 {
     std::vector<User> users;
-    SQLite::Database db("database.db", SQLite::OPEN_READONLY);
+    SQLite::Database db("data/database.db", SQLite::OPEN_READONLY);
     SQLite::Statement query(db, 
         "SELECT u.id, u.name, u.email, u.role, u.profile_picture "
         "FROM users u "
@@ -129,7 +129,7 @@ std::vector<User> ProjectRepository::get_project_users(int project_id)
 std::vector<Project> ProjectRepository::get_user_projects(int user_id) 
 {
     std::vector<Project> projects;
-    SQLite::Database db("database.db", SQLite::OPEN_READONLY);
+    SQLite::Database db("data/database.db", SQLite::OPEN_READONLY);
     SQLite::Statement query(db, 
         "SELECT p.id, p.name, p.description, p.start_date, p.end_date "
         "FROM projects p "
