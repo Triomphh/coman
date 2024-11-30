@@ -80,11 +80,6 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            {% if error %}
-            <div class="error-message">
-                {{ error }}
-            </div>
-            {% endif %}
             <button type="submit">Register</button>
         </form>
         <p>Already have an account? <a href="/login">Login here</a></p>
