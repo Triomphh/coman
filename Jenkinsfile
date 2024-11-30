@@ -47,8 +47,8 @@ pipeline {
                     sh """
                         docker run -d --name ${CONTAINER_NAME} \
                             -v ${VOLUME_NAME}:/app \
-                            -p 127.0.0.1:18080:18080 \
                             --network jenkins \
+                            -p ${APP_PORT}:${APP_PORT} \
                             --restart unless-stopped \
                             ${DOCKER_IMAGE}:${VERSION}
                     """
