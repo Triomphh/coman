@@ -41,10 +41,10 @@ docker volume create coman-data
 #### Build & Run
 ```bash
 # Build
-docker build -t triomph/coman:0.0.1 -t triomph/coman:latest .
+docker build -t triomph/coman:latest .
 
 # Run
-docker run -p 18080:18080 -v coman-data:/app triomph/coman:latest
+docker run -p 18080:18080 -v coman-data:/app/data triomph/coman:latest
 ```
 
 > Note : Éventuellement faire `sudo` avant chaque commande
