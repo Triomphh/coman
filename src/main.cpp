@@ -2,7 +2,7 @@
 #include "../include/ProjectRepository.hpp"
 #include "../include/TaskRepository.hpp"
 #include "../include/UserRepository.hpp"
-#include <SQLiteCpp/SQLiteCpp.h>
+#include "../include/DatabaseManager.hpp"
 
 
 
@@ -32,56 +32,8 @@ int main()
     // app.loglevel(crow::LogLevel::Info);    // Show all logs bellow this level (see https://crowcpp.org/master/guides/logging/ for more info)
 
 
-    // Initialize the SQLite database
-    SQLite::Database db("data/database.db", SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
-    db.exec("CREATE TABLE IF NOT EXISTS projects ("
-            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-            "name TEXT, "
-            "description TEXT, "
-            "start_date DATE, "
-            "end_date DATE"
-            ")"
-    );
-
-    db.exec("CREATE TABLE IF NOT EXISTS tasks ("
-            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-            "title TEXT, "
-            "description TEXT, "
-            "priority TEXT, "
-            "status TEXT, "
-            "deadline DATE, "
-            "project_id INTEGER, "
-            "FOREIGN KEY (project_id) REFERENCES projects(id)"
-            ")"
-    );
-
-    db.exec("CREATE TABLE IF NOT EXISTS users ("
-            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-            "name TEXT, "
-            "email TEXT, "
-            "hashed_password TEXT, "
-            "role TEXT, "
-            "profile_picture TEXT DEFAULT 'default.png'"
-            ")"
-    );
-
-    db.exec("CREATE TABLE IF NOT EXISTS work_on_project ("
-            "user_id INTEGER, "
-            "project_id INTEGER, "
-            "PRIMARY KEY (user_id, project_id), "
-            "FOREIGN KEY (user_id) REFERENCES users(id), "
-            "FOREIGN KEY (project_id) REFERENCES projects(id)"
-            ")"
-    );
-
-    db.exec("CREATE TABLE IF NOT EXISTS work_on_task ("
-            "user_id INTEGER, "
-            "task_id INTEGER, "
-            "PRIMARY KEY (user_id, task_id), "
-            "FOREIGN KEY (user_id) REFERENCES users(id), "
-            "FOREIGN KEY (task_id) REFERENCES tasks(id)"
-            ")"
-    );
+    // Initialize database - Singleton pattern (table creation done in the constructor of DatabaseManager)
+    DatabaseManager::getInstance();
 
 
     // Define differents endpoints
