@@ -1,12 +1,8 @@
-#include "../include/TaskRepository.hpp"
-#include "../include/DatabaseManager.hpp"
-#include <SQLiteCpp/SQLiteCpp.h>
+#include "../../include/repositories/TaskRepository.hpp"
 
 
-
-void TaskRepository::create_task(const Task& task, int project_id)
+void TaskRepository::create(const Task& task, int project_id)
 {
-    auto db = DatabaseManager::getInstance()->getDatabase();
     SQLite::Statement query(*db, "INSERT INTO tasks (title, description, priority, status, deadline, project_id) VALUES (?, ?, ?, ?, ?, ?)");
     query.bind(1, task.title);
     query.bind(2, task.description);
@@ -17,10 +13,30 @@ void TaskRepository::create_task(const Task& task, int project_id)
     query.exec();
 }
 
-std::vector<Task> TaskRepository::get_tasks()
+std::optional<Task> TaskRepository::get(int id)
+{
+    SQLite::Statement query(*db, "SELECT id, title, description, priority, status, deadline, project_id FROM tasks WHERE id = ?");
+    query.bind(1, id);
+
+    if (query.executeStep()) 
+    {
+        Task task;
+        task.id          = query.getColumn(0);
+        task.title       = query.getColumn(1).getText();
+        task.description = query.getColumn(2).getText();
+        task.priority    = static_cast<TaskPriority>(query.getColumn(3).getInt());
+        task.status      = static_cast<TaskStatus>(query.getColumn(4).getInt());
+        task.deadline    = query.getColumn(5).getText();
+
+        return task;
+    }
+
+    return std::nullopt;
+}
+
+std::vector<Task> TaskRepository::get_all()
 {
     std::vector<Task> tasks;
-    auto db = DatabaseManager::getInstance()->getDatabase();
     SQLite::Statement query(*db, "SELECT id, title, description, priority, status, deadline, project_id FROM tasks");
 
     while (query.executeStep()) 
@@ -38,52 +54,8 @@ std::vector<Task> TaskRepository::get_tasks()
     return tasks;
 }
 
-std::optional<Task> TaskRepository::get_task(int id)
+std::optional<Task> TaskRepository::get_by_project(int project_id, int task_id)
 {
-    auto db = DatabaseManager::getInstance()->getDatabase();
-    SQLite::Statement query(*db, "SELECT id, title, description, priority, status, deadline, project_id FROM tasks WHERE id = ?");
-    query.bind(1, id);
-
-    if (query.executeStep()) 
-    {
-        Task task;
-        task.id          = query.getColumn(0);
-        task.title       = query.getColumn(1).getText();
-        task.description = query.getColumn(2).getText();
-        task.priority    = static_cast<TaskPriority>(query.getColumn(3).getInt());
-        task.status      = static_cast<TaskStatus>(query.getColumn(4).getInt());
-        task.deadline    = query.getColumn(5).getText();
-        return task;
-    }
-
-    return std::nullopt;
-}
-
-std::vector<Task> TaskRepository::get_tasks_by_project(int project_id)
-{
-    std::vector<Task> tasks;
-    auto db = DatabaseManager::getInstance()->getDatabase();
-    SQLite::Statement query(*db, "SELECT id, title, description, priority, status, deadline, project_id FROM tasks WHERE project_id = ?");
-    query.bind(1, project_id);
-
-    while (query.executeStep()) 
-    {
-        Task task;
-        task.id          = query.getColumn(0);
-        task.title       = query.getColumn(1).getText();
-        task.description = query.getColumn(2).getText();
-        task.priority    = static_cast<TaskPriority>(query.getColumn(3).getInt());
-        task.status      = static_cast<TaskStatus>(query.getColumn(4).getInt());
-        task.deadline    = query.getColumn(5).getText();
-        tasks.push_back(task);
-    }
-
-    return tasks;
-}
-
-std::optional<Task> TaskRepository::get_task_by_project(int project_id, int task_id)
-{
-    auto db = DatabaseManager::getInstance()->getDatabase();
     SQLite::Statement query(*db, "SELECT id, title, description, priority, status, deadline, project_id FROM tasks WHERE project_id = ? AND id = ?");
     query.bind(1, project_id);
     query.bind(2, task_id);
@@ -103,9 +75,29 @@ std::optional<Task> TaskRepository::get_task_by_project(int project_id, int task
     return std::nullopt;
 }
 
-void TaskRepository::update_task(const Task& task)
+std::vector<Task> TaskRepository::get_all_by_project(int project_id)
 {
-    auto db = DatabaseManager::getInstance()->getDatabase();
+    std::vector<Task> tasks;
+    SQLite::Statement query(*db, "SELECT id, title, description, priority, status, deadline, project_id FROM tasks WHERE project_id = ?");
+    query.bind(1, project_id);
+
+    while (query.executeStep()) 
+    {
+        Task task;
+        task.id          = query.getColumn(0);
+        task.title       = query.getColumn(1).getText();
+        task.description = query.getColumn(2).getText();
+        task.priority    = static_cast<TaskPriority>(query.getColumn(3).getInt());
+        task.status      = static_cast<TaskStatus>(query.getColumn(4).getInt());
+        task.deadline    = query.getColumn(5).getText();
+        tasks.push_back(task);
+    }
+
+    return tasks;
+}
+
+void TaskRepository::update(const Task& task)
+{
     SQLite::Statement query(*db, "UPDATE tasks SET title = ?, description = ?, priority = ?, status = ?, deadline = ? WHERE id = ?");
     query.bind(1, task.title);
     query.bind(2, task.description);
@@ -116,16 +108,15 @@ void TaskRepository::update_task(const Task& task)
     query.exec();
 }
 
-void TaskRepository::delete_task(int id)
+void TaskRepository::remove(int id)
 {
-    auto db = DatabaseManager::getInstance()->getDatabase();
     SQLite::Statement query(*db, "DELETE FROM tasks WHERE id = ?");
     query.bind(1, id);
     query.exec();
 }
 
-void TaskRepository::delete_all_tasks()
+void TaskRepository::remove_all()
 {
-    auto db = DatabaseManager::getInstance()->getDatabase();
-    db->exec("DELETE FROM tasks");
+    SQLite::Statement query(*db, "DELETE FROM tasks");
+    query.exec();
 }
