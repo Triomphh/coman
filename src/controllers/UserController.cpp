@@ -20,6 +20,12 @@ void UserController::register_routes(crow::App<crow::CookieParser, crow::Session
             return handle_get_all_users(req); 
         });
 
+    CROW_ROUTE(app, "/users/json")
+        ([this](const crow::request& req) 
+        { 
+            return handle_get_all_users_json(req); 
+        });
+
     CROW_ROUTE(app, "/users/delete/<int>")
         .methods("DELETE"_method)
         ([this](const crow::request& req, int id) 
@@ -108,6 +114,35 @@ crow::response UserController::handle_get_all_users(const crow::request& req)
         context["users"] = std::move(user_list);
         auto page = crow::mustache::load("users.html").render(context);
         return page;
+    }
+    catch (const std::exception& e)
+    {
+        return crow::response(500, "Internal server error: " + std::string(e.what()));
+    }
+}
+
+
+crow::response UserController::handle_get_all_users_json(const crow::request& req)
+{
+    try
+    {
+        auto users = user_service->get_all_users();
+        std::vector<crow::json::wvalue> user_list;
+
+        for (const auto& user : users)
+        {
+            crow::json::wvalue u;
+            u["id"] = user.id;
+            u["name"] = user.name;
+            u["email"] = user.email;
+            u["profile_picture"] = user.profile_picture;
+            u["role"] = static_cast<int>(user.role);
+            user_list.push_back(std::move(u));
+        }
+
+        crow::json::wvalue response;
+        response["users"] = std::move(user_list);
+        return crow::response(200, response);
     }
     catch (const std::exception& e)
     {

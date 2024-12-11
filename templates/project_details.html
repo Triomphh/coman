@@ -35,7 +35,7 @@
                         <span class="text-gray-700 text-sm">{{name}}</span>
                     </div>
                     {{/users}}
-                    <button class="flex flex-col items-center justify-center w-12 h-12 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">
+                    <button onclick="showAddUserModal()" class="flex flex-col items-center justify-center w-12 h-12 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                         </svg>
@@ -285,9 +285,32 @@
         </div>
     </div>
 
+    <!-- Add User to Project Modal -->
+    <div id="addUserModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full">
+            <h2 class="text-2xl font-bold mb-4">Add User to Project</h2>
+            <div class="mb-4">
+                <label for="user_search" class="block text-gray-700 font-medium mb-2">Search Users</label>
+                <input type="text" id="user_search" 
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#00B4DB]"
+                       placeholder="Type to search users...">
+            </div>
+            <div id="user_list" class="max-h-60 overflow-y-auto mb-4">
+                <!-- Users will be populated here -->
+            </div>
+            <div class="flex justify-end space-x-4">
+                <button type="button" onclick="hideAddUserModal()" 
+                        class="px-4 py-2 text-gray-600 hover:text-gray-800">Cancel</button>
+                <button onclick="addSelectedUserToProject()" 
+                        class="bg-[#00B4DB] text-white px-4 py-2 rounded-md hover:bg-[#0083a3]">Add User</button>
+            </div>
+        </div>
+    </div>
+
     <script src="../static/js/nav.js"></script>
     <script src="../static/js/tasks.js"></script>
     <script>const projectId = "{{id}}";</script>
     <script src="../static/js/task_drag_drop.js"></script>
+    <script src="../static/js/project_users.js"></script>
 </body>
 </html> 

@@ -16,6 +16,7 @@ public:
 
     crow::response handle_create_user(const crow::request& req);
     crow::response handle_get_all_users(const crow::request& req);
+    crow::response handle_get_all_users_json(const crow::request& req);
     crow::response handle_update_user(const crow::request& req, int id);
     crow::response handle_delete_user(const crow::request& req, int id);
     crow::response handle_delete_all_users(const crow::request& req);
