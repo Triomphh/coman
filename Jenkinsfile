@@ -20,18 +20,43 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh "docker build -t ${DOCKER_IMAGE}:${VERSION} -t ${DOCKER_IMAGE}:latest ."
+                    // Build the builder stage
+                    sh "docker build --target builder -t ${DOCKER_IMAGE}:${VERSION}-builder ."
                 }
             }
         }
 
         stage('Test') {
             steps {
-                sh 'echo "Testing..."'
+                script {
+                    try {
+                        // Run tests using the test stage
+                        sh "docker build --target test -t ${DOCKER_IMAGE}:${VERSION}-test ."
+                        currentBuild.result = 'SUCCESS'
+                    } catch (Exception e) {
+                        currentBuild.result = 'FAILURE'
+                        error("Tests failed: ${e.message}")
+                    }
+                }
+            }
+        }
+
+        stage('Build Production Image') {
+            when {
+                expression { currentBuild.result == 'SUCCESS' }
+            }
+            steps {
+                script {
+                    // Build the final production image
+                    sh "docker build -t ${DOCKER_IMAGE}:${VERSION} -t ${DOCKER_IMAGE}:latest ."
+                }
             }
         }
 
         stage('Deploy') {
+            when {
+                expression { currentBuild.result == 'SUCCESS' }
+            }
             steps {
                 script {
                     // Create volume if it doesn't exist
@@ -62,6 +87,17 @@ pipeline {
                 sh """
                     docker stop ${CONTAINER_NAME} || true
                     docker rm ${CONTAINER_NAME} || true
+                """
+            }
+        }
+        always {
+            // Clean up images
+            script {
+                sh """
+                    docker rmi ${DOCKER_IMAGE}:${VERSION}-builder || true
+                    docker rmi ${DOCKER_IMAGE}:${VERSION}-test || true
+                    docker rmi ${DOCKER_IMAGE}:${VERSION} || true
+                    docker rmi ${DOCKER_IMAGE}:latest || true
                 """
             }
         }
