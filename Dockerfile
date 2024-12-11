@@ -1,4 +1,4 @@
-FROM ubuntu:24.04 AS builder
+FROM ubuntu:24.04
 
 # Avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -27,27 +27,6 @@ RUN rm -rf build && \
     cd build && \
     cmake .. && \
     make
-
-# Test stage
-FROM builder AS test
-RUN /app/coman_test
-
-# Production stage
-FROM ubuntu:24.04
-
-# Install runtime dependencies
-RUN apt-get update && apt-get install -y \
-    libsqlite3-0 \
-    libasio-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-WORKDIR /app
-
-# Create data directory
-RUN mkdir -p /app/data
-
-# Copy only the necessary files from builder
-COPY --from=builder /app/coman .
 
 # Expose the port that the application listens on
 EXPOSE 18080
