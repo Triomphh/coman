@@ -21,12 +21,13 @@ RUN mkdir -p /app/data
 # Copy the current directory contents into the container at /app
 COPY . .
 
-# Create build directory and build the project
+# Create build directory and build the project and tests
 RUN rm -rf build && \
     mkdir build && \
     cd build && \
     cmake .. && \
-    make
+    make && \
+    make coman_test
 
 # Expose the port that the application listens on
 EXPOSE 18080

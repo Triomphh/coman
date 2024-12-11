@@ -27,7 +27,12 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'echo "Testing..."'
+                script {
+                    // Run tests inside a temporary container
+                    sh """
+                        docker run --rm ${DOCKER_IMAGE}:${VERSION} /bin/bash -c './coman_test'
+                    """
+                }
             }
         }
 
