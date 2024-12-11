@@ -33,6 +33,13 @@ void UserController::register_routes(crow::App<crow::CookieParser, crow::Session
         { 
             return handle_delete_all_users(req); 
         });
+
+    CROW_ROUTE(app, "/profile")
+        .methods("GET"_method)
+        ([this](const crow::request& req)
+        {
+            return handle_get_profile(req);
+        });
 }
 
 
@@ -140,6 +147,46 @@ crow::response UserController::handle_delete_all_users(const crow::request& req)
 
 crow::response UserController::handle_get_profile(const crow::request& req)
 {
-    // Not implemented
-    return crow::response(501, "Not implemented");
+    auto& session = *reinterpret_cast<crow::detail::context<crow::CookieParser, crow::SessionMiddleware<crow::FileStore>>*>(req.middleware_context);
+    auto username = session.template get<crow::SessionMiddleware<crow::FileStore>>().get("user", "");
+    
+    // If user is not logged in, redirect to login page
+    if (username.empty()) 
+    {
+        crow::response redirect(302);
+        redirect.set_header("Location", "/login");
+        return redirect;
+    }
+    
+    // Get user data
+    auto user = user_service->get_user_by_email(username);
+    if (!user) 
+    {
+        crow::response redirect(302);
+        redirect.set_header("Location", "/login");
+        return redirect;
+    }
+    
+    crow::mustache::context context;
+    utils::ContextUtils::populate_navbar_context(context, req, user_service);
+    
+    // Add user data to context
+    context["name"]            = user->name;
+    context["email"]           = user->email;
+    context["profile_picture"] = user->profile_picture;
+    
+    // Add role-specific flags for styling
+    context["isAdmin"]          = (user->role == UserRole::ADMIN);
+    context["isProjectManager"] = (user->role == UserRole::PROJECT_MANAGER);
+    context["isTeamMember"]     = (user->role == UserRole::TEAM_MEMBER);
+    
+    // Add role text
+    switch(user->role) 
+    {
+        case UserRole::ADMIN:           context["roleText"] = "Admin"; break;
+        case UserRole::PROJECT_MANAGER: context["roleText"] = "Project Manager"; break;
+        case UserRole::TEAM_MEMBER:     context["roleText"] = "Team Member"; break;
+    }
+    
+    return crow::mustache::load("profile.html").render(context);
 }
