@@ -17,20 +17,11 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                script {
-                    // Build the builder stage
-                    sh "docker build --target builder -t ${DOCKER_IMAGE}:${VERSION}-builder ."
-                }
-            }
-        }
-
-        stage('Test') {
+        stage('Build and Test') {
             steps {
                 script {
                     try {
-                        // Run tests using the test stage
+                        // Build and run tests using the test stage
                         sh "docker build --target test -t ${DOCKER_IMAGE}:${VERSION}-test ."
                         currentBuild.result = 'SUCCESS'
                     } catch (Exception e) {
@@ -94,10 +85,10 @@ pipeline {
             // Clean up images
             script {
                 sh """
-                    docker rmi ${DOCKER_IMAGE}:${VERSION}-builder || true
                     docker rmi ${DOCKER_IMAGE}:${VERSION}-test || true
                     docker rmi ${DOCKER_IMAGE}:${VERSION} || true
                     docker rmi ${DOCKER_IMAGE}:latest || true
+                    docker image prune -f
                 """
             }
         }

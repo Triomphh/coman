@@ -15,6 +15,9 @@ RUN apt-get update && apt-get install -y \
 # Set the working directory
 WORKDIR /app
 
+# Create data directory
+RUN mkdir -p /app/data
+
 # Copy the current directory contents into the container at /app
 COPY . .
 
@@ -45,7 +48,6 @@ RUN mkdir -p /app/data
 
 # Copy only the necessary files from builder
 COPY --from=builder /app/coman .
-COPY --from=builder /app/data /app/data
 
 # Expose the port that the application listens on
 EXPOSE 18080
