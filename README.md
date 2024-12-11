@@ -25,6 +25,7 @@ Le projet suit une architecture client-serveur :
 ## EN REMOTE
 Compilation et déploiment automatique via Jenkins + WebHook
 
+
 ## EN LOCAL
 ### Docker
 Format des versions : `MAJOR.MINOR.PATCH (ex, 1.18.2)` :
@@ -46,11 +47,21 @@ docker build -t triomph/coman:latest .
 # Run
 docker run -p 18080:18080 -v coman-data:/app/data triomph/coman:latest
 ```
-
 > Note : Éventuellement faire `sudo` avant chaque commande
 
+#### Test
+```bash
+# Build
+docker build -t triomph/coman:latest .
 
-### Compilation
+# Launch tests
+sudo docker run --rm triomph/coman:latest /bin/bash -c './coman_test'
+```
+
+---
+
+### Sans Docker
+#### Compilation
 ```bash
 mkdir build
 cd build
@@ -58,7 +69,7 @@ cmake ..
 make
 ```
 
-## Execution
+#### Execution
 ```bash
 ./coman
 ```
