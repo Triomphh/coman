@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="fr" class="bg-[#0a0a0a] scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COMAN - Présentation du Projet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            100: '#1f1f1f',
+                            200: '#171717',
+                            300: '#121212',
+                            400: '#0f0f0f',
+                            500: '#0a0a0a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#0a0a0a] text-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-dark-100 shadow-xl sticky top-0 z-50 border-b border-dark-300">
+        <div class="w-[95%] mx-auto px-4">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-white">COMAN</h1>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#intro" class="text-gray-400 hover:text-white transition-colors">Introduction</a>
+                    <a href="#tech" class="text-gray-400 hover:text-white transition-colors">Technologies</a>
+                    <a href="#infrastructure" class="text-gray-400 hover:text-white transition-colors">Infrastructure</a>
+                    <a href="#architecture" class="text-gray-400 hover:text-white transition-colors">Architecture</a>
+                    <a href="#deployment" class="text-gray-400 hover:text-white transition-colors">Déploiement</a>
+                    <a href="#srs" class="text-gray-400 hover:text-white transition-colors">SRS</a>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button class="text-gray-400 hover:text-white">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile menu (hidden by default) -->
+    <div class="md:hidden bg-dark-100 border-b border-dark-300 hidden">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+            <a href="#intro" class="block px-3 py-2 text-gray-400 hover:text-white transition-colors">Introduction</a>
+            <a href="#tech" class="block px-3 py-2 text-gray-400 hover:text-white transition-colors">Technologies</a>
+            <a href="#infrastructure" class="block px-3 py-2 text-gray-400 hover:text-white transition-colors">Infrastructure</a>
+            <a href="#architecture" class="block px-3 py-2 text-gray-400 hover:text-white transition-colors">Architecture</a>
+            <a href="#deployment" class="block px-3 py-2 text-gray-400 hover:text-white transition-colors">Déploiement</a>
+            <a href="#srs" class="block px-3 py-2 text-gray-400 hover:text-white transition-colors">SRS</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="w-[95%] mx-auto px-4 space-y-24">
+        <!-- Introduction -->
+        <section id="intro" class="min-h-screen flex flex-col justify-center py-24">
+            <div class="text-center max-w-4xl mx-auto mb-16">
+                <h2 class="text-5xl font-bold mb-12 text-white">Gestion de Projet Moderne</h2>
+                <p class="text-xl text-gray-300 mb-12">COMAN est une solution complète de gestion de projet, conçue pour simplifier et optimiser la gestion de vos projets.</p>
+                <ul class="space-y-6 text-gray-400 text-lg max-w-2xl mx-auto">
+                    <li class="flex items-center justify-center">
+                        <svg class="w-6 h-6 mr-3 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <span>Interface intuitive et moderne</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <svg class="w-6 h-6 mr-3 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <span>Performance et scalabilité</span>
+                    </li>
+                    <li class="flex items-center justify-center">
+                        <svg class="w-6 h-6 mr-3 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <span>Déploiement automatisé</span>
+                    </li>
+                </ul>
+            </div>
+
+            <a href="https://coman.triomph.dev" target="_blank" class="block w-full">
+                <div class="bg-dark-100 p-4 rounded-lg shadow-2xl hover:bg-dark-200 transition-colors border border-dark-300">
+                    <div class="bg-dark-200 h-[50vh] rounded-lg flex items-center justify-center">
+                        <p class="text-gray-500">Aperçu du Projet COMAN</p>
+                    </div>
+                </div>
+            </a>
+        </section>
+
+        <!-- Technologies -->
+        <section id="tech" class="min-h-screen flex flex-col justify-center py-24">
+            <h2 class="text-4xl font-bold mb-16 text-white">Technologies Utilisées</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
+                    <h3 class="text-xl font-semibold mb-4 text-white">Backend</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            C++ 17
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Framework Crow
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            SQLite
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
+                    <h3 class="text-xl font-semibold mb-4 text-white">Frontend</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            HTML5/CSS3
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Tailwind CSS
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
+                    <h3 class="text-xl font-semibold mb-4 text-white">DevOps</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Docker
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Jenkins
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            GitHub
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Infrastructure -->
+        <section id="infrastructure" class="min-h-screen flex flex-col justify-center py-20">
+            <h2 class="text-4xl font-bold mb-16 text-white">Infrastructure</h2>
+            <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
+                <div class="bg-dark-200 h-[70vh] rounded-lg flex items-center justify-center">
+                    <p class="text-gray-500">Vue Globale de l'Infrastructure</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture -->
+        <section id="architecture" class="space-y-24">
+            <!-- Project Architecture -->
+            <div class="min-h-screen flex flex-col justify-center py-20">
+                <h2 class="text-4xl font-bold mb-16 text-white">Architecture</h2>
+                <div class="flex flex-col lg:flex-row-reverse gap-16">
+                    <div class="w-full lg:w-2/5">
+                        <div class="prose prose-invert">
+                            <h3 class="text-2xl font-semibold mb-8 text-white">Architecture du Projet</h3>
+                            <p class="text-gray-400 text-lg mb-8">Une architecture moderne et modulaire permettant une grande flexibilité et une maintenance simplifiée.</p>
+                            <ul class="space-y-6 text-gray-400">
+                                <li class="flex items-center">
+                                    <span class="text-emerald-500 mr-2">•</span>
+                                    <span>Séparation des responsabilités</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-emerald-500 mr-2">•</span>
+                                    Modules indépendants
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-emerald-500 mr-2">•</span>
+                                    APIs RESTful
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-emerald-500 mr-2">•</span>
+                                    Extensibilité native
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-3/5">
+                        <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
+                            <div class="bg-dark-200 h-[60vh] rounded-lg flex items-center justify-center">
+                                <p class="text-gray-500">Schéma Architecture Projet</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Server Architecture -->
+            <div class="min-h-screen flex flex-col justify-center py-20">
+                <div class="flex flex-col lg:flex-row gap-16">
+                    <div class="w-full lg:w-2/5">
+                        <div class="prose prose-invert">
+                            <h3 class="text-2xl font-semibold mb-8 text-white">Architecture Serveur</h3>
+                            <p class="text-gray-400 text-lg mb-8">Architecture serveur robuste et évolutive.</p>
+                            <ul class="space-y-6 text-gray-400">
+                                <li>• Performance optimisée</li>
+                                <li>• Gestion efficace des ressources</li>
+                                <li>• Sécurité intégrée</li>
+                                <li>• Scalabilité horizontale</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-3/5">
+                        <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
+                            <div class="bg-dark-200 h-[60vh] rounded-lg flex items-center justify-center">
+                                <p class="text-gray-500">Schéma Architecture Serveur</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Database -->
+            <div class="min-h-screen flex flex-col justify-center py-20">
+                <div class="flex flex-col lg:flex-row-reverse gap-16">
+                    <div class="w-full lg:w-2/5">
+                        <div class="prose prose-invert">
+                            <h3 class="text-2xl font-semibold mb-8 text-white">Base de Données</h3>
+                            <p class="text-gray-400 text-lg mb-8">Structure optimisée pour la performance.</p>
+                            <ul class="space-y-6 text-gray-400">
+                                <li>• Modèle relationnel</li>
+                                <li>• Indexation optimisée</li>
+                                <li>• Intégrité des données</li>
+                                <li>• Backups automatisés</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-3/5">
+                        <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
+                            <div class="bg-dark-200 h-[60vh] rounded-lg flex items-center justify-center">
+                                <p class="text-gray-500">Schéma Base de Données</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Class Diagram -->
+            <div class="min-h-screen flex flex-col justify-center py-20">
+                <div class="flex flex-col lg:flex-row gap-16">
+                    <div class="w-full lg:w-2/5">
+                        <div class="prose prose-invert">
+                            <h3 class="text-2xl font-semibold mb-8 text-white">Diagramme de Classes</h3>
+                            <p class="text-gray-400 text-lg mb-8">Vue d'ensemble des classes principales.</p>
+                            <ul class="space-y-6 text-gray-400">
+                                <li>• Structure orientée objet</li>
+                                <li>• Relations entre classes</li>
+                                <li>• Héritage et composition</li>
+                                <li>• Patterns de conception</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-3/5">
+                        <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
+                            <div class="bg-dark-200 h-[60vh] rounded-lg flex items-center justify-center">
+                                <p class="text-gray-500">Diagramme de Classes High Level</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deployment -->
+        <section id="deployment" class="min-h-screen flex flex-col justify-center py-20 space-y-24">
+            <!-- Pipeline CI/CD -->
+            <div>
+                <h2 class="text-4xl font-bold mb-16 text-white">Déploiement</h2>
+                <div class="flex flex-col lg:flex-row-reverse gap-16">
+                    <div class="w-full lg:w-2/5">
+                        <div class="prose prose-invert">
+                            <h3 class="text-2xl font-semibold mb-8 text-white">Pipeline CI/CD</h3>
+                            <p class="text-gray-400 text-lg mb-8">Processus de déploiement automatisé.</p>
+                            <ul class="space-y-6 text-gray-400">
+                                <li class="flex items-center">
+                                    <span class="text-emerald-500 mr-2">•</span>
+                                    <span>Intégration continue</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-emerald-500 mr-2">•</span>
+                                    <span>Tests automatisés</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-emerald-500 mr-2">•</span>
+                                    <span>Déploiement automatique</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-3/5">
+                        <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
+                            <div class="bg-dark-200 h-[60vh] rounded-lg flex items-center justify-center">
+                                <p class="text-gray-500">Schéma Pipeline CI/CD</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Docker -->
+            <div>
+                <div class="flex flex-col lg:flex-row gap-16">
+                    <div class="w-full lg:w-2/5">
+                        <div class="prose prose-invert">
+                            <h3 class="text-2xl font-semibold mb-8 text-white">Configuration Docker</h3>
+                            <p class="text-gray-400 text-lg mb-8">Configuration de conteneurisation pour un déploiement cohérent et reproductible.</p>
+                            <ul class="space-y-6 text-gray-400">
+                                <li class="flex items-center">
+                                    <span class="text-emerald-500 mr-2">•</span>
+                                    <span>Image basée sur GCC</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-emerald-500 mr-2">•</span>
+                                    <span>Installation automatisée des dépendances</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-emerald-500 mr-2">•</span>
+                                    <span>Compilation intégrée</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-3/5">
+                        <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
+                            <pre class="bg-dark-200 rounded-lg p-6"><code class="language-dockerfile text-gray-300">FROM gcc:latest
+
+WORKDIR /app
+COPY . .
+
+RUN apt-get update && apt-get install -y \
+    cmake \
+    build-essential \
+    libasio-dev
+
+RUN mkdir build && cd build && \
+    cmake .. && \
+    make
+
+EXPOSE 18080
+
+CMD ["./coman"]</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tests -->
+            <div>
+                <div class="flex flex-col lg:flex-row-reverse gap-16">
+                    <div class="w-full lg:w-2/5">
+                        <div class="prose prose-invert">
+                            <h3 class="text-2xl font-semibold mb-8 text-white">Tests Unitaires</h3>
+                            <p class="text-gray-400 text-lg mb-8">Tests automatisés avec Google Test Framework pour garantir la fiabilité du code.</p>
+                            <ul class="space-y-6 text-gray-400">
+                                <li class="flex items-center">
+                                    <span class="text-emerald-500 mr-2">•</span>
+                                    <span>Framework Google Test</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-emerald-500 mr-2">•</span>
+                                    <span>Tests unitaires exhaustifs</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-emerald-500 mr-2">•</span>
+                                    <span>Assertions avancées</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-emerald-500 mr-2">•</span>
+                                    <span>Intégration CI/CD</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-3/5">
+                        <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
+                            <pre class="bg-dark-200 rounded-lg p-6"><code class="language-cpp text-gray-300">#include &lt;gtest/gtest.h&gt;
+#include "Project.h"
+
+TEST(ProjectTest, Creation) {
+    Project project("Test Project");
+    EXPECT_EQ(project.getName(), "Test Project");
+    EXPECT_TRUE(project.getTasks().empty());
+}
+
+TEST(ProjectTest, AddTask) {
+    Project project("Test Project");
+    Task task("Test Task");
+    
+    project.addTask(task);
+    EXPECT_EQ(project.getTasks().size(), 1);
+    EXPECT_EQ(project.getTasks()[0].getName(), "Test Task");
+}
+
+TEST(ProjectTest, TaskStatus) {
+    Project project("Test Project");
+    Task task("Test Task");
+    
+    project.addTask(task);
+    EXPECT_EQ(project.getTasks()[0].getStatus(), TaskStatus::TODO);
+    
+    project.getTasks()[0].setStatus(TaskStatus::IN_PROGRESS);
+    EXPECT_EQ(project.getTasks()[0].getStatus(), TaskStatus::IN_PROGRESS);
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SRS -->
+        <section id="srs" class="min-h-screen flex flex-col justify-center py-20">
+            <div class="flex flex-col lg:flex-row gap-16">
+                <div class="w-full lg:w-2/5">
+                    <div class="prose prose-invert">
+                        <h2 class="text-4xl font-bold mb-8 text-white">Software Requirements Specification</h2>
+                        <p class="text-gray-400 text-lg mb-8">Documentation détaillée des spécifications.</p>
+                        <ul class="space-y-6 text-gray-400">
+                            <li>• Exigences fonctionnelles</li>
+                            <li>• Exigences non fonctionnelles</li>
+                            <li>• Contraintes techniques</li>
+                            <li>• Cas d'utilisation</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="w-full lg:w-3/5">
+                    <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
+                        <div class="bg-dark-200 h-[60vh] rounded-lg flex items-center justify-center">
+                            <p class="text-gray-500">Document SRS</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team -->
+        <section id="team" class="min-h-screen flex flex-col justify-center py-20">
+            <h2 class="text-4xl font-bold mb-16 text-white text-center">L'Équipe</h2>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-16">
+                <div class="flex items-center space-x-4">
+                    <div class="bg-dark-100 w-24 h-24 rounded-full flex items-center justify-center border border-dark-300">
+                        <p class="text-gray-500">Avatar 1</p>
+                    </div>
+                    <div class="text-white">
+                        <h3 class="text-xl font-semibold">Prénom Nom</h3>
+                        <p class="text-gray-400">Rôle</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="bg-dark-100 w-24 h-24 rounded-full flex items-center justify-center border border-dark-300">
+                        <p class="text-gray-500">Avatar 2</p>
+                    </div>
+                    <div class="text-white">
+                        <h3 class="text-xl font-semibold">Prénom Nom</h3>
+                        <p class="text-gray-400">Rôle</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark-100 text-white py-8 mt-24 border-t border-dark-300">
+        <div class="w-[95%] mx-auto px-4">
+            <div class="text-center">
+                <p>COMAN - Projet de Gestion</p>
+                <p class="mt-2 text-gray-500">Développé avec ❤️ par l'équipe COMAN</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-dockerfile.min.js"></script>
+    
+    <!-- Menu mobile toggle -->
+    <script>
+        document.querySelector('button').addEventListener('click', () => {
+            document.querySelector('.md\\:hidden.bg-dark-100').classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html> 
