@@ -6,6 +6,7 @@
 #include "../include/controllers/DashboardController.hpp"
 #include "../include/controllers/AuthenticationController.hpp"
 #include "../include/controllers/ProjectMembershipController.hpp"
+#include "../include/controllers/DocumentationController.hpp"
 #include "../include/services/ProjectService.hpp"
 #include "../include/services/TaskService.hpp"
 #include "../include/services/UserService.hpp"
@@ -66,6 +67,7 @@ int main()
         user_service,
         app
     );
+    auto documentation_controller = std::make_shared<DocumentationController>();
 
     // Register routes
     dashboard_controller->register_routes(app);
@@ -74,6 +76,7 @@ int main()
     user_controller->register_routes(app);
     authentication_controller->register_routes(app);
     project_membership_controller->register_routes(app);
+    documentation_controller->register_routes(app);
 
     // Configure and run the application
     app.port(18080)

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COMAN - Présentation du Projet</title>
+    <title>coman - Présentation du Projet</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
     <script>
@@ -30,7 +30,7 @@
         <div class="w-[95%] mx-auto px-4">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <h1 class="text-2xl font-bold text-white">COMAN</h1>
+                    <a href="/" class="text-2xl font-bold text-white hover:text-gray-300 transition-colors">coman</a>
                 </div>
                 <div class="hidden md:flex items-center space-x-6">
                     <a href="#intro" class="text-gray-400 hover:text-white transition-colors">Introduction</a>
@@ -69,34 +69,23 @@
         <!-- Introduction -->
         <section id="intro" class="min-h-screen flex flex-col justify-center py-24">
             <div class="text-center max-w-4xl mx-auto mb-16">
-                <h2 class="text-5xl font-bold mb-12 text-white">Gestion de Projet Moderne</h2>
-                <p class="text-xl text-gray-300 mb-12">COMAN est une solution complète de gestion de projet, conçue pour simplifier et optimiser la gestion de vos projets.</p>
-                <ul class="space-y-6 text-gray-400 text-lg max-w-2xl mx-auto">
-                    <li class="flex items-center justify-center">
-                        <svg class="w-6 h-6 mr-3 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                        </svg>
-                        <span>Interface intuitive et moderne</span>
-                    </li>
-                    <li class="flex items-center justify-center">
-                        <svg class="w-6 h-6 mr-3 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                        </svg>
-                        <span>Performance et scalabilité</span>
-                    </li>
-                    <li class="flex items-center justify-center">
-                        <svg class="w-6 h-6 mr-3 text-emerald-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                        </svg>
-                        <span>Déploiement automatisé</span>
-                    </li>
-                </ul>
+                <h2 class="text-5xl font-bold mb-12 text-white">coman</h2>
+                <p class="text-xl text-gray-300 mb-12">Une application web de gestion de projets moderne, développée en C++ avec le framework Crow.</p>
             </div>
 
-            <a href="https://coman.triomph.dev" target="_blank" class="block w-full">
-                <div class="bg-dark-100 p-4 rounded-lg shadow-2xl hover:bg-dark-200 transition-colors border border-dark-300">
-                    <div class="bg-dark-200 h-[50vh] rounded-lg flex items-center justify-center">
-                        <p class="text-gray-500">Aperçu du Projet COMAN</p>
+            <a href="/" class="block w-full">
+                <div class="max-w-4xl mx-auto bg-dark-100 p-4 rounded-lg shadow-2xl hover:bg-dark-200 transition-colors border border-dark-300">
+                    <div class="relative group">
+                        <img 
+                            src="/static/Documents/Presentation/coman_dashboard.png" 
+                            alt="Dashboard coman" 
+                            class="w-full rounded-lg"
+                        >
+                        <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
+                            <button class="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors">
+                                Visiter le site
+                            </button>
+                        </div>
                     </div>
                 </div>
             </a>
@@ -175,9 +164,39 @@
         <!-- Infrastructure -->
         <section id="infrastructure" class="min-h-screen flex flex-col justify-center py-20">
             <h2 class="text-4xl font-bold mb-16 text-white">Infrastructure</h2>
-            <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
-                <div class="bg-dark-200 h-[70vh] rounded-lg flex items-center justify-center">
-                    <p class="text-gray-500">Vue Globale de l'Infrastructure</p>
+            <div class="flex flex-col lg:flex-row gap-16">
+                <div class="w-full lg:w-3/5">
+                    <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
+                        <img 
+                            src="/static/Documents/Presentation/infrastructure.png" 
+                            alt="Infrastructure coman" 
+                            class="w-full rounded-lg"
+                        >
+                    </div>
+                </div>
+                <div class="w-full lg:w-2/5">
+                    <div class="prose prose-invert">
+                        <h3 class="text-2xl font-semibold mb-8 text-white">Infrastructure Technique</h3>
+                        <p class="text-gray-400 text-lg mb-8">Le projet est hébergé sur un VPS Linode sous Linux, avec NGINX comme reverse proxy pour gérer les requêtes entrantes et assurer la sécurité.</p>
+                        <ul class="space-y-6 text-gray-400">
+                            <li class="flex items-center">
+                                <span class="text-blue-500 mr-2">•</span>
+                                <span>VPS Linode</span>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="text-blue-500 mr-2">•</span>
+                                <span>NGINX comme reverse proxy</span>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="text-blue-500 mr-2">•</span>
+                                <span>Certificat SSL automatique Let's Encrypt + certbot</span>
+                            </li>
+                            <li class="flex items-center">
+                                <span class="text-blue-500 mr-2">•</span>
+                                <span>Conteneurisation avec Docker</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
@@ -185,113 +204,129 @@
         <!-- Architecture -->
         <section id="architecture" class="space-y-24">
             <!-- Project Architecture -->
-            <div class="min-h-screen flex flex-col justify-center py-20">
+            <div id="architecture-project" class="min-h-screen flex flex-col justify-center py-20">
                 <h2 class="text-4xl font-bold mb-16 text-white">Architecture</h2>
                 <div class="flex flex-col lg:flex-row-reverse gap-16">
                     <div class="w-full lg:w-2/5">
                         <div class="prose prose-invert">
                             <h3 class="text-2xl font-semibold mb-8 text-white">Architecture du Projet</h3>
-                            <p class="text-gray-400 text-lg mb-8">Une architecture moderne et modulaire permettant une grande flexibilité et une maintenance simplifiée.</p>
+                            <p class="text-gray-400 text-lg mb-8">Une architecture client-serveur classique où le serveur C++ gère la logique métier et les données, tandis que le client web assure l'interface utilisateur.</p>
                             <ul class="space-y-6 text-gray-400">
                                 <li class="flex items-center">
                                     <span class="text-emerald-500 mr-2">•</span>
-                                    <span>Séparation des responsabilités</span>
+                                    <span>Serveur C++ avec Crow pour les API REST</span>
                                 </li>
                                 <li class="flex items-center">
                                     <span class="text-emerald-500 mr-2">•</span>
-                                    Modules indépendants
+                                    Client web en HTML/CSS
                                 </li>
                                 <li class="flex items-center">
                                     <span class="text-emerald-500 mr-2">•</span>
-                                    APIs RESTful
-                                </li>
-                                <li class="flex items-center">
-                                    <span class="text-emerald-500 mr-2">•</span>
-                                    Extensibilité native
+                                    Communication via requêtes HTTP
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="w-full lg:w-3/5">
                         <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
-                            <div class="bg-dark-200 h-[60vh] rounded-lg flex items-center justify-center">
-                                <p class="text-gray-500">Schéma Architecture Projet</p>
-                            </div>
+                            <img 
+                                src="/static/Documents/Presentation/architecture.png" 
+                                alt="Architecture du Projet coman" 
+                                class="w-full rounded-lg"
+                            >
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Server Architecture -->
-            <div class="min-h-screen flex flex-col justify-center py-20">
+            <div id="architecture-server" class="min-h-screen flex flex-col justify-center py-20">
                 <div class="flex flex-col lg:flex-row gap-16">
                     <div class="w-full lg:w-2/5">
                         <div class="prose prose-invert">
                             <h3 class="text-2xl font-semibold mb-8 text-white">Architecture Serveur</h3>
-                            <p class="text-gray-400 text-lg mb-8">Architecture serveur robuste et évolutive.</p>
+                            <p class="text-gray-400 text-lg mb-8">Architecture en couches suivant le pattern MVC avec une séparation claire des responsabilités.</p>
                             <ul class="space-y-6 text-gray-400">
-                                <li>• Performance optimisée</li>
-                                <li>• Gestion efficace des ressources</li>
-                                <li>• Sécurité intégrée</li>
-                                <li>• Scalabilité horizontale</li>
+                                <li class="flex items-center">
+                                    <span class="text-blue-500 mr-2">•</span>
+                                    <span>View : Templates HTML pour le rendu des pages</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-blue-500 mr-2">•</span>
+                                    <span>Controller : Gestion des requêtes et de la logique de présentation</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-blue-500 mr-2">•</span>
+                                    <span>Service : Logique métier et orchestration des opérations</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-blue-500 mr-2">•</span>
+                                    <span>Repository : Accès aux données et requêtes SQL</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="text-blue-500 mr-2">•</span>
+                                    <span>Model : Classes représentant les entités métier</span>
+                                </li>
                             </ul>
+                            <h4 class="text-xl font-semibold mt-12 mb-6 text-white">Avantages de l'Architecture</h4>
+                            <p class="text-gray-400 text-lg leading-relaxed">
+                                Cette architecture permet une séparation claire des responsabilités, rendant le code plus maintenable et évolutif. Les services encapsulent la logique métier et peuvent être réutilisés à travers différents controllers, tandis que les repositories isolent complètement l'accès aux données. Cette abstraction facilite les changements de base de données et permet d'écrire des tests unitaires efficaces grâce à l'injection de dépendances. La séparation entre les services et les repositories permet également de modifier la logique métier sans impacter la couche de données, et vice-versa.
+                            </p>
                         </div>
                     </div>
                     <div class="w-full lg:w-3/5">
                         <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
-                            <div class="bg-dark-200 h-[60vh] rounded-lg flex items-center justify-center">
-                                <p class="text-gray-500">Schéma Architecture Serveur</p>
-                            </div>
+                            <img 
+                                src="/static/Documents/Presentation/server_architecture.png" 
+                                alt="Architecture Serveur coman" 
+                                class="w-full rounded-lg"
+                            >
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Database -->
-            <div class="min-h-screen flex flex-col justify-center py-20">
+            <div id="architecture-database" class="min-h-screen flex flex-col justify-center py-20">
                 <div class="flex flex-col lg:flex-row-reverse gap-16">
                     <div class="w-full lg:w-2/5">
                         <div class="prose prose-invert">
                             <h3 class="text-2xl font-semibold mb-8 text-white">Base de Données</h3>
-                            <p class="text-gray-400 text-lg mb-8">Structure optimisée pour la performance.</p>
-                            <ul class="space-y-6 text-gray-400">
-                                <li>• Modèle relationnel</li>
-                                <li>• Indexation optimisée</li>
-                                <li>• Intégrité des données</li>
-                                <li>• Backups automatisés</li>
-                            </ul>
+                            <p class="text-gray-400 text-lg leading-relaxed">
+                                Le projet utilise SQLite comme base de données, implémentée avec un pattern Singleton pour garantir une instance unique de la connexion. Cette approche assure une gestion efficace des ressources et évite les problèmes de concurrence d'accès à la base de données.
+                            </p>
                         </div>
                     </div>
                     <div class="w-full lg:w-3/5">
-                        <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
-                            <div class="bg-dark-200 h-[60vh] rounded-lg flex items-center justify-center">
-                                <p class="text-gray-500">Schéma Base de Données</p>
-                            </div>
+                        <div class="bg-white p-8 rounded-lg shadow-2xl border border-dark-300 flex justify-center">
+                            <iframe 
+                                src="/static/Documents/Presentation/database_scheme.html" 
+                                class="w-[60vh] h-[60vh] rounded-lg"
+                                frameborder="0"
+                            ></iframe>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Class Diagram -->
-            <div class="min-h-screen flex flex-col justify-center py-20">
+            <div id="architecture-class" class="min-h-screen flex flex-col justify-center py-20">
                 <div class="flex flex-col lg:flex-row gap-16">
                     <div class="w-full lg:w-2/5">
                         <div class="prose prose-invert">
                             <h3 class="text-2xl font-semibold mb-8 text-white">Diagramme de Classes</h3>
-                            <p class="text-gray-400 text-lg mb-8">Vue d'ensemble des classes principales.</p>
-                            <ul class="space-y-6 text-gray-400">
-                                <li>• Structure orientée objet</li>
-                                <li>• Relations entre classes</li>
-                                <li>• Héritage et composition</li>
-                                <li>• Patterns de conception</li>
-                            </ul>
+                            <p class="text-gray-400 text-lg leading-relaxed">
+                                Le diagramme présente les principales classes du projet organisées selon notre architecture MVC. Chaque entité (Project, Task, User) possède son propre Controller qui gère les requêtes, son Service qui implémente la logique métier, et son Repository qui gère l'accès aux données. Cette structure en couches permet une séparation claire des responsabilités et facilite l'évolution du code.
+                            </p>
                         </div>
                     </div>
                     <div class="w-full lg:w-3/5">
-                        <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
-                            <div class="bg-dark-200 h-[60vh] rounded-lg flex items-center justify-center">
-                                <p class="text-gray-500">Diagramme de Classes High Level</p>
-                            </div>
+                        <div class="bg-white p-8 rounded-lg shadow-2xl border border-dark-300">
+                            <iframe 
+                                src="/static/Documents/UML/Class_Diagrams/high_level_class_diagram.html" 
+                                class="w-full h-[60vh] rounded-lg"
+                                frameborder="0"
+                            ></iframe>
                         </div>
                     </div>
                 </div>
@@ -301,7 +336,7 @@
         <!-- Deployment -->
         <section id="deployment" class="min-h-screen flex flex-col justify-center py-20 space-y-24">
             <!-- Pipeline CI/CD -->
-            <div>
+            <div id="deployment-pipeline">
                 <h2 class="text-4xl font-bold mb-16 text-white">Déploiement</h2>
                 <div class="flex flex-col lg:flex-row-reverse gap-16">
                     <div class="w-full lg:w-2/5">
@@ -326,55 +361,121 @@
                     </div>
                     <div class="w-full lg:w-3/5">
                         <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
-                            <div class="bg-dark-200 h-[60vh] rounded-lg flex items-center justify-center">
-                                <p class="text-gray-500">Schéma Pipeline CI/CD</p>
-                            </div>
+                            <pre class="language-groovy rounded-lg overflow-auto max-h-[60vh]"><code class="text-sm text-gray-200">pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE = 'triomph/coman'
+        VERSION = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+        CONTAINER_NAME = 'coman'
+        VOLUME_NAME = 'coman-data'
+        APP_PORT = '18080'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+                sh 'git submodule update --init --recursive'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    sh "docker build -t \${DOCKER_IMAGE}:\${VERSION} -t \${DOCKER_IMAGE}:latest ."
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    sh "docker run --rm \${DOCKER_IMAGE}:\${VERSION} /bin/bash -c './coman_test'"
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    sh "docker volume create \${VOLUME_NAME} || true"
+                    sh "docker stop \${CONTAINER_NAME} || true"
+                    sh "docker rm \${CONTAINER_NAME} || true"
+                    sh """
+                        docker run -d --name \${CONTAINER_NAME} \\
+                            -v \${VOLUME_NAME}:/app/data \\
+                            -p \${APP_PORT}:\${APP_PORT} \\
+                            --restart unless-stopped \\
+                            \${DOCKER_IMAGE}:\${VERSION}
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        failure {
+            script {
+                sh "docker stop \${CONTAINER_NAME} || true"
+                sh "docker rm \${CONTAINER_NAME} || true"
+            }
+        }
+    }
+}</code></pre>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Docker -->
-            <div>
+            <div id="deployment-docker" class="min-h-screen flex flex-col justify-center">
                 <div class="flex flex-col lg:flex-row gap-16">
                     <div class="w-full lg:w-2/5">
                         <div class="prose prose-invert">
-                            <h3 class="text-2xl font-semibold mb-8 text-white">Configuration Docker</h3>
-                            <p class="text-gray-400 text-lg mb-8">Configuration de conteneurisation pour un déploiement cohérent et reproductible.</p>
-                            <ul class="space-y-6 text-gray-400">
-                                <li class="flex items-center">
-                                    <span class="text-emerald-500 mr-2">•</span>
-                                    <span>Image basée sur GCC</span>
-                                </li>
-                                <li class="flex items-center">
-                                    <span class="text-emerald-500 mr-2">•</span>
-                                    <span>Installation automatisée des dépendances</span>
-                                </li>
-                                <li class="flex items-center">
-                                    <span class="text-emerald-500 mr-2">•</span>
-                                    <span>Compilation intégrée</span>
-                                </li>
-                            </ul>
+                            <h3 class="text-2xl font-semibold mb-8 text-white">Conteneurisation</h3>
+                            <p class="text-gray-400 text-lg leading-relaxed">
+                                Notre application est conteneurisée avec Docker pour assurer une portabilité et un déploiement cohérent. L'image est basée sur Ubuntu 24.04 et inclut toutes les dépendances nécessaires pour la compilation et l'exécution du projet C++. Le conteneur expose le port 18080 et maintient les données de l'application dans un volume persistant.
+                            </p>
                         </div>
                     </div>
                     <div class="w-full lg:w-3/5">
                         <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
-                            <pre class="bg-dark-200 rounded-lg p-6"><code class="language-dockerfile text-gray-300">FROM gcc:latest
+                            <pre class="language-docker rounded-lg overflow-auto max-h-[60vh]"><code class="text-sm text-gray-200">FROM ubuntu:24.04
 
+# Avoid interactive prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install required packages
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    libsqlite3-dev \
+    libasio-dev \
+    libgtest-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set the working directory
 WORKDIR /app
+
+# Create data directory
+RUN mkdir -p /app/data
+
+# Copy the current directory contents into the container at /app
 COPY . .
 
-RUN apt-get update && apt-get install -y \
-    cmake \
-    build-essential \
-    libasio-dev
-
-RUN mkdir build && cd build && \
+# Create build directory and build the project and tests
+RUN rm -rf build && \
+    mkdir build && \
+    cd build && \
     cmake .. && \
-    make
+    make && \
+    make coman_test
 
+# Expose the port that the application listens on
 EXPOSE 18080
 
+# Run the application
 CMD ["./coman"]</code></pre>
                         </div>
                     </div>
@@ -382,7 +483,7 @@ CMD ["./coman"]</code></pre>
             </div>
 
             <!-- Tests -->
-            <div>
+            <div id="deployment-tests" class="min-h-screen flex flex-col justify-center">
                 <div class="flex flex-col lg:flex-row-reverse gap-16">
                     <div class="w-full lg:w-2/5">
                         <div class="prose prose-invert">
@@ -410,33 +511,23 @@ CMD ["./coman"]</code></pre>
                     </div>
                     <div class="w-full lg:w-3/5">
                         <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
-                            <pre class="bg-dark-200 rounded-lg p-6"><code class="language-cpp text-gray-300">#include &lt;gtest/gtest.h&gt;
-#include "Project.h"
+                            <pre class="language-cpp rounded-lg overflow-auto max-h-[60vh]"><code class="language-cpp text-sm text-gray-200">TEST_F(ProjectRepositoryTest, CreateAndGetProject) 
+{
+    // Create a test project
+    Project project = createTestProject();
 
-TEST(ProjectTest, Creation) {
-    Project project("Test Project");
-    EXPECT_EQ(project.getName(), "Test Project");
-    EXPECT_TRUE(project.getTasks().empty());
-}
+    // Create the project in the database
+    repo->create(project);
 
-TEST(ProjectTest, AddTask) {
-    Project project("Test Project");
-    Task task("Test Task");
-    
-    project.addTask(task);
-    EXPECT_EQ(project.getTasks().size(), 1);
-    EXPECT_EQ(project.getTasks()[0].getName(), "Test Task");
-}
+    // Get the project with ID 1 (first project)
+    auto retrieved = repo->get(1);
 
-TEST(ProjectTest, TaskStatus) {
-    Project project("Test Project");
-    Task task("Test Task");
-    
-    project.addTask(task);
-    EXPECT_EQ(project.getTasks()[0].getStatus(), TaskStatus::TODO);
-    
-    project.getTasks()[0].setStatus(TaskStatus::IN_PROGRESS);
-    EXPECT_EQ(project.getTasks()[0].getStatus(), TaskStatus::IN_PROGRESS);
+    // Verify the project is correct
+    ASSERT_TRUE(retrieved.has_value());
+    EXPECT_EQ(retrieved->name, "Test Project");
+    EXPECT_EQ(retrieved->description, "A test project");
+    EXPECT_EQ(retrieved->start_date, "2024-01-01");
+    EXPECT_EQ(retrieved->end_date, "2024-12-31");
 }</code></pre>
                         </div>
                     </div>
@@ -461,9 +552,11 @@ TEST(ProjectTest, TaskStatus) {
                 </div>
                 <div class="w-full lg:w-3/5">
                     <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
-                        <div class="bg-dark-200 h-[60vh] rounded-lg flex items-center justify-center">
-                            <p class="text-gray-500">Document SRS</p>
-                        </div>
+                        <iframe 
+                            src="/static/Documents/SRS.pdf" 
+                            class="w-full h-[60vh] rounded-lg"
+                            type="application/pdf"
+                        ></iframe>
                     </div>
                 </div>
             </div>
@@ -471,24 +564,25 @@ TEST(ProjectTest, TaskStatus) {
 
         <!-- Team -->
         <section id="team" class="min-h-screen flex flex-col justify-center py-20">
-            <h2 class="text-4xl font-bold mb-16 text-white text-center">L'Équipe</h2>
             <div class="flex flex-col md:flex-row justify-center items-center gap-16">
                 <div class="flex items-center space-x-4">
-                    <div class="bg-dark-100 w-24 h-24 rounded-full flex items-center justify-center border border-dark-300">
-                        <p class="text-gray-500">Avatar 1</p>
+                    <div class="w-12 h-12 rounded-full bg-dark-200 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                        </svg>
                     </div>
-                    <div class="text-white">
-                        <h3 class="text-xl font-semibold">Prénom Nom</h3>
-                        <p class="text-gray-400">Rôle</p>
+                    <div>
+                        <h3 class="text-lg font-semibold text-white">Kévin Driencourt</h3>
                     </div>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <div class="bg-dark-100 w-24 h-24 rounded-full flex items-center justify-center border border-dark-300">
-                        <p class="text-gray-500">Avatar 2</p>
+                    <div class="w-12 h-12 rounded-full bg-dark-200 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                        </svg>
                     </div>
-                    <div class="text-white">
-                        <h3 class="text-xl font-semibold">Prénom Nom</h3>
-                        <p class="text-gray-400">Rôle</p>
+                    <div>
+                        <h3 class="text-lg font-semibold text-white">Florent Conderine</h3>
                     </div>
                 </div>
             </div>
@@ -496,25 +590,129 @@ TEST(ProjectTest, TaskStatus) {
     </div>
 
     <!-- Footer -->
-    <footer class="bg-dark-100 text-white py-8 mt-24 border-t border-dark-300">
-        <div class="w-[95%] mx-auto px-4">
-            <div class="text-center">
-                <p>COMAN - Projet de Gestion</p>
-                <p class="mt-2 text-gray-500">Développé avec ❤️ par l'équipe COMAN</p>
-            </div>
+    <footer class="bg-dark-100 py-8">
+        <div class="container mx-auto text-center">
+            <p class="text-gray-400">Projet réalisé dans le cadre du Master 1 de l'Université de Pau et des Pays de l'Adour (UPPA)</p>
         </div>
     </footer>
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-cpp.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-dockerfile.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-docker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-groovy.min.js"></script>
     
     <!-- Menu mobile toggle -->
     <script>
         document.querySelector('button').addEventListener('click', () => {
             document.querySelector('.md\\:hidden.bg-dark-100').classList.toggle('hidden');
         });
+    </script>
+
+    <!-- Floating arrow buttons -->
+    <button id="prevSectionBtn" class="fixed top-24 right-8 bg-dark-100 hover:bg-dark-200 text-gray-400 hover:text-gray-200 rounded-full p-2.5 shadow-lg transition-all duration-300 border border-dark-300">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+        </svg>
+    </button>
+    <button id="nextSectionBtn" class="fixed bottom-8 right-8 bg-dark-100 hover:bg-dark-200 text-gray-400 hover:text-gray-200 rounded-full p-2.5 shadow-lg transition-all duration-300 border border-dark-300">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+        </svg>
+    </button>
+
+    <!-- Section navigation -->
+    <script>
+        // Liste complète des sections et sous-sections
+        const sections = [
+            'intro',
+            'tech',
+            'infrastructure',
+            // Architecture et ses sous-sections
+            'architecture-project',
+            'architecture-server',
+            'architecture-database',
+            'architecture-class',
+            // Deployment et ses sous-sections
+            'deployment-pipeline',
+            'deployment-docker',
+            'deployment-tests',
+            'srs',
+            'team'
+        ];
+
+        // Ajout des IDs aux sections qui n'en ont pas
+        document.querySelectorAll('section > div > div > h3').forEach(heading => {
+            const section = heading.closest('div.flex.flex-col');
+            if (section) {
+                const headingText = heading.textContent.toLowerCase();
+                if (headingText.includes('architecture')) {
+                    section.id = 'architecture-' + headingText.split(' ')[0].toLowerCase();
+                } else if (headingText.includes('pipeline')) {
+                    section.id = 'deployment-pipeline';
+                } else if (headingText.includes('conteneur')) {
+                    section.id = 'deployment-docker';
+                } else if (headingText.includes('tests')) {
+                    section.id = 'deployment-tests';
+                }
+            }
+        });
+
+        const prevSectionBtn = document.getElementById('prevSectionBtn');
+        const nextSectionBtn = document.getElementById('nextSectionBtn');
+
+        function getCurrentSectionIndex() {
+            const scrollPosition = window.scrollY + window.innerHeight / 3;
+            let currentIndex = 0;
+
+            sections.forEach((sectionId, index) => {
+                const section = document.getElementById(sectionId);
+                if (section && section.offsetTop <= scrollPosition) {
+                    currentIndex = index;
+                }
+            });
+
+            return currentIndex;
+        }
+
+        function scrollToNextSection() {
+            const currentIndex = getCurrentSectionIndex();
+            const nextIndex = (currentIndex + 1) % sections.length;
+            const nextSection = document.getElementById(sections[nextIndex]);
+            
+            if (nextSection) {
+                nextSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function scrollToPrevSection() {
+            const currentIndex = getCurrentSectionIndex();
+            const prevIndex = currentIndex === 0 ? sections.length - 1 : currentIndex - 1;
+            const prevSection = document.getElementById(sections[prevIndex]);
+            
+            if (prevSection) {
+                prevSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function updateButtonsVisibility() {
+            const currentIndex = getCurrentSectionIndex();
+            
+            // Update next button visibility
+            nextSectionBtn.style.opacity = currentIndex === sections.length - 1 ? '0' : '1';
+            nextSectionBtn.style.pointerEvents = currentIndex === sections.length - 1 ? 'none' : 'auto';
+            
+            // Update prev button visibility
+            prevSectionBtn.style.opacity = currentIndex === 0 ? '0' : '1';
+            prevSectionBtn.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
+        }
+
+        prevSectionBtn.addEventListener('click', scrollToPrevSection);
+        nextSectionBtn.addEventListener('click', scrollToNextSection);
+        window.addEventListener('scroll', updateButtonsVisibility);
+        updateButtonsVisibility();
     </script>
 </body>
 </html> 

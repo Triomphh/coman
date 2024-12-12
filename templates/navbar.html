@@ -6,20 +6,28 @@
             <li class="text-gray-500 cursor-not-allowed">Tasks</li>
             <li><a href="/users" class="text-white hover:text-gray-300">Users</a></li>
         </ul>
-        <div class="relative">
-            <button onclick="toggleProfileMenu()" class="flex items-center text-white hover:text-gray-300">
-                <img src="/static/profile_pictures/{{profile_picture}}" alt="Profile" 
-                     class="w-8 h-8 rounded-full border-2 border-white">
-            </button>
-            <div id="profileMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-                <a href="/profile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                    Profile Settings
-                </a>
-                <form action="/logout" method="POST" class="block">
-                    <button type="submit" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
-                        Logout
-                    </button>
-                </form>
+        <div class="flex items-center space-x-6">
+            <a href="/doc" class="bg-white text-[#00B4DB] px-4 py-1.5 rounded-lg font-bold hover:bg-gray-100 transition-colors duration-200 flex items-center shadow-lg border-2 border-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Documentation
+            </a>
+            <div class="relative">
+                <button onclick="toggleProfileMenu()" class="flex items-center text-white hover:text-gray-300">
+                    <img src="/static/profile_pictures/{{profile_picture}}" alt="Profile" 
+                         class="w-8 h-8 rounded-full border-2 border-white">
+                </button>
+                <div id="profileMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                    <a href="/profile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        Profile Settings
+                    </a>
+                    <form action="/logout" method="POST" class="block">
+                        <button type="submit" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
+                            Logout
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
