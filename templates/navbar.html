@@ -1,34 +1,99 @@
 <nav class="bg-[#00B4DB] p-4">
-    <div class="flex justify-between items-center">
-        <ul class="flex items-center space-x-8">
-            <li><a href="/" class="text-white font-bold text-xl hover:text-gray-300">coman</a></li>
-            <li><a href="/projects" class="text-white hover:text-gray-300">Projects</a></li>
-            <li class="text-gray-500 cursor-not-allowed">Tasks</li>
-            <li><a href="/users" class="text-white hover:text-gray-300">Users</a></li>
-        </ul>
-        <div class="flex items-center space-x-6">
-            <a href="/doc" class="bg-white text-[#00B4DB] px-4 py-1.5 rounded-lg font-bold hover:bg-gray-100 transition-colors duration-200 flex items-center shadow-lg border-2 border-white">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                Documentation
-            </a>
-            <div class="relative">
-                <button onclick="toggleProfileMenu()" class="flex items-center text-white hover:text-gray-300">
-                    <img src="/static/profile_pictures/{{profile_picture}}" alt="Profile" 
-                         class="w-8 h-8 rounded-full border-2 border-white">
-                </button>
-                <div id="profileMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-                    <a href="/profile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                        Profile Settings
-                    </a>
-                    <form action="/logout" method="POST" class="block">
-                        <button type="submit" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
-                            Logout
-                        </button>
-                    </form>
+    <div class="container mx-auto">
+        <div class="flex justify-between items-center">
+            <!-- Logo and Desktop Navigation -->
+            <div class="flex items-center">
+                <a href="/" class="text-white font-bold text-xl hover:text-gray-300 mr-8">coman</a>
+                <ul class="hidden md:flex items-center space-x-8">
+                    <li><a href="/projects" class="text-white hover:text-gray-300">Projects</a></li>
+                    <li class="text-gray-500 cursor-not-allowed">Tasks</li>
+                    <li><a href="/users" class="text-white hover:text-gray-300">Users</a></li>
+                </ul>
+            </div>
+
+            <!-- Right side items -->
+            <div class="flex items-center space-x-2 md:space-x-6">
+                <a href="/doc" class="bg-white text-[#00B4DB] px-2 md:px-4 py-1.5 rounded-lg font-bold hover:bg-gray-100 transition-colors duration-200 flex items-center shadow-lg border-2 border-white text-sm md:text-base">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5 mr-1 md:mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span class="hidden md:inline">Documentation</span>
+                    <span class="md:hidden">Docs</span>
+                </a>
+                <div class="relative">
+                    <button onclick="toggleProfileMenu()" class="flex items-center text-white hover:text-gray-300">
+                        <img src="/static/profile_pictures/{{profile_picture}}" alt="Profile" 
+                             class="w-8 h-8 rounded-full border-2 border-white">
+                    </button>
+                    <div id="profileMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                        <a href="/profile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                            Profile Settings
+                        </a>
+                        <form action="/logout" method="POST" class="block">
+                            <button type="submit" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                Logout
+                            </button>
+                        </form>
+                    </div>
                 </div>
+                <!-- Mobile menu button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden md:hidden mt-4 fixed left-0 right-0 bg-white shadow-lg z-50">
+            <div class="border-t border-gray-200">
+                <ul class="flex flex-col">
+                    <li><a href="/projects" class="block px-6 py-3 text-gray-700 hover:bg-gray-50 border-b border-gray-200">Projects</a></li>
+                    <li><span class="block px-6 py-3 text-gray-500 cursor-not-allowed border-b border-gray-200">Tasks</span></li>
+                    <li><a href="/users" class="block px-6 py-3 text-gray-700 hover:bg-gray-50 border-b border-gray-200">Users</a></li>
+                </ul>
             </div>
         </div>
     </div>
-</nav> 
+</nav>
+
+<script>
+function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenu.classList.toggle('hidden');
+    
+    // Close profile menu when opening mobile menu
+    const profileMenu = document.getElementById('profileMenu');
+    if (!profileMenu.classList.contains('hidden')) {
+        profileMenu.classList.add('hidden');
+    }
+}
+
+function toggleProfileMenu() {
+    const profileMenu = document.getElementById('profileMenu');
+    profileMenu.classList.toggle('hidden');
+    
+    // Close mobile menu when opening profile menu
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (!mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+    }
+}
+
+// Close menus when clicking outside
+document.addEventListener('click', function(event) {
+    const mobileMenu = document.getElementById('mobileMenu');
+    const profileMenu = document.getElementById('profileMenu');
+    const mobileMenuButton = document.querySelector('[onclick="toggleMobileMenu()"]');
+    const profileButton = document.querySelector('[onclick="toggleProfileMenu()"]');
+
+    if (!mobileMenuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+        mobileMenu.classList.add('hidden');
+    }
+    
+    if (!profileButton.contains(event.target) && !profileMenu.contains(event.target)) {
+        profileMenu.classList.add('hidden');
+    }
+});
+</script> 
