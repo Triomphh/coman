@@ -36,7 +36,8 @@
                     <a href="#intro" class="text-gray-400 hover:text-white transition-colors">Introduction</a>
                     <a href="#tech" class="text-gray-400 hover:text-white transition-colors">Technologies</a>
                     <a href="#infrastructure" class="text-gray-400 hover:text-white transition-colors">Infrastructure</a>
-                    <a href="#architecture" class="text-gray-400 hover:text-white transition-colors">Architecture</a>
+                    <a href="#architecture-project" class="text-gray-400 hover:text-white transition-colors">Architecture</a>
+                    <a href="#architecture-patterns" class="text-gray-400 hover:text-white transition-colors">Patterns</a>
                     <a href="#deployment" class="text-gray-400 hover:text-white transition-colors">Déploiement</a>
                     <a href="#srs" class="text-gray-400 hover:text-white transition-colors">SRS</a>
                 </div>
@@ -58,7 +59,8 @@
             <a href="#intro" class="block px-3 py-2 text-gray-400 hover:text-white transition-colors">Introduction</a>
             <a href="#tech" class="block px-3 py-2 text-gray-400 hover:text-white transition-colors">Technologies</a>
             <a href="#infrastructure" class="block px-3 py-2 text-gray-400 hover:text-white transition-colors">Infrastructure</a>
-            <a href="#architecture" class="block px-3 py-2 text-gray-400 hover:text-white transition-colors">Architecture</a>
+            <a href="#architecture-project" class="block px-3 py-2 text-gray-400 hover:text-white transition-colors">Architecture</a>
+            <a href="#architecture-patterns" class="block px-3 py-2 text-gray-400 hover:text-white transition-colors">Patterns</a>
             <a href="#deployment" class="block px-3 py-2 text-gray-400 hover:text-white transition-colors">Déploiement</a>
             <a href="#srs" class="block px-3 py-2 text-gray-400 hover:text-white transition-colors">SRS</a>
         </div>
@@ -327,6 +329,140 @@
                                 class="w-full h-[60vh] rounded-lg"
                                 frameborder="0"
                             ></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Design Patterns -->
+            <div id="architecture-patterns" class="min-h-screen flex flex-col justify-center py-20">
+                <h2 class="text-4xl font-bold mb-8 text-white">Design Patterns</h2>
+                <p class="text-gray-400 text-lg leading-relaxed mb-16">
+                    L'application utilise plusieurs design patterns pour assurer une architecture robuste et maintenable. Ces patterns permettent une meilleure séparation des responsabilités et facilitent la maintenance du code.
+                </p>
+
+                <div class="flex flex-col lg:flex-row gap-16">
+                    <div class="w-full lg:w-2/5">
+                        <div class="prose prose-invert">
+                            <h3 class="text-2xl font-semibold mb-8 text-white">Singleton</h3>
+                            <p class="text-gray-400 text-lg leading-relaxed">
+                                Le pattern Singleton est utilisé pour le gestionnaire de base de données afin de garantir une instance unique de la connexion à la base de données. Cela permet d'éviter les problèmes de concurrence et d'optimiser l'utilisation des ressources.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-3/5">
+                        <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
+                            <pre class="language-cpp rounded-lg overflow-auto max-h-[60vh]"><code class="text-sm text-gray-200">// DatabaseManager.hpp - Pattern Singleton
+class DatabaseManager 
+{
+private:
+    static DatabaseManager* instance;
+    std::unique_ptr&lt;SQLite::Database&gt; db;
+    
+    DatabaseManager()   // private constructor
+    {
+        db = std::make_unique&lt;SQLite::Database&gt;("data/database.db", SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
+    }
+
+public:
+    static DatabaseManager* getInstance() 
+    {
+        if (instance == nullptr) 
+            instance = new DatabaseManager();
+        
+        return instance;
+    }
+};</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col lg:flex-row-reverse gap-16 mt-24">
+                    <div class="w-full lg:w-2/5">
+                        <div class="prose prose-invert">
+                            <h3 class="text-2xl font-semibold mb-8 text-white">Repository Pattern</h3>
+                            <p class="text-gray-400 text-lg leading-relaxed">
+                                Le pattern Repository permet d'abstraire l'accès aux données et d'isoler la logique de persistance du reste de l'application. Chaque entité possède son propre repository qui gère les opérations CRUD.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-3/5">
+                        <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
+                            <pre class="language-cpp rounded-lg overflow-auto max-h-[60vh]"><code class="text-sm text-gray-200">// ProjectRepository.hpp - Pattern Repository
+class ProjectRepository : public IProjectRepository 
+{
+private:
+    std::shared_ptr&lt;SQLite::Database&gt; db;
+
+public:
+    ProjectRepository(std::shared_ptr&lt;SQLite::Database&gt; database) : db(std::move(database)) {}
+
+    void create(const Project& project) override;
+    std::optional&lt;Project&gt; get(int id) override;
+    std::vector&lt;Project&gt; get_all() override;
+    void update(const Project& project) override;
+    void remove(int id) override;
+    void remove_all() override;
+};</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col lg:flex-row gap-16 mt-24">
+                    <div class="w-full lg:w-2/5">
+                        <div class="prose prose-invert">
+                            <h3 class="text-2xl font-semibold mb-8 text-white">Dependency Injection</h3>
+                            <p class="text-gray-400 text-lg leading-relaxed">
+                                L'injection de dépendances est utilisée pour fournir les dépendances nécessaires aux différentes classes, ce qui améliore la testabilité et la flexibilité du code.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-3/5">
+                        <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
+                            <pre class="language-cpp rounded-lg overflow-auto max-h-[60vh]"><code class="text-sm text-gray-200">// main.cpp - Pattern Dependency Injection
+// Get database instance and wrap in shared_ptr
+auto db = std::shared_ptr&lt;SQLite::Database&gt;(DatabaseManager::getInstance());
+
+// Create repositories with database instance
+auto project_repo = std::make_shared&lt;ProjectRepository&gt;(db);
+auto task_repo = std::make_shared&lt;TaskRepository&gt;(db);
+auto user_repo = std::make_shared&lt;UserRepository&gt;(db);
+auto project_membership_repo = std::make_shared&lt;ProjectMembershipRepository&gt;(db);
+
+// Create services
+auto project_service = std::make_shared&lt;ProjectService&gt;(project_repo);
+auto task_service = std::make_shared&lt;TaskService&gt;(task_repo);
+auto user_service = std::make_shared&lt;UserService&gt;(user_repo);
+auto project_membership_service = std::make_shared&lt;ProjectMembershipService&gt;(project_membership_repo);</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col lg:flex-row-reverse gap-16 mt-24">
+                    <div class="w-full lg:w-2/5">
+                        <div class="prose prose-invert">
+                            <h3 class="text-2xl font-semibold mb-8 text-white">Service Pattern</h3>
+                            <p class="text-gray-400 text-lg leading-relaxed">
+                                Le pattern Service encapsule la logique métier de l'application. Il agit comme une couche intermédiaire entre les contrôleurs et les repositories, permettant une meilleure séparation des responsabilités.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-3/5">
+                        <div class="bg-dark-100 p-8 rounded-lg shadow-2xl border border-dark-300">
+                            <pre class="language-cpp rounded-lg overflow-auto max-h-[60vh]"><code class="text-sm text-gray-200">// ProjectService.hpp - Pattern Service
+class ProjectService : public IProjectService
+{
+private:
+    std::shared_ptr&lt;IProjectRepository&gt; repository;
+
+public:
+    ProjectService(std::shared_ptr&lt;IProjectRepository&gt; repo);
+
+    Project create_project(const std::string& name, 
+                           const std::string& description, 
+                           const std::string& start_date, 
+                           const std::string& end_date) override;
+};</code></pre>
                         </div>
                     </div>
                 </div>
@@ -658,6 +794,7 @@ CMD ["./coman"]</code></pre>
             'architecture-server',
             'architecture-database',
             'architecture-class',
+            'architecture-patterns',
             'architecture-usecase',
             // Deployment et ses sous-sections
             'deployment-pipeline',
