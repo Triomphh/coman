@@ -331,6 +331,29 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Use Case Diagram -->
+            <div id="architecture-usecase" class="min-h-screen flex flex-col justify-center py-20">
+                <div class="flex flex-col lg:flex-row gap-16">
+                    <div class="w-full lg:w-2/5">
+                        <div class="prose prose-invert">
+                            <h3 class="text-2xl font-semibold mb-8 text-white">Diagramme de Cas d'Utilisation</h3>
+                            <p class="text-gray-400 text-lg leading-relaxed">
+                                Le diagramme de cas d'utilisation présente les fonctionnalités principales de notre application de gestion de projets. Il montre comment les utilisateurs peuvent interagir avec le système pour créer et gérer des projets, assigner et suivre des tâches, et collaborer avec d'autres membres de l'équipe. Les administrateurs ont des privilèges supplémentaires pour la gestion des utilisateurs et des droits d'accès.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-3/5">
+                        <div class="bg-white p-8 rounded-lg shadow-2xl border border-dark-300">
+                            <iframe 
+                                src="/static/Documents/UML/Use_Case_Diagrams/use_case_main.html" 
+                                class="w-full h-[60vh] rounded-lg"
+                                frameborder="0"
+                            ></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- Deployment -->
@@ -635,6 +658,7 @@ CMD ["./coman"]</code></pre>
             'architecture-server',
             'architecture-database',
             'architecture-class',
+            'architecture-usecase',
             // Deployment et ses sous-sections
             'deployment-pipeline',
             'deployment-docker',
