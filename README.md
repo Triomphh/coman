@@ -1,77 +1,128 @@
-# coman - Project Management Software
+# COMAN - Documentation
 
- [coman.triomph.dev](https://coman.triomph.dev)
+La documentation moderne et avancée est accessible via [coman.triomph.dev/doc](https://coman.triomph.dev/doc)
 
-## Infos importantes pour le flogobert
-- On utilise le framework Crow <sub><sup>(pour ne pas traiter la partie communication HTTP)</sup></sub>
-- Full anglais stp <sub><sup>(si jamais je veux reprendre le projet plus tard)</sup></sub>
-- Fais gaffe à pas commit des fichiers inutiles (compilations, etc...) et mets les dans le `.gitignore` si t'en as
-- Essaye d'avoir des messages de commit normaux
+## À propos
+COMAN est un logiciel de gestion de projet moderne et efficace, accessible via [coman.triomph.dev](https://coman.triomph.dev). Cette application suit une architecture client-serveur robuste, conçue pour offrir une expérience utilisateur fluide et performante.
 
+## Architecture Technique
 
-## Architecture
-Le projet suit une architecture client-serveur :
-- **Backend** : C++ avec APIs REST
-- **Frontend** : HTML/CSS avec Tailwind CSS
+### Backend
+- Développé en C++ (version 17)
+- API REST utilisant le framework Crow
+- Base de données persistante
+- Architecture en couches (MVC)
+  - Models : Représentation des données
+  - Controllers : Gestion des requêtes HTTP
+  - Services : Logique métier
+  - Repositories : Accès aux données
 
-## Dépendances <sub><sup>(en local / sans Docker)</sup></sub>
+### Frontend
+- Interface utilisateur en HTML/CSS
+- Framework CSS : Tailwind CSS
+- Design responsive et moderne
+
+## Déploiement en Production
+
+Le projet est automatiquement déployé sur un VPS (Virtual Private Server) grâce à :
+- **Jenkins** pour l'intégration continue
+- **Webhooks GitHub** qui déclenchent automatiquement le déploiement à chaque push sur la branche principale
+- Pipeline de déploiement automatisé incluant :
+  - Compilation du code
+  - Exécution des tests
+  - Déploiement sur le serveur de production
+
+Cette configuration permet un déploiement continu et sécurisé sans intervention manuelle.
+
+## Prérequis d'Installation
+
+### Installation Locale
+#### Dépendances Requises
 - CMake
-- C++ 17 
-- Asio development headers (1.10.9+) (peut-être devoir link son path dans le `CMakeLists.txt`)
+- C++ 17 ou supérieur
+- Headers de développement Asio (version 1.10.9+)
 
-> Note : uncomment le `CMakeLists.txt` si il y a beaucoup d'erreurs dans la première compilation
+### Installation via Docker
+Docker simplifie considérablement le déploiement de l'application.
 
+#### Prérequis Docker
+- Docker installé sur votre système
+- Droits administrateur pour certaines commandes
 
-## EN REMOTE
-Compilation et déploiment automatique via Jenkins + WebHook
+## Guide d'Installation
 
+### Méthode 1 : Installation avec Docker (Recommandée)
 
-## EN LOCAL
-### Docker
-Format des versions : `MAJOR.MINOR.PATCH (ex, 1.18.2)` :
-- `MAJOR (1.0.0)`: Release majeures <br>
-- `MINOR (0.1.0)`: Nouvelle fonctionnalité <br>
-- `PATCH (0.0.1)`: Bug fix
+1. **Création du volume pour la base de données**
+   ```bash
+   docker volume create coman-data
+   ```
 
-#### Volume de Base de Données
+2. **Construction de l'image**
+   ```bash
+   docker build -t triomph/coman:latest .
+   ```
+
+3. **Lancement de l'application**
+   ```bash
+   docker run -p 18080:18080 -v coman-data:/app/data triomph/coman:latest
+   ```
+
+Note : Selon votre configuration, vous pourriez avoir besoin d'utiliser `sudo` pour les commandes Docker.
+
+#### Tests
+Pour exécuter les tests avec Docker :
 ```bash
-# Création du volume persistant pour la base de données
-docker volume create coman-data
+docker run --rm triomph/coman:latest /bin/bash -c './coman_test'
 ```
 
-#### Build & Run
-```bash
-# Build
-docker build -t triomph/coman:latest .
+### Méthode 2 : Installation Locale
 
-# Run
-docker run -p 18080:18080 -v coman-data:/app/data triomph/coman:latest
-```
-> Note : Éventuellement faire `sudo` avant chaque commande
+1. **Compilation**
+   ```bash
+   mkdir build
+   cd build
+   cmake ..
+   make
+   ```
 
-#### Test
-```bash
-# Build
-docker build -t triomph/coman:latest .
+2. **Exécution**
+   ```bash
+   ./coman
+   ```
 
-# Launch tests
-sudo docker run --rm triomph/coman:latest /bin/bash -c './coman_test'
-```
+Important : L'exécution doit se faire depuis la racine du projet.
 
----
+## Gestion des Versions
 
-### Sans Docker
-#### Compilation
-```bash
-mkdir build
-cd build
-cmake ..
-make
-```
+Le projet suit la convention de versionnement sémantique (SemVer) :
+- **MAJOR.MINOR.PATCH** (exemple : 1.18.2)
+  - MAJOR (1.0.0) : Changements incompatibles avec les versions précédentes
+  - MINOR (0.1.0) : Ajout de fonctionnalités rétrocompatibles
+  - PATCH (0.0.1) : Corrections de bugs
 
-#### Execution
-```bash
-./coman
-```
+## Déploiement
 
-> Note : Obligatoirement dans la racine du projet (pas de `../coman` ou `../../coman`)
+### Déploiement Automatisé
+- Intégration continue via Jenkins
+- Déploiement automatique via WebHooks
+- Tests automatisés avant déploiement
+
+## Maintenance et Support
+
+### Bonnes Pratiques
+- Utilisation de l'anglais dans le code source
+- Messages de commit descriptifs
+- Gestion des fichiers via `.gitignore`
+- Documentation à jour
+
+### Résolution des Problèmes Courants
+1. **Erreurs de compilation initiales** : Vérifier les commentaires dans `CMakeLists.txt`
+2. **Problèmes de droits Docker** : Utiliser `sudo` si nécessaire
+3. **Erreurs de chemin d'accès** : S'assurer d'être dans le bon répertoire pour l'exécution
+4. **Site inaccessible** : Essayer un autre réseau (e.g. 5G, 4G)
+
+## Sécurité
+- Gestion sécurisée des données utilisateur
+- Base de données persistante et sécurisée
+- Communication HTTP sécurisée
