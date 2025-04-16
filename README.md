@@ -1,82 +1,71 @@
 # COMAN - Documentation
 
-La documentation moderne et avancée est accessible via [coman.triomph.dev/doc](https://coman.triomph.dev/doc)
+Modern and advanced documentation is available at [coman.triomph.dev/doc](https://coman.triomph.dev/doc)
 
-## À propos
-COMAN est un logiciel de gestion de projet moderne et efficace, accessible via [coman.triomph.dev](https://coman.triomph.dev). Cette application suit une architecture client-serveur robuste, conçue pour offrir une expérience utilisateur fluide et performante.
+## About
+COMAN is a modern and efficient project management software, accessible at [coman.triomph.dev](https://coman.triomph.dev). This application follows a robust client-server architecture, designed to provide a smooth and high-performance user experience.
 
-## Architecture Technique
+## Technical Architecture
 
 ### Backend
-- Développé en C++ (version 17)
-- API REST utilisant le framework Crow
-- Base de données persistante
-- Architecture en couches (MVC)
-  - Models : Représentation des données
-  - Controllers : Gestion des requêtes HTTP
-  - Services : Logique métier
-  - Repositories : Accès aux données
+- Developed in C++ (version 17)
+- REST API using the Crow framework
+- Persistent database
+- Layered architecture (MVC)
+  - Models: Data representation
+  - Controllers: HTTP request handling
+  - Services: Business logic
+  - Repositories: Data access
 
 ### Frontend
-- Interface utilisateur en HTML/CSS
-- Framework CSS : Tailwind CSS
-- Design responsive et moderne
+- User interface in HTML/CSS
+- CSS Framework: Tailwind CSS
+- Responsive and modern design
 
-## Déploiement en Production
 
-Le projet est automatiquement déployé sur un VPS (Virtual Private Server) grâce à :
-- **Jenkins** pour l'intégration continue
-- **Webhooks GitHub** qui déclenchent automatiquement le déploiement à chaque push sur la branche principale
-- Pipeline de déploiement automatisé incluant :
-  - Compilation du code
-  - Exécution des tests
-  - Déploiement sur le serveur de production
+## Installation Prerequisites
 
-Cette configuration permet un déploiement continu et sécurisé sans intervention manuelle.
-
-## Prérequis d'Installation
-
-### Installation Locale
-#### Dépendances Requises
+### Local Installation
+#### Required Dependencies
 - CMake
-- C++ 17 ou supérieur
-- Headers de développement Asio (version 1.10.9+)
+- C++ 17 or higher
+- Asio development headers (version 1.10.9+)
 
 ### Installation via Docker
-Docker simplifie considérablement le déploiement de l'application.
+Docker greatly simplifies the deployment of the application.
 
-#### Prérequis Docker
-- Docker installé sur votre système
-- Droits administrateur pour certaines commandes
+#### Docker Prerequisites
+- Docker installed on your system
+- Administrator rights for some commands
 
-## Guide d'Installation
+## Installation Guide
 
-### Méthode 1 : Installation avec Docker (Recommandée)
+### Method 1: Installation with Docker (Recommended)
 
-1. **Création du volume pour la base de données**
+1. **Create the volume for the database**
    ```bash
    docker volume create coman-data
    ```
 
-2. **Construction de l'image**
+2. **Build the image**
    ```bash
    docker build -t triomph/coman:latest .
    ```
 
-3. **Lancement de l'application**
+3. **Run the application**
    ```bash
    docker run -p 18080:18080 -v coman-data:/app/data triomph/coman:latest
    ```
 
-Note : Selon votre configuration, vous pourriez avoir besoin d'utiliser `sudo` pour les commandes Docker.
+Note: Depending on your configuration, you may need to use `sudo` for Docker commands.
 
 #### Tests
-Pour exécuter les tests avec Docker :
+To run the tests with Docker:
 ```bash
 docker run --rm triomph/coman:latest /bin/bash -c './coman_test'
 ```
 
-### Méthode 2 : Installation Locale
+### Method 2: Local Installation
 
 1. **Compilation**
    ```bash
@@ -86,43 +75,39 @@ docker run --rm triomph/coman:latest /bin/bash -c './coman_test'
    make
    ```
 
-2. **Exécution**
+2. **Execution**
    ```bash
    ./coman
    ```
 
-Important : L'exécution doit se faire depuis la racine du projet.
+Important: Execution must be done from the root of the project.
 
-## Gestion des Versions
+## Version Management
 
-Le projet suit la convention de versionnement sémantique (SemVer) :
-- **MAJOR.MINOR.PATCH** (exemple : 1.18.2)
-  - MAJOR (1.0.0) : Changements incompatibles avec les versions précédentes
-  - MINOR (0.1.0) : Ajout de fonctionnalités rétrocompatibles
-  - PATCH (0.0.1) : Corrections de bugs
+The project follows the semantic versioning convention (SemVer):
+- **MAJOR.MINOR.PATCH** (example: 1.18.2)
+  - MAJOR (1.0.0): Breaking changes
+  - MINOR (0.1.0): Backward-compatible feature additions
+  - PATCH (0.0.1): Bug fixes
 
-## Déploiement
+## Production Deployment
 
-### Déploiement Automatisé
-- Intégration continue via Jenkins
-- Déploiement automatique via WebHooks
-- Tests automatisés avant déploiement
+The project is automatically deployed on a VPS (Virtual Private Server) thanks to:
+- **Jenkins** for continuous integration
+- **GitHub Webhooks** that automatically trigger deployment on each push to the main branch
+- Automated deployment pipeline including:
+  - Code compilation
+  - Test execution
+  - Deployment to the production server
 
-## Maintenance et Support
+This setup enables continuous and secure deployment without manual intervention.
 
-### Bonnes Pratiques
-- Utilisation de l'anglais dans le code source
-- Messages de commit descriptifs
-- Gestion des fichiers via `.gitignore`
-- Documentation à jour
+## Maintenance and Support
 
-### Résolution des Problèmes Courants
-1. **Erreurs de compilation initiales** : Vérifier les commentaires dans `CMakeLists.txt`
-2. **Problèmes de droits Docker** : Utiliser `sudo` si nécessaire
-3. **Erreurs de chemin d'accès** : S'assurer d'être dans le bon répertoire pour l'exécution
-4. **Site inaccessible** : Essayer un autre réseau (e.g. 5G, 4G)
 
-## Sécurité
-- Gestion sécurisée des données utilisateur
-- Base de données persistante et sécurisée
-- Communication HTTP sécurisée
+### Troubleshooting Common Issues
+1. **Initial compilation errors**: Check comments in `CMakeLists.txt`
+2. **Docker permission issues**: Use `sudo` if necessary
+3. **Path errors**: Make sure you are in the correct directory for execution
+4. **Site inaccessible**: Try another network (e.g. 5G, 4G)
+
